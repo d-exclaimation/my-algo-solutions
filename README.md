@@ -6,8 +6,8 @@ I am just collecting them together, so I don't lose them and have this messy
 
 I use multiple languages, so yeah:
 
-> `rust` (the one I have been using recently, to better understand how everything unfolds)
-> `go` (I just like the language)
-> `typescript` (Idk) [TODO: Find them]
-> `swift` (I used to mainly use this) [TODO: Find them]
-> `python` (I think I lost this one, lol :) )
+> 1. `rust` (the one I have been using recently, to better understand how everything unfolds)
+> 2. `go` (I just like the language)
+> 3. `typescript` (Idk) [TODO: Find them]
+> 4. `swift` (I used to mainly use this) [TODO: Find them]
+> 5. `python` (I think I lost this one, lol :) )
