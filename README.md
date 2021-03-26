@@ -1,4 +1,4 @@
-# My Optimzed and Unoptimized solutions for common algorithm questions
+# My Optimized and Unoptimized solutions for common algorithm questions
 
 Answers here are not perfect, some of them are not optimized, because I couldn't care less to try again
 
