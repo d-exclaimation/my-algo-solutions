@@ -8,12 +8,36 @@
 
 package tree
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Node struct {
 	Val interface{}
 	Left *Node
 	Right *Node
+}
+
+func (tree *Node) MaxDepthValue() int {
+	res, ok := tree.Val.(int)
+	if !ok {
+		return 0
+	}
+	left, right := res, res
+	if tree.Left != nil {
+		left = tree.Left.MaxDepthValue() + left
+		if res < left {
+			res = left
+		}
+	}
+
+	if tree.Right != nil {
+		right = tree.Right.MaxDepthValue() + right
+		if res < right {
+			res = right
+		}
+	}
+	return res
 }
 
 func (tree *Node) PrintInorder() {

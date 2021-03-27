@@ -8,23 +8,12 @@
 
 package main
 
-import "github.com/d-exclaimation/al-go/tree"
+import (
+	"fmt"
+	"github.com/d-exclaimation/al-go/array"
+)
 
 func main() {
-	oak := &tree.Node{
-		Val: 2,
-		Left: &tree.Node{
-			Val:   0,
-			Left:  nil,
-			Right: &tree.Node{Val: 1},
-		},
-		Right: &tree.Node{
-			Val:   3,
-			Left:  nil,
-			Right: &tree.Node{Val: 4},
-		},
-	}
-	oak.PrintInorder()
-	oak.PrintInorderIter()
+	fmt.Printf("Unique count is %d", array.CountUnique([]int{1, 2, 2, 4, 4, 6, 8, 8}))
 }
 
