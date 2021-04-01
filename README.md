@@ -9,5 +9,6 @@ I use multiple languages, so yeah:
 > 1. `rust` (the one I have been using recently, to better understand how everything unfolds)
 > 2. `go` (I just like the language)
 > 3. `typescript` (Idk) [TODO: Find them]
-> 4. `swift` (I used to mainly use this) [TODO: Find them]
-> 5. `python` (I think I lost this one, lol :) )
+> 4. `elixir` (For pure functional programming, and practice to use it in the future)
+> 5. `swift` (I used to mainly use this) [TODO: Find them]
+> 6. `python` (I think I lost this one, lol :) )
