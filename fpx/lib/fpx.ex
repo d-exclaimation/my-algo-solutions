@@ -8,14 +8,14 @@
 
 defmodule FPX do
   @moduledoc """
-  Documentation for `FPX`.
+  Module for `FPX` Application.
   """
 
   @doc """
   Main initialize function
   """
   def run do
-    IO.puts(MyMath.square_root(6))
+    IO.puts(Sentence.last_word_length("The Daily Byte"))
   end
 end
 
