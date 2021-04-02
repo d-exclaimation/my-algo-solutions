@@ -13,8 +13,8 @@ defmodule Sentence do
 
   @doc """
   Last word's length (Before space)
-  Take a string
-  Return an integer
+  -> string: String
+  :: integer
   """
   @spec last_word_length(String.t) :: integer
   def last_word_length(string) do
@@ -34,8 +34,8 @@ defmodule Sentence do
   Word with the same row on the keyboard
     >> O(2n) + O(3nk) time
     >> Time complexity O(n x k) time
-  Take a list of string
-  Return a list of string
+  -> list: list(String)
+  :: list(String)
   """
   @spec same_row(list(String.t)) :: list(String.t)
   def same_row(list) when length(list) == 0, do: []
@@ -55,8 +55,6 @@ defmodule Sentence do
       ) > 0
     end)
     |> Enum.map(fn w_map -> w_map.val end)
-
-
   end
 
 end

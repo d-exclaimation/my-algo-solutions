@@ -15,7 +15,8 @@ defmodule FPX do
   Main initialize function
   """
   def run do
-    IO.inspect(Sentence.same_row(["two", "dad", "cat"]))
+    IO.puts("Attempt 5")
+    IO.inspect(Array.rotate_1d([1, 2, 3, 4, 5], 2), charlists: :as_list)
   end
 end
 
