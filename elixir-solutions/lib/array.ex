@@ -11,6 +11,12 @@ defmodule Array do
   Array manipulation
   """
 
+  def one_value(list) when is_list(list) do
+    list
+    |> Enum.filter(fn x -> Enum.count(list, fn y -> y == x end) == 1 end)
+    |> Enum.fetch!(0)
+  end
+
   def rotate_1d([head | rest], count) when count == 0, do: [head] ++ rest
   def rotate_1d([head | rest], count) do
     rotate_1d(rest ++ [head], count - 1)
