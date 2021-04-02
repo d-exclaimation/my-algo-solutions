@@ -15,7 +15,7 @@ defmodule FPX do
   Main initialize function
   """
   def run do
-    IO.puts(Sentence.last_word_length("The Daily Byte"))
+    IO.inspect(Sentence.same_row(["two", "dad", "cat"]))
   end
 end
 

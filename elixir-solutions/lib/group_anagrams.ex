@@ -29,4 +29,11 @@ defmodule GroupAnagrams do
     |> Enum.sort()
   end
 
+  def tidy_word(word) when is_binary(word) do
+    word
+    |> String.downcase()
+    |> String.graphemes()
+    |> Enum.uniq()
+  end
+
 end
