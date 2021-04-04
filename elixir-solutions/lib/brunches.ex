@@ -14,9 +14,6 @@ defmodule Brunches do
     find_seq(list, Enum.at(list, 0), 0, 0, [])
   end
 
-  @doc """
-  Find the sequence and collectively check the for brunches
-  """
   @spec find_seq(list(String.t()), String.t(), integer(), integer(), list(tuple())) :: list(tuple())
   defp find_seq(list, curr, start, index, res) when length(list) == index, do: res ++ [{start, index - 1}]
 
@@ -28,6 +25,17 @@ defmodule Brunches do
     else
       find_seq(list, curr, start, index + 1, res)
     end
+  end
+
+  @doc """
+  Find the special value in the matrix (min for its row, max for the column
+  -> matrix: list(list(integer))
+  :: integer
+  """
+  def special_values(matrix) when is_list(matrix) do
+    matrix
+    |> Enum.map(fn x -> Enum.min(x) end)
+    |> Enum.max()
   end
 
 end

@@ -13,8 +13,8 @@ defmodule MyMath do
   @doc """
   Square root of a value
   """
-  def square_root(val) when val <= 1, do: val
-  def square_root(val) do
+  def square_root_f(val) when val <= 1, do: val
+  def square_root_f(val) do
     2..div(val, 2)
     |> Enum.filter(fn x -> x * x <= val end)
     |> Enum.fetch!(-1)
@@ -31,6 +31,20 @@ defmodule MyMath do
     else
       add_list(Enum.slice(num_list, 0..-2), 0) ++ [last]
     end
+  end
+
+  @doc """
+  Square root
+  -> num: integer
+  """
+  def square_root(num) do
+    Float.round(find_square(num, num / 2), 2)
+  end
+
+  defp find_square(num, guess) when abs(num - (guess * guess)) < 0.001, do: guess
+  defp find_square(num, guess) do
+    next_guess = (guess + num/guess) / 2
+    find_square(num, next_guess)
   end
 
 end
