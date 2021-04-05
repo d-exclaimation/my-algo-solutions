@@ -15,7 +15,7 @@ defmodule Brunches do
   end
 
   @spec find_seq(list(String.t()), String.t(), integer(), integer(), list(tuple())) :: list(tuple())
-  defp find_seq(list, curr, start, index, res) when length(list) == index, do: res ++ [{start, index - 1}]
+  defp find_seq(list, _curr, start, index, res) when length(list) == index, do: res ++ [{start, index - 1}]
 
   @spec find_seq(list(String.t()), String.t(), integer(), integer(), list(tuple())) :: list(tuple())
   defp find_seq(list, curr, start, index, res) do

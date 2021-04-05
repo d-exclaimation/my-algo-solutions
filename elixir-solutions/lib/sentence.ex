@@ -57,4 +57,18 @@ defmodule Sentence do
     |> Enum.map(fn w_map -> w_map.val end)
   end
 
+  @doc """
+  Find the first occurring char sentence
+  -> word: String.t
+  :: String.t
+  """
+  def first_recurring(word) do
+    _first_occurring(String.graphemes(word), MapSet.new())
+  end
+
+  defp _first_occurring(list, _mapper) when length(list) == 0, do: nil
+  defp _first_occurring([first | rest], mapper) do
+    if MapSet.member?(mapper, first), do: first, else: _first_occurring(rest, MapSet.put(mapper, first))
+  end
+
 end

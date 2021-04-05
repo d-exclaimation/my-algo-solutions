@@ -15,10 +15,7 @@ defmodule FPX do
   Main initialize function
   """
   def run do
-    IO.puts(Brunches.special_values([
-      [1, 2],
-      [3, 4]
-    ]))
+    IO.puts(Sentence.first_recurring("qwerty"))
   end
 end
 

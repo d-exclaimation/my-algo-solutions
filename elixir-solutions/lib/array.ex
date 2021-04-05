@@ -64,11 +64,30 @@ defmodule Array do
     |> Enum.min()
   end
 
-  defp min_subs(list, at, count, s) when is_list(list) and at + count >= length(list), do: false
+  defp min_subs(list, at, count, _s) when is_list(list) and at + count >= length(list), do: false
   defp min_subs(list, at, count, s) when is_list(list) do
     curr = list
       |> Enum.slice(at..(at + count))
       |> Enum.sum()
     if curr >= s, do: true, else: min_subs(list, at + 1, count, s)
+  end
+
+  @doc """
+  Equal share, given a positive integer determine whether the array can be partition with equal sums
+  -> list: list(integer)
+  :: boolean
+  """
+  def equal_share?(list) do
+    _equalize?(list, 0)
+  end
+
+  defp _equalize?(list, index) when length(list) == index, do: false
+  defp _equalize?(list, index) do
+    sum_first = Enum.sum(Enum.slice(list, 0..index))
+    sum_rest = Enum.sum(Enum.slice(list, index + 1..-1))
+    cond do
+      sum_first == sum_rest -> true
+      true -> false or _equalize?(list, index + 1)
+    end
   end
 end
