@@ -78,16 +78,26 @@ defmodule Array do
   :: boolean
   """
   def equal_share?(list) do
-    _equalize?(list, 0)
+#    _equalize?(list, 0)
+    _optimized_eq?(list, 0, 0, Enum.sum(list))
   end
 
-  defp _equalize?(list, index) when length(list) == index, do: false
-  defp _equalize?(list, index) do
-    sum_first = Enum.sum(Enum.slice(list, 0..index))
-    sum_rest = Enum.sum(Enum.slice(list, index + 1..-1))
+  defp _optimized_eq?(list, index, lhs, rhs) when length(list) == index, do: lhs == rhs
+  defp _optimized_eq?(list, index, lhs, rhs) do
+    curr = Enum.at(list, index)
     cond do
-      sum_first == sum_rest -> true
-      true -> false or _equalize?(list, index + 1)
+      lhs + curr == rhs - curr -> true
+      true -> false or _optimized_eq?(list, index + 1, lhs + curr, rhs - curr)
     end
   end
+#
+#  defp _equalize?(list, index) when length(list) == index, do: false
+#  defp _equalize?(list, index) do
+#    sum_first = Enum.sum(Enum.slice(list, 0..index))
+#    sum_rest = Enum.sum(Enum.slice(list, index + 1..-1))
+#    cond do
+#      sum_first == sum_rest -> true
+#      true -> false or _equalize?(list, index + 1)
+#    end
+#  end
 end
