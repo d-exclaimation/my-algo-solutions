@@ -15,7 +15,7 @@ defmodule FPX do
   Main initialize function
   """
   def run do
-    IO.inspect(MyMath.generate_subset([1, 2, 3]), charlists: :as_lists)
+    IO.inspect(PhoneNumber.make_valid_words([3, 6, 4], ["dog", "fish", "cat", "fog"]))
   end
 end
 
