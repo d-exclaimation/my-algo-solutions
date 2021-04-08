@@ -47,4 +47,22 @@ defmodule MyMath do
     find_square(num, next_guess)
   end
 
+
+  @doc """
+  Generate all subsets
+  -> arr: list(integer)
+  :: list(list(integer)
+  """
+  def generate_subset([head | rest]) when length(rest) == 0, do: [[head]]
+  def generate_subset([head | rest]) do
+    _gen_subset([head | rest], 0, [head]) ++ generate_subset(rest)
+  end
+
+  defp _gen_subset(arr, idx, curr) when length(arr) == idx + 1, do: curr
+  defp _gen_subset(arr, idx, curr) do
+     [curr | idx + 1..length(arr) - 1
+           |> Enum.map(fn i -> _gen_subset(arr, i, curr ++ [Enum.at(arr, i)]) end)
+           |> Enum.reduce([], fn x, acc -> acc ++ if is_list(Enum.at(x, 0)), do: x, else: [x] end)]
+  end
+
 end

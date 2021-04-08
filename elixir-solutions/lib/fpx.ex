@@ -15,7 +15,7 @@ defmodule FPX do
   Main initialize function
   """
   def run do
-    IO.puts(Array.equal_share?([1, 2, 3, 4, 4, 3, 2, 2]))
+    IO.inspect(MyMath.generate_subset([1, 2, 3]), charlists: :as_lists)
   end
 end
 

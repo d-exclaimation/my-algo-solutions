@@ -38,4 +38,24 @@ defmodule Brunches do
     |> Enum.max()
   end
 
+
+  @doc """
+  Mini FizzBuzz
+  -> n: integer
+  :: list(String.t)
+  """
+  def mini_fizzbuzz(n) when n == 0, do: []
+  def mini_fizzbuzz(n) when is_integer(n) do
+    mini_fizzbuzz(n - 1) ++ [fizzbuzz_logic(n)]
+  end
+
+  defp fizzbuzz_logic(n) do
+    cond do
+      rem(n, 3 * 5) == 0 -> "FizzBuzz"
+      rem(n, 3) == 0 -> "Fizz"
+      rem(n, 5) == 0 -> "Buzz"
+      true -> to_string(n)
+    end
+  end
+
 end
