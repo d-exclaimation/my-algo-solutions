@@ -15,7 +15,7 @@ defmodule FPX do
   Main initialize function
   """
   def run do
-    IO.inspect(PhoneNumber.make_valid_words([3, 6, 4], ["dog", "fish", "cat", "fog"]))
+    IO.inspect(MyMath.bigger_and_bigger([2, 4, 3, 6]), charlist: :as_lists)
   end
 end
 

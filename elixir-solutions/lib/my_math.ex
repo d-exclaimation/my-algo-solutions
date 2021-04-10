@@ -65,4 +65,33 @@ defmodule MyMath do
            |> Enum.reduce([], fn x, acc -> acc ++ if is_list(Enum.at(x, 0)), do: x, else: [x] end)]
   end
 
+
+  @doc """
+  Generate subset with two or more element in increasing order
+  -> arr: list(integer)
+  :: list(list(integer))
+  """
+  def bigger_and_bigger(arr) do
+    generate_subset(arr)
+    |> Enum.filter(fn each ->
+        length(each) >= 2 and increasing?(each)
+      end)
+  end
+
+
+  @doc """
+  Is Increasing
+  -> arr: list(integer)
+  :: boolean
+  """
+  def increasing?(arr) when is_list(arr) and length(arr) === 0, do: true
+  def increasing?(arr) when is_list(arr), do: _increasing?(arr, Enum.at(arr, 0) - 1)
+
+  defp _increasing?([head | rest], prev) when length(rest) == 0, do: head > prev
+  defp _increasing?([head | rest], prev) do
+    prev < head and _increasing?(rest, head)
+  end
+
+
+
 end
