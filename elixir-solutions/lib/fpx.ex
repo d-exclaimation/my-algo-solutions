@@ -15,7 +15,10 @@ defmodule FPX do
   Main initialize function
   """
   def run do
-    IO.inspect(MyMath.bigger_and_bigger([2, 4, 3, 6]), charlist: :as_lists)
+    IO.puts("\n")
+    LatentHeat.part_one
+    LatentHeat.part_two
+    LatentHeat.part_three
   end
 end
 

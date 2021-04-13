@@ -90,7 +90,33 @@ defmodule Array do
       true -> false or _optimized_eq?(list, index + 1, lhs + curr, rhs - curr)
     end
   end
-#
+
+  @doc """
+  Max increasing subsequence
+  O(n) time, and O(n) space (given the recursive stack consist of prev, curr, best: integer. No mutation)
+  -> arr: list(integer)
+  :: integer
+  """
+  def max_increasing(arr) do
+    _max_increasing(arr, Enum.at(arr, 0) - 1, 0, 0)
+  end
+
+  defp _max_increasing([head | rest], prev, curr, best) when length(rest) == 0 do
+    cond do
+      head > prev -> if best > curr + 1, do: best, else: curr + 1
+      true -> if best > curr, do: best, else: curr
+    end
+  end
+  defp _max_increasing([head | rest], prev, curr, best) do
+    cond do
+      head > prev ->
+        _max_increasing(rest, head, curr + 1, best)
+      true ->
+         next_max = if best > curr, do: best, else: curr
+         _max_increasing(rest, head, 1, next_max)
+    end
+  end
+
 #  defp _equalize?(list, index) when length(list) == index, do: false
 #  defp _equalize?(list, index) do
 #    sum_first = Enum.sum(Enum.slice(list, 0..index))
