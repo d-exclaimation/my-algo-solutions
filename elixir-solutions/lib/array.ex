@@ -126,4 +126,50 @@ defmodule Array do
 #      true -> false or _equalize?(list, index + 1)
 #    end
 #  end
+
+  @doc """
+  Two sum: return two values summed to target
+  -> arr: list(integer)
+  -> target: integer
+  :: {integer, integer}
+  """
+  @spec three_sum(list(integer()), integer()) :: {:ok, {integer(), integer()}} | :error
+  def two_sum(arr, target) do
+    case _two_sum(arr, target, MapSet.new()) do
+      {:ok, {lhs, rhs}} -> {lhs, rhs}
+      :error -> {-1, -1}
+    end
+  end
+
+  defp _two_sum(arr, _target, _set) when length(arr) == 0, do: :error
+  defp _two_sum([head | rest], target, set) do
+    remains = target - head
+    case set |> MapSet.member?(remains) do
+      true -> {:ok, {head, remains}}
+      false -> _two_sum(rest, target, set |> MapSet.put(head))
+    end
+  end
+
+  @doc"""
+  Three sum: return three values summed to target
+  -> arr: list(integer)
+  -> target: integer
+  :: {integer, integer, integer}
+  """
+  @spec three_sum(list(integer()), integer()) :: {:ok, {integer(), integer(), integer()}} | :error
+  def three_sum(arr, target) do
+    case _three_sum(arr, target) do
+      {:ok, res} -> res
+      :error -> {-1, -1, -1}
+    end
+  end
+
+  defp _three_sum(arr, _target) when length(arr) == 0, do: :error
+  defp _three_sum([first | rest], target) do
+    case _two_sum(rest, target - first, MapSet.new()) do
+      {:ok, {lhs, rhs}} -> {:ok , {first, lhs, rhs}}
+      :error -> _three_sum(rest, target)
+    end
+  end
+
 end

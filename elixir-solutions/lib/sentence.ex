@@ -71,4 +71,54 @@ defmodule Sentence do
     if MapSet.member?(mapper, first), do: first, else: _first_occurring(rest, MapSet.put(mapper, first))
   end
 
+
+  @doc """
+  Longest palindrome substring
+  -> str: String.t
+  :: String,t
+  """
+  def longest_palindrome_substring(str) do
+    cond do
+      String.length(str) <= 1 -> str
+      true -> _longest_palindrome_substring(str |> String.graphemes(), String.length(str))
+    end
+  end
+
+  defp _longest_palindrome_substring(_, len) when len <= 0, do: nil
+  defp _longest_palindrome_substring(str_arr, len) do
+    try do
+      _palindrome_substring(str_arr, len, len - 1)
+    catch
+      _ -> _longest_palindrome_substring(str_arr, len - 1)
+    end
+  end
+
+  defp _palindrome_substring(str_arr, _len, idx) when idx >= length(str_arr), do: throw(:error)
+  defp _palindrome_substring(str_arr, len, idx) do
+    curr = str_arr |> Enum.slice((idx - len + 1)..idx) |> Enum.join()
+    rev = curr |> String.reverse()
+    cond do
+      curr == rev -> curr
+      true -> _palindrome_substring(str_arr, len, idx + 1)
+    end
+  end
+
+  @doc """
+  Count the depth of nested brackets
+  -> str: String.t
+  :: integer
+  """
+  def depth_parentheses(str) do
+    str
+    |> String.to_charlist()
+    |> Enum.map(fn
+        ?( -> 1
+        ?) -> -1
+        _ -> 0
+      end)
+    |> Enum.scan(&+/2)
+    |> Enum.max()
+  end
+
+
 end

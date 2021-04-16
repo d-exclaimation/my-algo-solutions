@@ -15,10 +15,8 @@ defmodule FPX do
   Main initialize function
   """
   def run do
-    IO.puts("\n")
-    LatentHeat.part_one
-    LatentHeat.part_two
-    LatentHeat.part_three
+    {lhs, mhs, rhs} = Array.three_sum([1, 2, 3, 4, 5], 6)
+    IO.puts("#{lhs}, #{mhs} and #{rhs}")
   end
 end
 
