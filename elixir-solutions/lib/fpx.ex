@@ -15,8 +15,7 @@ defmodule FPX do
   Main initialize function
   """
   def run do
-    {lhs, mhs, rhs} = Array.three_sum([1, 2, 3, 4, 5], 6)
-    IO.puts("#{lhs}, #{mhs} and #{rhs}")
+    AbsoluteZero.only_part
   end
 end
 
