@@ -7,16 +7,19 @@
 #
 
 defmodule FPX do
+  use Application
   @moduledoc """
   Module for `FPX` Application.
   """
 
-  @doc """
-  Main initialize function
-  """
-  def run() do
+  def start(_type, _args) do
+    import Supervisor.Spec, warn: false
+
     IO.inspect(Limit.missing_dup([1, 2, 3, 5, 5]))
+
+    # All children process to be supervised
+    children = []
+    opts = [strategy: :one_for_one, name: FPX.Supervisor]
+    Supervisor.start_link(children, opts)
   end
 end
-
-FPX.run()
