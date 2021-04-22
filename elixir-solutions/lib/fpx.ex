@@ -7,15 +7,23 @@
 #
 
 defmodule FPX do
-  use Application
   @moduledoc """
   Module for `FPX` Application.
   """
+  use Application
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    IO.inspect(Limit.missing_dup([1, 2, 3, 5, 5]))
+    oak = %LinkedNode{
+      val: 1,
+      next: %LinkedNode{
+        val: 1,
+        next: %LinkedNode{val: 2}
+      }
+    }
+    IO.inspect(oak)
+    IO.inspect(oak |> LinkedNode.remove_sorted())
 
     # All children process to be supervised
     children = []
