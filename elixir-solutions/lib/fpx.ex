@@ -14,8 +14,8 @@ defmodule FPX do
   @doc """
   Main initialize function
   """
-  def run do
-    AbsoluteZero.only_part
+  def run() do
+    IO.inspect(Limit.missing_dup([1, 2, 3, 5, 5]))
   end
 end
 

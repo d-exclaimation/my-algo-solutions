@@ -22,4 +22,21 @@ defmodule Kth do
     |> Enum.map(fn map -> map.val end)
   end
 
+  @doc """
+  Find duplicate if only one is duplicated
+  -> arr: list(integer)
+  :: integer
+  """
+  def find_one_dup(arr) do
+    _find_one_dup(arr, MapSet.new())
+  end
+
+  defp _find_one_dup(arr, _seen) when length(arr) == 0, do: nil
+  defp _find_one_dup([head | rest], seen) do
+    cond do
+      MapSet.member?(seen, head) -> head
+      true -> _find_one_dup(rest, seen |> MapSet.put(head))
+    end
+  end
+
 end

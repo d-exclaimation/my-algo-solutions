@@ -133,7 +133,7 @@ defmodule Array do
   -> target: integer
   :: {integer, integer}
   """
-  @spec three_sum(list(integer()), integer()) :: {:ok, {integer(), integer()}} | :error
+  @spec two_sum(list(integer()), integer()) :: {:ok, {integer(), integer()}} | :error
   def two_sum(arr, target) do
     case _two_sum(arr, target, MapSet.new()) do
       {:ok, {lhs, rhs}} -> {lhs, rhs}
