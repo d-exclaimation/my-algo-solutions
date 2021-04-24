@@ -15,15 +15,7 @@ defmodule FPX do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    oak = %LinkedNode{
-      val: 1,
-      next: %LinkedNode{
-        val: 1,
-        next: %LinkedNode{val: 2}
-      }
-    }
-    IO.inspect(oak)
-    IO.inspect(oak |> LinkedNode.remove_sorted())
+    IO.puts(Numeric.palindrome?(0))
 
     # All children process to be supervised
     children = []
