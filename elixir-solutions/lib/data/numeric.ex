@@ -33,10 +33,13 @@ defmodule Numeric do
   @spec reversed(numeric()) :: numeric()
   def reversed(val) when div(val, 10) == 0, do: val
   def reversed(val) do
-    last = rem(val, 10)
-    remain = div(val, 10)
-    base = :math.pow(10, ("#{remain}" |> String.to_charlist() |> length()))
-    return last * (base |> round()) + reversed(remain)
+    do_reversed(val, 0)
+  end
+
+  @spec do_reversed(numeric(), numeric()) :: numeric()
+  defp do_reversed(val, prev) when div(val, 10) == 0, do: prev * 10 + val
+  defp do_reversed(val, prev) do
+    do_reversed(div(val, 10), prev * 10 + rem(val, 10))
   end
 
 end

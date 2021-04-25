@@ -46,4 +46,27 @@ defmodule Limit do
     dup = Kth.find_one_dup(arr)
     %{missing: dup + div(n * (n + 1), 2) - Enum.sum(arr), duplicate: dup}
   end
+  
+  @doc """
+  Give all missing bounds not in nums, from lower to upper
+  -> nums: list(integer)
+  -> lower, upper: integer
+  :: list(String.t)
+  """
+  @spec missing_bounds(list(integer()), integer(), integer()) :: list(String.t())
+  def missing_bounds(nums, lower, upper) when length(nums) <= 0 do
+    cond do
+      upper < lower -> []
+      upper == lower -> ["#{upper}"]
+      true -> ["#{lower}->#{upper}"]
+    end
+  end
+  def missing_bounds([head | rest], lower, upper) do
+    cond do
+      head >= upper -> missing_bounds([], lower, upper)
+      (head - 1) < lower -> missing_bounds(rest, head + 1, upper)
+      (head - 1) == lower -> ["#{head - 1}" | missing_bounds(rest, head + 1, upper)]
+      true -> ["#{lower}->#{head - 1}" | missing_bounds(rest, head + 1, upper)]
+    end
+  end
 end

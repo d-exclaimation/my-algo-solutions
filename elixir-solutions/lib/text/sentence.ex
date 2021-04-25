@@ -120,5 +120,4 @@ defmodule Sentence do
     |> Enum.max()
   end
 
-
 end
