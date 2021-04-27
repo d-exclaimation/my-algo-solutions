@@ -15,11 +15,7 @@ defmodule FPX do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    IO.puts(Polygon.max_connected_dots([
-      [1, 0, 0, 1],
-      [1, 1, 1, 1],
-      [0, 1, 0, 0]
-    ]))
+    IO.puts(MyMath.largest_product_3([-4, 1, 2, 8]))
 
     # All children process to be supervised
     children = []
