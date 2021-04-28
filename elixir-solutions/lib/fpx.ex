@@ -15,7 +15,8 @@ defmodule FPX do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    IO.puts(MyMath.largest_product_3([-4, 1, 2, 8]))
+    arr = [2, 1, 3, 4, 5, 1, 3, 7, 10, 112]
+    IO.inspect(Sort.quick_sort(arr))
 
     # All children process to be supervised
     children = []

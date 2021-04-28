@@ -32,27 +32,6 @@ defmodule Array do
     rotate_1d(rest ++ [head], count - 1)
   end
 
-  @doc """
-  Merge Sort "list"
-  -> list: list(any: Comparable)
-  :: list(any: Comparable)
-  """
-  def merge_sort(list) when length(list) <= 1, do: list
-  def merge_sort(list) do
-    mid = div(length(list), 2)
-    lhs = merge_sort(Enum.slice(list, 0..mid - 1))
-    rhs = merge_sort(Enum.slice(list, mid..-1))
-    merge(lhs, rhs)
-  end
-
-  defp merge(lhs, rhs) when length(lhs) == 0 or length(rhs) == 0, do: lhs ++ rhs
-  defp merge([l_head | l_rest], [r_head | r_rest]) do
-    cond do
-      l_head < r_head -> [l_head] ++ merge(l_rest, [r_head | r_rest])
-      l_head == r_head -> [l_head, r_head] ++ merge(l_rest, r_rest)
-      l_head > r_head -> [r_head] ++ merge([l_head | l_rest], r_rest)
-    end
-  end
 
   @doc """
   Find the min subarray that is bigger or equal
