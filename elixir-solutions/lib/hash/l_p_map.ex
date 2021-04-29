@@ -37,7 +37,7 @@ defmodule LPMap do
     }
   end
 
-  @spec do_set(list(key_value()), any(), any(), integer()) :: %LPMap{}
+  @spec do_set(list(key_value()), any(), any(), integer()) :: list(key_value())
   defp do_set(mapper, key, element, hash) do
     case find_element(mapper, key, hash) do
       # Insert

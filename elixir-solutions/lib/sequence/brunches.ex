@@ -16,8 +16,6 @@ defmodule Brunches do
 
   @spec find_seq(list(String.t()), String.t(), integer(), integer(), list(tuple())) :: list(tuple())
   defp find_seq(list, _curr, start, index, res) when length(list) == index, do: res ++ [{start, index - 1}]
-
-  @spec find_seq(list(String.t()), String.t(), integer(), integer(), list(tuple())) :: list(tuple())
   defp find_seq(list, curr, start, index, res) do
     looked = Enum.at(list, index)
     if looked != curr do

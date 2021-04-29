@@ -42,7 +42,7 @@ defmodule Stats do
   @doc """
 
   """
-  @spec remaining_todo() :: nil
+  @spec remaining_todo() :: :ok
   def remaining_todo() do
     todos = """
     Home Page Stats Label	✅	✅	✅

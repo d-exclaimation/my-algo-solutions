@@ -39,7 +39,7 @@ defmodule ChainingMap do
     }
   end
 
-  @spec do_set(list(key_value()), any(), any(), integer()) :: %LPMap{}
+  @spec do_set(list(key_value()), any(), any(), integer()) :: list(key_value())
   defp do_set(mapper, key, val, hash) do
     case find_element(mapper, key, hash) do
       # Append

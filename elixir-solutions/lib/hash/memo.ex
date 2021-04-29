@@ -16,7 +16,7 @@ defmodule Memo do
   @doc """
   Intersection of three
   """
-  @spec intersections(collection(), collection(), collection()) :: MapSet
+  @spec intersections(collection(), collection(), collection()) :: MapSet.t()
   def intersections(arr1, arr2, arr3) do
     out_two = MapSet.intersection(MapSet.new(arr1), MapSet.new(arr2))
     MapSet.intersection(out_two, MapSet.new(arr3))

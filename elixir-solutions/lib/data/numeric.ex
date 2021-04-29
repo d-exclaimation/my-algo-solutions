@@ -50,6 +50,7 @@ defmodule Numeric do
   end
 
   # O(n) time x _digit? time
+  @spec _number?(list(String.t()), boolean(), boolean()) :: boolean()
   defp _number?([head | rest], float, scientific) when length(rest) == 0 do
     not_special = not float and not scientific
     (head == "." and not_special) or (head == "e" and not scientific) or _digit?(head)
@@ -58,7 +59,7 @@ defmodule Numeric do
     cond do
       head == "." -> not float and not scientific and _number?(rest, true, scientific)
       head == "e" -> not scientific and _number?(rest, float, true)
-      _digit?(head) -> true and _number?(rest, float, scientific)
+      _digit?(head) -> _number?(rest, float, scientific)
       true -> false
     end
   end

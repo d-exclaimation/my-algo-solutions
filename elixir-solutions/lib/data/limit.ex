@@ -16,7 +16,7 @@ defmodule Limit do
   @doc """
   Min operation of *2 | -1
   """
-  @spec min_operation(integer(), integer()) :: nil
+  @spec min_operation(integer(), integer()) :: integer()
   def min_operation(start, target) when start == target, do: 0
   def min_operation(start, target) do
     # Two operations allowed * 2, and - 1
@@ -42,7 +42,7 @@ defmodule Limit do
     dup = Kth.find_one_dup(arr)
     %{missing: dup + div(n * (n + 1), 2) - Enum.sum(arr), duplicate: dup}
   end
-  
+
   @doc """
   Give all missing bounds not in nums, from lower to upper
   """

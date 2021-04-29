@@ -16,16 +16,10 @@ defmodule AbsoluteZero do
              m: float(),
              b: float()
            }
-  @type three_temperature
-        :: %{
-             t1: float(),
-             t2: float(),
-             t3: float()
-           }
   @type average_data
         :: %{
              reg: float(),
-             fancy: float()
+             uncertain: float()
            }
 
   defmacro return(x), do: x
@@ -86,7 +80,7 @@ defmodule AbsoluteZero do
   @doc """
   Find average temperature with two ways
   """
-  @spec average_temperature(three_temperature()) :: average_data()
+  @spec average_temperature(list(float())) :: average_data()
   def average_temperature(all) when length(all) >= 3 do
     [t1, t2, t3 | _] = all
     return %{
