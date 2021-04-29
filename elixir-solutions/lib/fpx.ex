@@ -15,8 +15,8 @@ defmodule FPX do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    arr = [2, 1, 3, 4, 5, 1, 3, 7, 10, 112]
-    IO.inspect(Sort.quick_sort(arr))
+    arr = [2, 1, 4, 2, 5, 10]
+    IO.inspect(Array.sum_scan(arr))
 
     # All children process to be supervised
     children = []

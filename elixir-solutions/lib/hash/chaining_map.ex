@@ -19,7 +19,6 @@ defmodule ChainingMap do
 
   @doc """
   Instantiate a new ChainingMap
-  -> new(integer()) :: %ChainingMap{}
   """
   @spec new(integer()) :: %ChainingMap{}
   def new(size) do
@@ -30,7 +29,6 @@ defmodule ChainingMap do
 
   @doc """
   Insert into Chaining Map by making a new one
-  -> set(any()) :: %ChainingMap{}
   """
   @spec set(%ChainingMap{}, any(), any()) :: %ChainingMap{}
   def set(%ChainingMap{mapper: mapper}, key, val) do

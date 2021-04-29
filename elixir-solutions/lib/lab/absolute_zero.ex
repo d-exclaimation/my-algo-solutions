@@ -64,9 +64,6 @@ defmodule AbsoluteZero do
 
   @doc """
   Do something on three values as pairs of two
-  -> arr: list(any)
-  -> something: fn(any) -> any
-  :: list(any)
   """
   def pairs_apply(arr, something) do
     0..length(arr) - 1
@@ -82,16 +79,12 @@ defmodule AbsoluteZero do
 
   @doc """
   Get gradient temperature from two equation
-  -> data1, data2: graph_data
-  :: float
   """
   @spec gradient_temperature(graph_data(), graph_data()) :: float()
   def gradient_temperature(%{m: m1, b: b1}, %{m: m2, b: b2}), do: (b2 - b1) / (m1 - m2)
 
   @doc """
   Find average temperature with two ways
-  -> all: list(float)
-  :: average_data
   """
   @spec average_temperature(three_temperature()) :: average_data()
   def average_temperature(all) when length(all) >= 3 do

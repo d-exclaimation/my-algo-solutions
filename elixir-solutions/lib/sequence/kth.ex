@@ -24,8 +24,6 @@ defmodule Kth do
 
   @doc """
   Find duplicate if only one is duplicated
-  -> arr: list(integer)
-  :: integer
   """
   def find_one_dup(arr) do
     _find_one_dup(arr, MapSet.new())

@@ -34,8 +34,6 @@ defmodule PhoneNumber do
 
   @doc """
   Make Words
-  -> [head | rest] : list(integer)
-  :: list(String.t)
   """
   def make_words([head | rest]) when length(rest) == 0, do: num_pads()[head]
   def make_words([head | rest]) do
@@ -49,8 +47,6 @@ defmodule PhoneNumber do
 
   @doc """
   Make Valid Words
-  -> arr_num: list(integer)
-  :: list(String.t)
   """
   def make_valid_words(arr_num, valid) do
     checker = MapSet.new(valid)

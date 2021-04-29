@@ -29,8 +29,6 @@ defmodule Brunches do
 
   @doc """
   Find the special value in the matrix (min for its row, max for the column
-  -> matrix: list(list(integer))
-  :: integer
   """
   def special_values(matrix) when is_list(matrix) do
     matrix
@@ -41,8 +39,6 @@ defmodule Brunches do
 
   @doc """
   Mini FizzBuzz
-  -> n: integer
-  :: list(String.t)
   """
   def mini_fizzbuzz(n) when n == 0, do: []
   def mini_fizzbuzz(n) when is_integer(n) do

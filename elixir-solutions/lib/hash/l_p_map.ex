@@ -18,7 +18,6 @@ defmodule LPMap do
 
   @doc """
   Instantiate a new Linear Probing Hash Map
-  @spec new(integer()) :: %LPMap{}
   """
   @spec new(integer()) :: %LPMap{}
   def new(size) do
@@ -29,7 +28,6 @@ defmodule LPMap do
 
   @doc """
   Insert into map
-  -> set(%LPMap{}, any(), any()) :: %LPMap{}
   """
   @spec set(%LPMap{}, any(), any()) :: %LPMap{}
   def set(%LPMap{mapper: mapper}, key, element) do
@@ -56,7 +54,6 @@ defmodule LPMap do
 
   @doc """
   Insert into map
-  -> get(%LPMap{}, any()) :: any()
   """
   @spec get(%LPMap{}, any()) :: any()
   def get(%LPMap{mapper: mapper}, key) do
@@ -78,7 +75,6 @@ defmodule LPMap do
 
   @doc """
   Check if contains a key
-  -> has?(%LPMap{}, any()) :: boolean()
   """
   @spec has?(%LPMap{}, any()) :: boolean()
   def has?(%LPMap{mapper: mapper}, element) do
@@ -112,7 +108,6 @@ defmodule LPMap do
 
   @doc """
   To String Representation
-  -> to_string(%LPMap{}) :: String.t()
   """
   @spec to_string(%LPMap{}) :: String.t()
   def to_string(%LPMap{mapper: mapper}) do

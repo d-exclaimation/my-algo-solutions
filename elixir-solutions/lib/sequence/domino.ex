@@ -13,8 +13,6 @@ defmodule Domino do
 
   @doc """
   Weighted dominoes simulation
-  -> dominoes: list(integer)
-  :: list(integer)
   """
   def weighted_dominoes(dominoes) do
     _weighted_dominoes(dominoes, 0)

@@ -74,7 +74,6 @@ defmodule Polygon do
 
   @doc """
   Check if all in a straight line
-  -> straight_line?(list(point())) :: boolean()
   """
   @spec straight_line?(list(point())) :: boolean()
   def straight_line?(arr) do

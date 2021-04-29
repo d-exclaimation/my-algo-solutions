@@ -18,8 +18,6 @@ defmodule Tree do
 
   @doc """
   In Order Traversal, leftest first, mid then right
-  -> root: %Tree{}
-  :: list(value())
   """
   @spec in_order(%Tree{} | none()) :: list(value())
   def in_order(root) when root == nil, do: []
@@ -29,8 +27,6 @@ defmodule Tree do
 
   @doc """
   Pre Order Traversal, mid first, left then right
-  -> root: %Tree{}
-  :: list(value())
   """
   @spec pre_order(%Tree{} | none()) :: list(value())
   def pre_order(root) when root == nil, do: []
@@ -40,8 +36,6 @@ defmodule Tree do
 
   @doc """
   Post Order Traversal, left first, right then mid
-  -> root: %Tree{}
-  :: list(value())
   """
   @spec post_order(%Tree{} | none()) :: list(value())
   def post_order(root) when root == nil, do: []

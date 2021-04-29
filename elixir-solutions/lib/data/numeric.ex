@@ -18,8 +18,6 @@ defmodule Numeric do
 
   @doc """
   Check if palindrome
-  -> val: numeric
-  :: boolean
   """
   @spec palindrome?(numeric()) :: boolean()
   def palindrome?(val) when div(val, 10) == 0, do: true
@@ -27,8 +25,6 @@ defmodule Numeric do
 
   @doc """
   Reverse a numeric
-  -> val: numeric
-  :: numeric
   """
   @spec reversed(numeric()) :: numeric()
   def reversed(val) when div(val, 10) == 0, do: val
@@ -44,8 +40,6 @@ defmodule Numeric do
 
   @doc """
   Check if a number
-  -> exp: String.t
-  :: boolean
   """
   def number?(exp) do
     [first | rest] = String.graphemes(exp)

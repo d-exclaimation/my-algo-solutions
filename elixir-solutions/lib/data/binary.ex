@@ -16,8 +16,6 @@ defmodule Binary do
 
   @doc """
   Find highest binary
-  -> val, idx: integer
-  :: integer
   """
   def find_highest_binary(val, idx) do
     if :math.pow(2, idx) >= val do
@@ -29,8 +27,6 @@ defmodule Binary do
 
   @doc """
   Convert to binary
-  -> val: integer
-  :: String.t
   """
   def to_binary(val) do
     highest = find_highest_binary(val, 0)

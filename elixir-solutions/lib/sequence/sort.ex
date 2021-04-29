@@ -25,10 +25,9 @@ defmodule Sort do
     minimal = list |> Enum.min()
   (list |> Enum.filter(fn x -> x == minimal end)) ++ (selection_sort(list |> Enum.filter(fn x -> x != minimal end)))
   end
-  
+
   @doc """
   Insertion Sort
-  -> insertion_sort(array()) :: array()
   """
   @spec insertion_sort(array()) :: array()
   def insertion_sort(arr) do
@@ -38,7 +37,6 @@ defmodule Sort do
 
   @doc """
   Shell sort
-  -> shell_sort(array()) :: array()
   """
   @spec shell_sort(array()) :: array()
   def shell_sort(arr) do
@@ -55,7 +53,6 @@ defmodule Sort do
 
   @doc """
   Custom gaps insertion sort
-  -> custom_gap_sort(array(), list(integer())) :: array()
   """
   @spec custom_gap_sort(array(), list(integer())) :: array()
   def custom_gap_sort(arr, gaps) do
@@ -66,10 +63,9 @@ defmodule Sort do
       |> Enum.reduce(acc, fn x, acc2 -> gap_insertion(acc2, x, gap) end)
     end)
   end
-  
+
   @doc """
   Gap insertion swap
-  -> gap_insertion(array(), integer(), integer()) :: array()
   """
   @spec gap_insertion(array(), integer(), integer()) :: array()
   def gap_insertion(arr, start, gap), do: do_gap_insertion(arr, start + gap, gap)
@@ -99,43 +95,39 @@ defmodule Sort do
   end
 
   # Mark: O(nlogn) algorithms
-  
+
   @doc """
   Quick Sort with Partition
-  -> quick_sort(array()) :: array()
   """
   @spec quick_sort(array()) :: array()
   def quick_sort(arr) when length(arr) <= 1, do: arr
   def quick_sort(arr) do
-    median = median_of_three(arr, 0, div(length(arr), 2), length(arr))
-    {lower, upper} = partition(arr, median)
-    quick_sort(lower) ++ [Enum.at(arr, median)] ++ quick_sort(upper)
+    median = median_of_three(Enum.at(arr, 0), Enum.at(arr, div(length(arr), 2)), Enum.at(arr, length(arr) - 1))
+    {lower, equal, upper} = partition(arr, median)
+    quick_sort(lower) ++ equal ++ quick_sort(upper)
   end
 
-  @spec partition(array(), integer()) :: {array(), array()}
-  defp partition(arr, median) do
-    pivot = Enum.at(arr, median)
-    range = 0..(length(arr) - 1)
-    lower = fn i -> i != median and Enum.at(arr, i) <= pivot end
-    upper = fn i -> i != median and Enum.at(arr, i) > pivot end
-    filter_map = fn range, f -> range |> Enum.filter(f) |> Enum.map(fn i -> Enum.at(arr, i) end) end
-    {filter_map.(range, lower), filter_map.(range, upper)}
+  @spec partition(array(), value()) :: {array(), array(), array()}
+  defp partition(arr, pivot) do
+    lower = fn x -> x < pivot end
+    upper = fn x -> x > pivot end
+    equal = fn x -> x == pivot end
+    {arr |> Enum.filter(lower), arr |> Enum.filter(equal), arr |> Enum.filter(upper)}
   end
 
-  @spec median_of_three(array(), integer(), integer(), integer()) :: integer()
-  defp median_of_three(arr, low, mid, high) do
+  @spec median_of_three(integer(), integer(), integer()) :: integer()
+  defp median_of_three(low, mid, high) do
     median? = fn x, l, r -> (l <= x and x <= r) or (r <= x and x <= l) end
     cond do
-      median?.(Enum.at(arr, low), Enum.at(arr, mid), Enum.at(arr, high)) -> low
-      median?.(Enum.at(arr, mid), Enum.at(arr, low), Enum.at(arr, high)) -> mid
-      median?.(Enum.at(arr, high), Enum.at(arr, mid), Enum.at(arr, low)) -> high
+      median?.(low, mid, high) -> low
+      median?.(mid, low, high) -> mid
+      median?.(high, low, mid) -> high
       true -> mid
     end
   end
 
   @doc """
   Merge Sort "list"
-  @spec merge_sort(array()) :: array()
   """
   @spec merge_sort(array()) :: array()
   def merge_sort(list) when length(list) <= 1, do: list

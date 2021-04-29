@@ -13,8 +13,6 @@ defmodule Array do
 
   @doc """
   Get the only unique element in a list
-  -> list: list(any: Equatable)
-  :: any: Equatable
   """
   def one_value(list) when is_list(list) do
     list
@@ -24,8 +22,6 @@ defmodule Array do
 
   @doc """
   Rotate a one dimensional array
-  -> [head | rest]: list(any)
-  :: list(any)
   """
   def rotate_1d([head | rest], count) when count == 0, do: [head] ++ rest
   def rotate_1d([head | rest], count) do
@@ -53,8 +49,6 @@ defmodule Array do
 
   @doc """
   Equal share, given a positive integer determine whether the array can be partition with equal sums
-  -> list: list(integer)
-  :: boolean
   """
   def equal_share?(list) do
 #    _equalize?(list, 0)
@@ -73,8 +67,6 @@ defmodule Array do
   @doc """
   Max increasing subsequence
   O(n) time, and O(n) space (given the recursive stack consist of prev, curr, best: integer. No mutation)
-  -> arr: list(integer)
-  :: integer
   """
   def max_increasing(arr) do
     _max_increasing(arr, Enum.at(arr, 0) - 1, 0, 0)
@@ -108,11 +100,8 @@ defmodule Array do
 
   @doc """
   Two sum: return two values summed to target
-  -> arr: list(integer)
-  -> target: integer
-  :: {integer, integer}
   """
-  @spec two_sum(list(integer()), integer()) :: {:ok, {integer(), integer()}} | :error
+  @spec two_sum(list(integer()), integer()) :: {integer(), integer()}
   def two_sum(arr, target) do
     case _two_sum(arr, target, MapSet.new()) do
       {:ok, {lhs, rhs}} -> {lhs, rhs}
@@ -120,6 +109,7 @@ defmodule Array do
     end
   end
 
+  @spec _two_sum(list(integer()), integer(), MapSet.t()) :: {:ok, {integer(), integer()}} | :error
   defp _two_sum(arr, _target, _set) when length(arr) == 0, do: :error
   defp _two_sum([head | rest], target, set) do
     remains = target - head
@@ -131,11 +121,8 @@ defmodule Array do
 
   @doc"""
   Three sum: return three values summed to target
-  -> arr: list(integer)
-  -> target: integer
-  :: {integer, integer, integer}
   """
-  @spec three_sum(list(integer()), integer()) :: {:ok, {integer(), integer(), integer()}} | :error
+  @spec three_sum(list(integer()), integer()) :: {integer(), integer(), integer()}
   def three_sum(arr, target) do
     case _three_sum(arr, target) do
       {:ok, res} -> res
@@ -149,6 +136,15 @@ defmodule Array do
       {:ok, {lhs, rhs}} -> {:ok , {first, lhs, rhs}}
       :error -> _three_sum(rest, target)
     end
+  end
+
+  @doc """
+  Scan
+  """
+  @spec sum_scan(list(number())) :: list(number())
+  def sum_scan(arr) do
+    arr
+    |> Enum.scan(&+/2)
   end
 
 end

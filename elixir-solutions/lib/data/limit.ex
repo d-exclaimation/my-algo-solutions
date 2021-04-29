@@ -15,8 +15,6 @@ defmodule Limit do
 
   @doc """
   Min operation of *2 | -1
-  -> start, target: integer
-  :: integer
   """
   @spec min_operation(integer(), integer()) :: nil
   def min_operation(start, target) when start == target, do: 0
@@ -37,8 +35,6 @@ defmodule Limit do
 
   @doc """
   Find missing and duplicates, 1 duplicate, and 1 missing
-  -> arr: list(integer)
-  :: miss_n_dup
   """
   @spec missing_dup(list(integer())) :: miss_n_dup()
   def missing_dup(arr) do
@@ -49,9 +45,6 @@ defmodule Limit do
   
   @doc """
   Give all missing bounds not in nums, from lower to upper
-  -> nums: list(integer)
-  -> lower, upper: integer
-  :: list(String.t)
   """
   @spec missing_bounds(list(integer()), integer(), integer()) :: list(String.t())
   def missing_bounds(nums, lower, upper) when length(nums) <= 0 do

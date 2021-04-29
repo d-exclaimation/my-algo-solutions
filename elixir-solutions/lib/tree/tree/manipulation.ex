@@ -13,8 +13,6 @@ defmodule Tree.Manipulation do
 
   @doc """
   Boring tree, tree with one value
-  -> root: %Tree | none
-  :: boolean
   """
   @spec boring?(%Tree{} | none()) :: boolean()
   def boring?(root), do: do_boring?(root, root.val)

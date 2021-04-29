@@ -16,7 +16,6 @@ defmodule LatentHeat do
 
   @doc """
   Given the data, calculate the specific heat of the metal
-  -> data: %{m_cal: float, m_pb: float, t_init: float, t_final: float, m_total: float}
   """
   def part_one() do
     data = %{
@@ -70,7 +69,6 @@ defmodule LatentHeat do
 
   @doc """
   Given the data, calculate the latent fusion heat of the system
-  -> data: %{m_cal: float, m_cw: float, t_room: float, t_init: float, t_final: float, m_final: float}
   """
   def part_two() do
     data = %{
@@ -144,7 +142,6 @@ defmodule LatentHeat do
 
   @doc """
   Given the data, calculate the latent vapor heat of the system
-  -> data: %{m_cal: float, m_cw: float, t_room: float, t_init: float, t_final: float, m_final: float}
   """
   def part_three() do
     data = %{

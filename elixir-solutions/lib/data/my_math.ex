@@ -35,7 +35,6 @@ defmodule MyMath do
 
   @doc """
   Square root
-  -> num: integer
   """
   def square_root(num) do
     Float.round(find_square(num, num / 2), 2)
@@ -50,8 +49,6 @@ defmodule MyMath do
 
   @doc """
   Generate all subsets
-  -> arr: list(integer)
-  :: list(list(integer)
   """
   def generate_subset([head | rest]) when length(rest) == 0, do: [[head]]
   def generate_subset([head | rest]) do
@@ -68,8 +65,6 @@ defmodule MyMath do
 
   @doc """
   Generate subset with two or more element in increasing order
-  -> arr: list(integer)
-  :: list(list(integer))
   """
   def bigger_and_bigger(arr) do
     generate_subset(arr)
@@ -81,8 +76,6 @@ defmodule MyMath do
 
   @doc """
   Is Increasing
-  -> arr: list(integer)
-  :: boolean
   """
   def increasing?(arr) when is_list(arr) and length(arr) === 0, do: true
   def increasing?(arr) when is_list(arr), do: _increasing?(arr, Enum.at(arr, 0) - 1)

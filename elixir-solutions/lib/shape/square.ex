@@ -20,8 +20,6 @@ defmodule Squared do
 
   @doc """
   List to square
-  -> list: list(integer) if length == 4
-  :: %Square{}
   """
   def to_square(list) when length(list) == 4 do
     %Square{
@@ -32,8 +30,6 @@ defmodule Squared do
   end
   @doc """
   Collide?
-  -> lhs, rhs: %Square
-  :: boolean
   """
   def collide?(lhs, rhs) do
     _collide?(lhs, rhs) or _collide?(rhs, lhs)
