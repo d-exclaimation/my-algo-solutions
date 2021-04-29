@@ -11,6 +11,9 @@ defmodule Binary do
   Binary module
   """
 
+  @type binary_str :: String.t()
+  @type binary_arr :: list(integer())
+
   @doc """
   Find highest binary
   -> val, idx: integer
