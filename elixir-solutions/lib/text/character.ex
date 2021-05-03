@@ -29,4 +29,24 @@ defmodule Character do
     |> Enum.reduce(fn x, acc -> MapSet.intersection(x, acc) end)
   end
 
+  @doc """
+  Find any letter in letters that are strictly larger than target
+  """
+  @spec next_letter(charlist, char) :: char
+  def next_letter(letters, target) do
+    case do_next_letter(letters, target) do
+      {:ok, val} -> val
+      :error -> Enum.min(letters)
+    end
+  end
+
+  @spec do_next_letter(charlist, char) :: {:ok, char} | :error
+  defp do_next_letter([], _target), do: :error
+  defp do_next_letter([head | rest], target) do
+    cond do
+      head > target -> {:ok, head}
+      true -> do_next_letter(rest, target)
+    end
+  end
+
 end
