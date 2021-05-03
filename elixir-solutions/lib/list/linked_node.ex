@@ -34,4 +34,22 @@ defmodule LinkedNode do
     end
   end
 
+  @doc """
+  Sum of the linked list
+  """
+  @spec sum(%LinkedNode{}, integer(), integer()) :: integer()
+  def sum(root, _, _) when root == nil, do: 0
+  def sum(_, _, last) when last <= 0, do: 0
+  def sum(root, start, last) when start > 0, do: sum(root.next, start - 1, last - 1)
+  def sum(root, _, last) do
+    do_sum(root, last)
+  end
+
+  @spec do_sum(%LinkedNode{}, integer()) :: integer()
+  defp do_sum(root, _) when root == nil, do: 0
+  defp do_sum(_, last) when last < 0, do: 0
+  defp do_sum(root, last) do
+    root.val + do_sum(root.next, last - 1)
+  end
+
 end

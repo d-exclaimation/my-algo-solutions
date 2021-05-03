@@ -110,4 +110,15 @@ defmodule Sentence do
     |> Enum.max()
   end
 
+  @doc """
+  """
+  @spec rearrange(String.t(), list(integer())) :: String.t()
+  def rearrange(str, arrangement) do
+    0..length(arrangement)
+    |> Enum.map(fn i -> {Enum.at(arrangement, i), String.at(str, i)} end)
+    |> Enum.sort(fn {l, _}, {r, _} -> l <= r end)
+    |> Enum.map(fn {_, g} -> g end)
+    |> Enum.join()
+  end
+
 end
