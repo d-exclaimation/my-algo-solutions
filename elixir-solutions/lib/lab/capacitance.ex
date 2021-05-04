@@ -174,6 +174,7 @@ defmodule Capacitance do
   }
 
   @doc """
+  Part 3: Variance in capacitance with depth and thickness
   """
   @spec part_three() :: :ok
   def part_three() do
@@ -207,7 +208,7 @@ defmodule Capacitance do
 
   @spec print_think(variance_thick()) :: String.t()
   defp print_think(data) do
-    return "#{data.num}|#{Float.round(data.d, 2)}|#{Float.round(data.over_d, 2)}|#{data.c1}|#{data.c2}|#{Float.round(data.c_ave, 2)}|#{Float.round(data.u_c, 3)}"
+    return "#{data.num}|#{Float.round(data.d, 6)}|#{Float.round(data.over_d, 2)}|#{data.c1}|#{data.c2}|#{Float.round(data.c_ave, 2)}|#{Float.round(data.u_c, 3)}"
   end
 
 end
