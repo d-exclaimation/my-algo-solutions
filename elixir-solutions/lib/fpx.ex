@@ -12,10 +12,15 @@ defmodule FPX do
   """
   use Application
 
+  @spec start(any, any) :: {:error, any} | {:ok, pid}
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    IO.puts(Character.next_letter(['a', 'b', 'c'], 'y'))
+    IO.puts([
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9]
+    ] |> Matrix.Manipulation.diagonal_sum())
 
     # All children process to be supervised
     children = []
