@@ -1,7 +1,5 @@
 # Functional Programming with Elixir
 
-I haven't done a fully functional programming
-
-and I am beaten hard by elixir lol
+Elixir is one of the closest thing to my perfect language, so that's why I am learning, hopefully it stays that way
 
 This is my attempt to increase my functional programming skill again using data-structures and algorithms

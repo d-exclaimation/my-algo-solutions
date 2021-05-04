@@ -16,11 +16,8 @@ defmodule FPX do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    IO.puts([
-      [1, 2, 3],
-      [4, 5, 6],
-      [7, 8, 9]
-    ] |> Matrix.Manipulation.diagonal_sum())
+    Capacitance.part_two()
+    Capacitance.part_three()
 
     # All children process to be supervised
     children = []
