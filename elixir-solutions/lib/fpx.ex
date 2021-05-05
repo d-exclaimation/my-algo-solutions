@@ -16,8 +16,6 @@ defmodule FPX do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    nums = [3, 1, 5, 2, 4]
-    IO.inspect(Kth.odd_sum_subarray(nums))
 
     # All children process to be supervised
     children = []

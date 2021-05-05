@@ -15,7 +15,7 @@ defmodule MapMerge do
   Merge map
   """
   @spec map() &&& map() :: map()
-  def a &&& b do
+  def a &&& b when is_map(a) and is_map(b) do
     Map.merge(a, b)
   end
 end
