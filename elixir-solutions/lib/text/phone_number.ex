@@ -36,12 +36,14 @@ defmodule PhoneNumber do
   Make Words
   """
   def make_words([head | rest]) when length(rest) == 0, do: num_pads()[head]
+
   def make_words([head | rest]) do
     next_line = make_words(rest)
+
     num_pads()[head]
     |> Enum.map(fn x ->
-        Enum.map(next_line, fn y -> x <> y end)
-      end)
+      Enum.map(next_line, fn y -> x <> y end)
+    end)
     |> Enum.reduce([], fn x, acc -> acc ++ x end)
   end
 

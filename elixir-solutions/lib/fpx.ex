@@ -16,9 +16,11 @@ defmodule FPX do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-
     # All children process to be supervised
-    children = []
+    children = [
+      {DynamicSupervisor, strategy: :one_for_one, name: Portal.DoorSupervisor}
+    ]
+
     opts = [strategy: :one_for_one, name: FPX.Supervisor]
     Supervisor.start_link(children, opts)
   end

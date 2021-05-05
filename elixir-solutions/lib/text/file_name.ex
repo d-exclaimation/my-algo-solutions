@@ -22,6 +22,7 @@ defmodule FileName do
 
   @spec do_shortest_path(list(String.t()), list(String.t())) :: list(String.t())
   defp do_shortest_path([], res), do: res
+
   defp do_shortest_path([next | remains], path) do
     if length(path) == 0 do
       case next do
@@ -31,6 +32,7 @@ defmodule FileName do
       end
     else
       [curr | prev] = path
+
       case next do
         ".." -> do_shortest_path(remains, prev)
         "." -> do_shortest_path(remains, [curr | prev])

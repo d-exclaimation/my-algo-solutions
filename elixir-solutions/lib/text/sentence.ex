@@ -14,9 +14,10 @@ defmodule Sentence do
   @doc """
   Last word's length (Before space)
   """
-  @spec last_word_length(String.t) :: integer
+  @spec last_word_length(String.t()) :: integer
   def last_word_length(string) do
     last = String.last(string)
+
     if last == " " do
       0
     else
@@ -33,8 +34,9 @@ defmodule Sentence do
     >> O(2n) + O(3nk) time
     >> Time complexity O(n x k) time
   """
-  @spec same_row(list(String.t)) :: list(String.t)
+  @spec same_row(list(String.t())) :: list(String.t())
   def same_row(list) when length(list) == 0, do: []
+
   def same_row(list) do
     list
     # Map into original and checker
@@ -46,7 +48,8 @@ defmodule Sentence do
         # Filter the row where for every char of that word it exists there
         Enum.filter(row_keyboard(), fn row ->
           # Make sure only ones that have all the char in a row succeeded
-          length(Enum.filter(w_map.check, fn char -> String.contains?(row, char) end)) == length(w_map.check)
+          length(Enum.filter(w_map.check, fn char -> String.contains?(row, char) end)) ==
+            length(w_map.check)
         end)
       ) > 0
     end)
@@ -61,10 +64,12 @@ defmodule Sentence do
   end
 
   defp _first_occurring(list, _mapper) when length(list) == 0, do: nil
-  defp _first_occurring([first | rest], mapper) do
-    if MapSet.member?(mapper, first), do: first, else: _first_occurring(rest, MapSet.put(mapper, first))
-  end
 
+  defp _first_occurring([first | rest], mapper) do
+    if MapSet.member?(mapper, first),
+      do: first,
+      else: _first_occurring(rest, MapSet.put(mapper, first))
+  end
 
   @doc """
   Longest palindrome substring
@@ -77,6 +82,7 @@ defmodule Sentence do
   end
 
   defp _longest_palindrome_substring(_, len) when len <= 0, do: nil
+
   defp _longest_palindrome_substring(str_arr, len) do
     try do
       _palindrome_substring(str_arr, len, len - 1)
@@ -86,9 +92,11 @@ defmodule Sentence do
   end
 
   defp _palindrome_substring(str_arr, _len, idx) when idx >= length(str_arr), do: throw(:error)
+
   defp _palindrome_substring(str_arr, len, idx) do
     curr = str_arr |> Enum.slice((idx - len + 1)..idx) |> Enum.join()
     rev = curr |> String.reverse()
+
     cond do
       curr == rev -> curr
       true -> _palindrome_substring(str_arr, len, idx + 1)
@@ -102,10 +110,10 @@ defmodule Sentence do
     str
     |> String.to_charlist()
     |> Enum.map(fn
-        ?( -> 1
-        ?) -> -1
-        _ -> 0
-      end)
+      ?( -> 1
+      ?) -> -1
+      _ -> 0
+    end)
     |> Enum.scan(&+/2)
     |> Enum.max()
   end
@@ -120,5 +128,4 @@ defmodule Sentence do
     |> Enum.map(fn {_, g} -> g end)
     |> Enum.join()
   end
-
 end

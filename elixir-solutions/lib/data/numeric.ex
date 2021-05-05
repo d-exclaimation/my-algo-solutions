@@ -15,7 +15,6 @@ defmodule Numeric do
 
   defmacro return(x), do: x
 
-
   @doc """
   Check if palindrome
   """
@@ -28,12 +27,14 @@ defmodule Numeric do
   """
   @spec reversed(numeric()) :: numeric()
   def reversed(val) when div(val, 10) == 0, do: val
+
   def reversed(val) do
     do_reversed(val, 0)
   end
 
   @spec do_reversed(numeric(), numeric()) :: numeric()
   defp do_reversed(val, prev) when div(val, 10) == 0, do: prev * 10 + val
+
   defp do_reversed(val, prev) do
     do_reversed(div(val, 10), prev * 10 + rem(val, 10))
   end
@@ -43,6 +44,7 @@ defmodule Numeric do
   """
   def number?(exp) do
     [first | rest] = String.graphemes(exp)
+
     cond do
       first == "-" -> _number?(rest, false, false)
       true -> _number?([first | rest], false, false)
@@ -55,6 +57,7 @@ defmodule Numeric do
     not_special = not float and not scientific
     (head == "." and not_special) or (head == "e" and not scientific) or _digit?(head)
   end
+
   defp _number?([head | rest], float, scientific) do
     cond do
       head == "." -> not float and not scientific and _number?(rest, true, scientific)
@@ -66,8 +69,7 @@ defmodule Numeric do
 
   # O(n) time
   defp _digit?(grapheme) do
-    ["1","2","3","4","5","6","7","8","9","0"]
+    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
     |> Enum.member?(grapheme)
   end
-
 end

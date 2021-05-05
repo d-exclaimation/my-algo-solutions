@@ -18,11 +18,16 @@ defmodule Limit do
   """
   @spec min_operation(integer(), integer()) :: integer()
   def min_operation(start, target) when start == target, do: 0
+
   def min_operation(start, target) do
     # Two operations allowed * 2, and - 1
     cond do
-      start > target -> 1 + min_operation(start - 1, target)
-      target - start >= start -> 1 + min_operation(start * 2, target)
+      start > target ->
+        1 + min_operation(start - 1, target)
+
+      target - start >= start ->
+        1 + min_operation(start * 2, target)
+
       true ->
         upper = min_operation(start * 2, target)
         lower = min_operation(start - 1, target)
@@ -30,8 +35,8 @@ defmodule Limit do
     end
   end
 
-  @type miss_n_dup
-        :: %{missing: integer(), duplicate: integer()}
+  @type miss_n_dup ::
+          %{missing: integer(), duplicate: integer()}
 
   @doc """
   Find missing and duplicates, 1 duplicate, and 1 missing
@@ -54,11 +59,12 @@ defmodule Limit do
       true -> ["#{lower}->#{upper}"]
     end
   end
+
   def missing_bounds([head | rest], lower, upper) do
     cond do
       head >= upper -> missing_bounds([], lower, upper)
-      (head - 1) < lower -> missing_bounds(rest, head + 1, upper)
-      (head - 1) == lower -> ["#{head - 1}" | missing_bounds(rest, head + 1, upper)]
+      head - 1 < lower -> missing_bounds(rest, head + 1, upper)
+      head - 1 == lower -> ["#{head - 1}" | missing_bounds(rest, head + 1, upper)]
       true -> ["#{lower}->#{head - 1}" | missing_bounds(rest, head + 1, upper)]
     end
   end

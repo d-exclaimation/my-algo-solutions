@@ -21,10 +21,13 @@ defmodule Matrix.Manipulation do
     n = length(matrix)
     lhs = 0..(n - 1) |> Enum.map(fn i -> {i, i} end)
     lhs_set = MapSet.new(lhs)
-    rhs = 0..(n - 1)
-    |> Enum.map(fn i -> {i, n - 1 - i} end)
-    |> Enum.filter(fn tup -> not MapSet.member?(lhs_set, tup) end)
-    lhs ++ rhs
+
+    rhs =
+      0..(n - 1)
+      |> Enum.map(fn i -> {i, n - 1 - i} end)
+      |> Enum.filter(fn tup -> not MapSet.member?(lhs_set, tup) end)
+
+    (lhs ++ rhs)
     |> Enum.map(fn {i, j} -> Enum.at(Enum.at(matrix, j), i) end)
     |> Enum.sum()
   end

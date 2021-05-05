@@ -22,7 +22,7 @@ defmodule HexaDecimal do
     12 => "c",
     13 => "d",
     14 => "e",
-    15 => "f",
+    15 => "f"
   }
 
   @doc """

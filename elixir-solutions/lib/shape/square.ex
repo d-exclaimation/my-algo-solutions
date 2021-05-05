@@ -28,6 +28,7 @@ defmodule Squared do
       height: abs(Enum.at(list, 3) - Enum.at(list, 1))
     }
   end
+
   @doc """
   Collide?
   """
@@ -38,6 +39,6 @@ defmodule Squared do
   defp _collide?(lhs, rhs) do
     {x1, y1} = lhs.topleft
     {x2, y2} = rhs.topleft
-    (x1 <= x2 and x2 < x1 + lhs.width) and (y1 <= y2 and y2 < y1 + lhs.height)
+    x1 <= x2 and x2 < x1 + lhs.width and (y1 <= y2 and y2 < y1 + lhs.height)
   end
 end

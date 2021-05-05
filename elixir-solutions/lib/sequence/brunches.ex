@@ -14,10 +14,14 @@ defmodule Brunches do
     find_seq(list, Enum.at(list, 0), 0, 0, [])
   end
 
-  @spec find_seq(list(String.t()), String.t(), integer(), integer(), list(tuple())) :: list(tuple())
-  defp find_seq(list, _curr, start, index, res) when length(list) == index, do: res ++ [{start, index - 1}]
+  @spec find_seq(list(String.t()), String.t(), integer(), integer(), list(tuple())) ::
+          list(tuple())
+  defp find_seq(list, _curr, start, index, res) when length(list) == index,
+    do: res ++ [{start, index - 1}]
+
   defp find_seq(list, curr, start, index, res) do
     looked = Enum.at(list, index)
+
     if looked != curr do
       find_seq(list, looked, index, index, res ++ [{start, index - 1}])
     else
@@ -34,11 +38,11 @@ defmodule Brunches do
     |> Enum.max()
   end
 
-
   @doc """
   Mini FizzBuzz
   """
   def mini_fizzbuzz(n) when n == 0, do: []
+
   def mini_fizzbuzz(n) when is_integer(n) do
     mini_fizzbuzz(n - 1) ++ [fizzbuzz_logic(n)]
   end
@@ -51,5 +55,4 @@ defmodule Brunches do
       true -> to_string(n)
     end
   end
-
 end

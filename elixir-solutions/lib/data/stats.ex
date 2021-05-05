@@ -27,8 +27,8 @@ defmodule Stats do
     |> Enum.map(fn x ->
       if Enum.find(sample, fn y -> y == x end), do: 1, else: 0
     end)
-    |> Enum.sum()
-    == length(boot)
+    |> Enum.sum() ==
+      length(boot)
   end
 
   @doc """
@@ -36,7 +36,7 @@ defmodule Stats do
   """
   def possible_init(inits, {low, up}) do
     inits
-    |> Enum.filter(fn x -> (x - low) == (up - x) end)
+    |> Enum.filter(fn x -> x - low == up - x end)
   end
 
   @doc """
@@ -71,14 +71,22 @@ defmodule Stats do
     Form Modal	❌	❌	❌
     Alert and Toast	✅	✌️	✌️
     """
-    each = todos
-    |> String.split("\n")
-    |> Enum.map(fn str -> String.split(str, "\t") end)
-    |> Enum.filter(fn str_arr -> Enum.member?(str_arr, "❌") or Enum.member?(str_arr, "❔") end)
+
+    each =
+      todos
+      |> String.split("\n")
+      |> Enum.map(fn str -> String.split(str, "\t") end)
+      |> Enum.filter(fn str_arr -> Enum.member?(str_arr, "❌") or Enum.member?(str_arr, "❔") end)
+
     IO.puts("You have #{each |> Enum.count()} more unique component(s) to build")
-    result = each
-    |> Enum.map(fn str_arr -> str_arr |> Enum.filter(fn x -> x == "❌" or x == "❔" end) |> Enum.count end)
-    |> Enum.sum()
+
+    result =
+      each
+      |> Enum.map(fn str_arr ->
+        str_arr |> Enum.filter(fn x -> x == "❌" or x == "❔" end) |> Enum.count()
+      end)
+      |> Enum.sum()
+
     IO.puts("You have #{result} more work(s) to finish")
   end
 end

@@ -18,19 +18,25 @@ defmodule Tree.Manipulation do
   def boring?(root), do: do_boring?(root, root.val)
 
   def do_boring?(root, _value) when root == nil, do: true
-  def do_boring?(%Tree{val: val, left: left, right: right}, value), do: val == value && do_boring?(left, value) && do_boring?(right, value)
 
+  def do_boring?(%Tree{val: val, left: left, right: right}, value),
+    do: val == value && do_boring?(left, value) && do_boring?(right, value)
 
   @doc """
   Find all only children of a tree
   """
   @spec only_children(%Tree{} | nil) :: list(Tree.value())
   def only_children(nil), do: []
+
   def only_children(%Tree{left: left, right: right}) do
-    children = [left, right]
-    |> Enum.filter(fn x -> x != nil end)
+    children =
+      [left, right]
+      |> Enum.filter(fn x -> x != nil end)
+
     cond do
-      length(children) != 1 -> only_children(left) ++ only_children(right)
+      length(children) != 1 ->
+        only_children(left) ++ only_children(right)
+
       true ->
         [Enum.at(children, 0).val] ++ only_children(left) ++ only_children(right)
     end

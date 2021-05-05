@@ -18,7 +18,9 @@ defmodule Domino do
     _weighted_dominoes(dominoes, 0)
   end
 
-  defp _weighted_dominoes(dominoes, prev) when length(dominoes) <= 0, do: if prev == 0, do: [], else: [prev]
+  defp _weighted_dominoes(dominoes, prev) when length(dominoes) <= 0,
+    do: if(prev == 0, do: [], else: [prev])
+
   defp _weighted_dominoes([head | tail], prev) do
     if head < 0 do
       cond do
@@ -34,5 +36,4 @@ defmodule Domino do
       end
     end
   end
-
 end

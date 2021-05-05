@@ -8,6 +8,7 @@
 
 defmodule LinkedNode do
   alias __MODULE__
+
   @moduledoc """
   Linked List Node
   """
@@ -23,9 +24,12 @@ defmodule LinkedNode do
   end
 
   defp do_remove_sorted(root, _) when root == nil, do: nil
+
   defp do_remove_sorted(%LinkedNode{val: val, next: next}, seen_values) do
     cond do
-      MapSet.member?(seen_values, val) -> do_remove_sorted(next, seen_values)
+      MapSet.member?(seen_values, val) ->
+        do_remove_sorted(next, seen_values)
+
       true ->
         %LinkedNode{
           val: val,
@@ -41,6 +45,7 @@ defmodule LinkedNode do
   def sum(root, _, _) when root == nil, do: 0
   def sum(_, _, last) when last <= 0, do: 0
   def sum(root, start, last) when start > 0, do: sum(root.next, start - 1, last - 1)
+
   def sum(root, _, last) do
     do_sum(root, last)
   end
@@ -48,6 +53,7 @@ defmodule LinkedNode do
   @spec do_sum(%LinkedNode{}, integer()) :: integer()
   defp do_sum(root, _) when root == nil, do: 0
   defp do_sum(_, last) when last < 0, do: 0
+
   defp do_sum(root, last) do
     root.val + do_sum(root.next, last - 1)
   end
@@ -62,12 +68,11 @@ defmodule LinkedNode do
 
   @spec do_reversed(%LinkedNode{} | nil, %LinkedNode{} | nil) :: %LinkedNode{} | nil
   defp do_reversed(nil, prev), do: prev
+
   defp do_reversed(%LinkedNode{val: val, next: next}, prev) do
     do_reversed(next, %LinkedNode{val: val, next: prev})
   end
-
 end
-
 
 defimpl String.Chars, for: LinkedNode do
   @doc """
@@ -75,5 +80,7 @@ defimpl String.Chars, for: LinkedNode do
   """
   @spec to_string(%LinkedNode{} | nil) :: String.t()
   def to_string(nil), do: ""
-  def to_string(%LinkedNode{val: val, next: next}), do: "#{val} -> #{String.Chars.to_string(next)}"
+
+  def to_string(%LinkedNode{val: val, next: next}),
+    do: "#{val} -> #{String.Chars.to_string(next)}"
 end

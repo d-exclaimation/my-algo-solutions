@@ -21,5 +21,4 @@ defmodule Memo do
     out_two = MapSet.intersection(MapSet.new(arr1), MapSet.new(arr2))
     MapSet.intersection(out_two, MapSet.new(arr3))
   end
-
 end

@@ -35,5 +35,4 @@ defmodule GroupAnagrams do
     |> String.graphemes()
     |> Enum.uniq()
   end
-
 end
