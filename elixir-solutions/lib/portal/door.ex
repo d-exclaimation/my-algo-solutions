@@ -51,4 +51,15 @@ defmodule Portal.Door do
       [h | rest] -> {{:ok, h}, rest}
     end)
   end
+
+  @doc """
+  Trasfer from one door to another
+  """
+  @spec transfer(door(), door()) :: :ok
+  def transfer(from, to) do
+    case __MODULE__.pop(from) do
+      :error -> IO.puts("Nothing to transfer")
+      {:ok, val} -> __MODULE__.push(to, val)
+    end
+  end
 end

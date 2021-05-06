@@ -45,10 +45,17 @@ defmodule Portal do
   """
   @spec push_right(t()) :: t()
   def push_right(portal) do
-    case Portal.Door.pop(portal.left) do
-      :error -> IO.puts("Nothing to transfer")
-      {:ok, h} -> Portal.Door.push(portal.right, h)
-    end
+    portal.left |> Portal.Door.push(portal.right)
+
+    portal
+  end
+
+  @doc """
+  Pushes data to the left in the given `portal`
+  """
+  @spec push_left(t()) :: t()
+  def push_left(portal) do
+    portal.right |> Portal.Door.push(portal.left)
 
     portal
   end
