@@ -12,9 +12,14 @@ defmodule FPX do
   """
   use Application
 
+  @doc """
+  Start of the application, set up all the supervisors and processes
+  """
   @spec start(any, any) :: {:error, any} | {:ok, pid}
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
+
+    main()
 
     # All children process to be supervised
     children = [
@@ -23,5 +28,13 @@ defmodule FPX do
 
     opts = [strategy: :one_for_one, name: FPX.Supervisor]
     Supervisor.start_link(children, opts)
+  end
+
+  @doc """
+  main function for custom stuff
+  """
+  @spec main() :: :ok
+  def main() do
+    :ok
   end
 end

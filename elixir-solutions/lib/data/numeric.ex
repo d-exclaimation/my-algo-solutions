@@ -42,6 +42,7 @@ defmodule Numeric do
   @doc """
   Check if a number
   """
+  @spec number?(binary) :: boolean
   def number?(exp) do
     [first | rest] = String.graphemes(exp)
 
@@ -71,5 +72,46 @@ defmodule Numeric do
   defp _digit?(grapheme) do
     ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
     |> Enum.member?(grapheme)
+  end
+
+  @doc """
+  Convert from string to numeric
+  """
+  @spec from_string(String.t()) :: numeric()
+  def from_string(string) do
+    if number?(string) do
+      case convert_to_numeric(String.graphemes(string), 0) do
+        :error -> String.to_float(string)
+        val -> val
+      end
+    else
+      throw("Cannot convert")
+    end
+  end
+
+  @digit %{
+    "0" => 0,
+    "1" => 1,
+    "2" => 2,
+    "3" => 3,
+    "4" => 4,
+    "5" => 5,
+    "6" => 6,
+    "7" => 7,
+    "8" => 8,
+    "9" => 9
+  }
+
+  @spec convert_to_numeric(list(String.t()), numeric()) :: numeric() | :error
+  defp convert_to_numeric([], carry), do: carry
+
+  defp convert_to_numeric([head | rest], carry) when head == "-" and carry == 0,
+    do: convert_to_numeric(rest, carry * -1)
+
+  defp convert_to_numeric([head | rest], carry) do
+    case Map.has_key?(@digit, head) do
+      true -> convert_to_numeric(rest, carry * 10 + @digit[head])
+      false -> :error
+    end
   end
 end
