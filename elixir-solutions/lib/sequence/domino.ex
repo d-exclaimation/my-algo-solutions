@@ -14,6 +14,7 @@ defmodule Domino do
   @doc """
   Weighted dominoes simulation
   """
+  @spec weighted_dominoes(list) :: [number]
   def weighted_dominoes(dominoes) do
     _weighted_dominoes(dominoes, 0)
   end
@@ -35,5 +36,29 @@ defmodule Domino do
         true -> _weighted_dominoes(tail, 0)
       end
     end
+  end
+
+  @doc """
+  Maximum sum of min pairs
+  """
+  @spec max_min_pairs([integer()]) :: integer()
+  def max_min_pairs(arr) do
+    res =
+      arr
+      |> Enum.sort()
+
+    0..(length(res) - 1)
+    |> Enum.filter(fn i -> rem(i, 2) == 0 end)
+    |> Enum.map(fn i -> Enum.at(res, i) end)
+    |> Enum.sum()
+  end
+
+  @doc """
+  """
+  @spec max_subarray([number()], integer()) :: number()
+  def max_subarray(arr, k) do
+    0..(length(arr) - k)
+    |> Enum.map(fn i -> Enum.sum(Enum.slice(arr, i..(i + k - 1))) end)
+    |> Enum.max()
   end
 end
