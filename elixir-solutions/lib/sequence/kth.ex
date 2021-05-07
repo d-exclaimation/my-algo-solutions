@@ -74,7 +74,7 @@ defmodule Kth do
   @doc """
   Subtotal of all subarray that has an odd length
   """
-  @spec odd_sum_subarray(list(integer())) :: integer()
+  @spec odd_sum_subarray([integer]) :: integer
   def odd_sum_subarray(arr) do
     1..length(arr)
     |> Enum.filter(fn i -> rem(i, 2) == 1 end)
@@ -86,5 +86,21 @@ defmodule Kth do
       |> Enum.sum()
     end)
     |> Enum.sum()
+  end
+
+  @doc """
+  Find smallest number that cannot be summed from the sorted list
+  """
+  @spec find_smallest([integer]) :: integer
+  def find_smallest(arr) do
+    do_find_smallest(arr, 0)
+  end
+
+  @spec do_find_smallest([integer], integer) :: integer
+  defp do_find_smallest(arr, k) do
+    case Array.two_sum(arr, k) do
+      {-1, -1} -> k
+      _ -> do_find_smallest(arr, k + 1)
+    end
   end
 end

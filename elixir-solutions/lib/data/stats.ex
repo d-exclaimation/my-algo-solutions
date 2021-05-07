@@ -89,4 +89,21 @@ defmodule Stats do
 
     IO.puts("You have #{result} more work(s) to finish")
   end
+
+  @doc """
+  Chi-Square Calculation
+  """
+  @spec chi_square([number()], [number()]) :: number()
+  def chi_square(observed, expected) when length(observed) == length(expected) do
+    do_chi_square(observed, expected)
+    |> Enum.sum()
+  end
+
+  @spec do_chi_square([number()], [number()]) :: [number()]
+  defp do_chi_square([], []), do: []
+
+  defp do_chi_square([obs | rest], [exp | remain]) do
+    num = obs - exp
+    [num * num / exp | do_chi_square(rest, remain)]
+  end
 end

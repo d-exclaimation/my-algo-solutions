@@ -54,11 +54,13 @@ defmodule Domino do
   end
 
   @doc """
+  Find max average subarray
   """
   @spec max_subarray([number()], integer()) :: number()
   def max_subarray(arr, k) do
     0..(length(arr) - k)
     |> Enum.map(fn i -> Enum.sum(Enum.slice(arr, i..(i + k - 1))) end)
+    |> Enum.map(fn x -> x / k end)
     |> Enum.max()
   end
 end
