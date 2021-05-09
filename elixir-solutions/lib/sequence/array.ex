@@ -156,4 +156,28 @@ defmodule Array do
     arr
     |> Enum.scan(&+/2)
   end
+
+  @doc """
+  Find intersection of three sorted list
+  """
+  @spec intersection_sorted([integer], [integer], [integer]) :: [integer]
+  def intersection_sorted(nums1, nums2, nums3)
+      when length(nums1) == 0 or length(nums2) == 0 or length(nums3) == 0,
+      do: []
+
+  def intersection_sorted([h1 | r1], [h2 | r2], [h3 | r3]) do
+    min_val = Enum.min([h1, h2, h3])
+
+    cond do
+      min_val == h1 and min_val == h2 and min_val == h3 ->
+        [h1] ++ intersection_sorted(r1, r2, r3)
+
+      true ->
+        intersection_sorted(
+          if(min_val == h1, do: [h1 | r1], else: r1),
+          if(min_val == h2, do: [h2 | r2], else: r2),
+          if(min_val == h3, do: [h3 | r3], else: r3)
+        )
+    end
+  end
 end
