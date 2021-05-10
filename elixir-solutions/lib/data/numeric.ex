@@ -114,4 +114,14 @@ defmodule Numeric do
       false -> :error
     end
   end
+
+  @doc """
+  Count the amount of numbers that conform to a rule
+  """
+  @spec count_digits([integer], (integer -> boolean)) :: integer
+  def count_digits(arr, rule) do
+    arr
+    |> Enum.filter(rule)
+    |> Enum.count()
+  end
 end
