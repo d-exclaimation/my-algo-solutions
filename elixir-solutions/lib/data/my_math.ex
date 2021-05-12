@@ -115,4 +115,21 @@ defmodule MyMath do
       first * second * third
     end
   end
+
+  @doc """
+  Find the largest continuous subarray
+  """
+  @spec max_continous([integer]) :: integer
+  def max_continous([head | tail]) do
+    do_max_continous(tail, head, head)
+  end
+
+  @spec do_max_continous([integer], integer, integer) :: integer
+  defp do_max_continous([], max, curr), do: if(max > curr, do: max, else: curr)
+
+  defp do_max_continous([head | rest], max, curr) do
+    new_curr = max(curr + head, head)
+    new_max = max(new_curr, max)
+    do_max_continous(rest, new_max, new_curr)
+  end
 end

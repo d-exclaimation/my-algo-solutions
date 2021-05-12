@@ -35,7 +35,6 @@ defmodule FPX do
   """
   @spec main() :: :ok
   def main() do
-    Superconducor.part_three()
     :ok
   end
 end

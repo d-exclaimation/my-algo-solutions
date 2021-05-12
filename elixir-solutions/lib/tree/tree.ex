@@ -46,4 +46,34 @@ defmodule Tree do
   def post_order(%Tree{val: val, left: left, right: right}) do
     in_order(left) ++ in_order(right) ++ [val]
   end
+
+  @doc """
+  Inverse a tree
+  """
+  @spec inversed(%Tree{} | none()) :: nil
+  def inversed(nil), do: nil
+
+  def inversed(%Tree{val: val, left: left, right: right}) do
+    %Tree{
+      val: val,
+      left: inversed(right),
+      right: inversed(left)
+    }
+  end
+end
+
+defimpl Inspect, for: Tree do
+  @doc """
+  Inspect a tree
+  """
+  @spec inspect(%Tree{}, any()) :: String.t()
+  def inspect(%Tree{val: val, left: left, right: right}, _) do
+    """
+    #Tree<
+      @(#{val})
+      left => #{inspect(left)}
+      right => #{inspect(right)}
+    >
+    """
+  end
 end

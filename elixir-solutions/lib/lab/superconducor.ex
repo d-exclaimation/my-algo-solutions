@@ -164,7 +164,7 @@ defmodule Superconducor do
       {vt, v, t, r} =
         {Enum.at(vtemps, i), Enum.at(volts, i), Enum.at(temps, i), Enum.at(resistances, i)}
 
-      IO.puts("#{rounded(vt)}|#{rounded(v)}|#{rounded(t)}|#{rounded(r)}")
+      IO.puts("#{rounded(vt)},#{rounded(v)},#{rounded(t)},#{rounded(r)}")
     end
   end
 
