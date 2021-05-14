@@ -67,10 +67,18 @@ defimpl Inspect, for: Tree do
   Inspect a tree
   """
   @spec inspect(%Tree{}, any()) :: String.t()
+  def inspect(%Tree{val: val, left: nil, right: nil}, _), do: "#Tree<{#{val}}>"
+
+  def inspect(%Tree{val: val, left: left, right: nil}, _),
+    do: "#Tree<{#{val}} left => #{inspect(left)}>"
+
+  def inspect(%Tree{val: val, left: nil, right: right}, _),
+    do: "#Tree<{#{val}} right => #{inspect(right)}>"
+
   def inspect(%Tree{val: val, left: left, right: right}, _) do
     """
     #Tree<
-      @(#{val})
+      {#{val}}
       left => #{inspect(left)}
       right => #{inspect(right)}
     >

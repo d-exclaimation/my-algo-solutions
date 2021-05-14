@@ -49,4 +49,32 @@ defmodule Character do
       true -> do_next_letter(rest, target)
     end
   end
+
+  @doc """
+  String compression
+  """
+  @spec compressed([String.t()]) :: [String.t()]
+  def compressed([]), do: []
+
+  def compressed([head | tail]) do
+    do_compressed(tail, head, 1)
+  end
+
+  @spec do_compressed([String.t()], String.t(), integer) :: [String.t()]
+  defp do_compressed([], prev, 1), do: [prev]
+  defp do_compressed([], prev, count), do: [prev, "#{count}"]
+
+  defp do_compressed([head | tail], prev, count) do
+    case head do
+      ^prev ->
+        do_compressed(tail, prev, count + 1)
+
+      _ ->
+        if count == 1 do
+          [prev | do_compressed(tail, head, 1)]
+        else
+          [prev, "#{count}" | do_compressed(tail, head, 1)]
+        end
+    end
+  end
 end

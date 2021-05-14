@@ -58,7 +58,6 @@ defmodule FPX.TreeTest do
       }
     }
 
-    IO.inspect(init)
     assert Kernel.inspect(init |> Tree.inversed()) == Kernel.inspect(expected)
   end
 end
