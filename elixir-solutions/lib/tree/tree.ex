@@ -15,6 +15,17 @@ defmodule Tree do
   @enforce_keys [:val]
   defstruct [:val, :left, :right]
 
+  @typedoc """
+  Custom tree with values
+  """
+  @type t(k) ::
+          %Tree{
+            val: k,
+            left: t(k),
+            right: t(k)
+          }
+          | nil
+
   @type value() :: any()
 
   @doc """

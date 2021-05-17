@@ -35,26 +35,6 @@ defmodule FPX do
   """
   @spec main() :: :ok
   def main() do
-    res =
-      Heap.new(&</2, "Min")
-      |> Heap.put(4)
-      |> Heap.put(2)
-      |> Heap.put(5)
-      |> Heap.put(1)
-
-    {:ok, min, new_res} =
-      res
-      |> Heap.pop()
-
-    IO.puts(min)
-
-    res =
-      new_res
-      |> Heap.put(1)
-      |> Heap.put(6)
-
-    IO.inspect(res)
-
     :ok
   end
 end

@@ -60,4 +60,16 @@ defmodule FPX.TreeTest do
 
     assert Kernel.inspect(init |> Tree.inversed()) == Kernel.inspect(expected)
   end
+
+  test "Max Depth Integer" do
+    expected = 42
+
+    root = %Tree{
+      val: 12,
+      left: %Tree{val: 10, right: %Tree{val: 20}, left: %Tree{val: 10}},
+      right: %Tree{val: 30, left: %Tree{val: -40}}
+    }
+
+    assert Tree.Manipulation.max_total(root) == expected
+  end
 end

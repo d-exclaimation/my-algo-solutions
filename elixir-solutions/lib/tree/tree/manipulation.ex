@@ -41,4 +41,14 @@ defmodule Tree.Manipulation do
         [Enum.at(children, 0).val] ++ only_children(left) ++ only_children(right)
     end
   end
+
+  @doc """
+  Max total depth
+  """
+  @spec max_total(Tree.t(integer())) :: integer()
+  def max_total(nil), do: 0
+
+  def max_total(%Tree{left: left, right: right, val: val}) do
+    val + max(max_total(left), max_total(right))
+  end
 end
