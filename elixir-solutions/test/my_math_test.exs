@@ -16,4 +16,8 @@ defmodule MyMathTest do
   test "Continuous subarray max" do
     assert MyMath.max_continous([34, -50, 42, 14, -5, 86]) == 137
   end
+
+  test "Fibonacci" do
+    assert MyMath.fibonacci(3) == 2
+  end
 end

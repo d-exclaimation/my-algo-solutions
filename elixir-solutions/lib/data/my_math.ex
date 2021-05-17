@@ -132,4 +132,14 @@ defmodule MyMath do
     new_max = max(new_curr, max)
     do_max_continous(rest, new_max, new_curr)
   end
+
+  @doc """
+  Fibonacci sequence
+  """
+  @spec fibonacci(integer) :: integer
+  def fibonacci(n) when n <= 2, do: 1
+
+  def fibonacci(n) do
+    fibonacci(n - 1) + fibonacci(n - 2)
+  end
 end
