@@ -18,7 +18,6 @@ defmodule Numeric.Operators do
 
   def a >>> b do
     half = a >>> div(b, 2)
-    IO.puts(half)
 
     cond do
       rem(b, 2) == 0 -> half * half
