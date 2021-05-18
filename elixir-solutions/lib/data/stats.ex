@@ -97,6 +97,7 @@ defmodule Stats do
   def chi_square(observed, expected) when length(observed) == length(expected) do
     do_chi_square(observed, expected)
     |> Enum.sum()
+    |> :math.sqrt()
   end
 
   @spec do_chi_square([number()], [number()]) :: [number()]
