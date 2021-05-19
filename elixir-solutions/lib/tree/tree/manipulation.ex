@@ -51,4 +51,20 @@ defmodule Tree.Manipulation do
   def max_total(%Tree{left: left, right: right, val: val}) do
     val + max(max_total(left), max_total(right))
   end
+
+  @doc """
+  Add / Overlay tree
+  """
+  @spec add(Tree.t(number) | none(), Tree.t(number) | none()) :: Tree.t(number)
+  def add(nil, nil), do: nil
+  def add(nil, rhs), do: rhs
+  def add(lhs, nil), do: lhs
+
+  def add(%Tree{val: val1, left: l1, right: r1}, %Tree{val: val2, left: l2, right: r2}) do
+    %Tree{
+      val: val1 + val2,
+      left: add(l1, l2),
+      right: add(r1, r2)
+    }
+  end
 end

@@ -72,4 +72,21 @@ defmodule FPX.TreeTest do
 
     assert Tree.Manipulation.max_total(root) == expected
   end
+
+  test "Add tree" do
+    lhs = %Tree{
+      val: 1,
+      left: %Tree{val: 2}
+    }
+
+    rhs = %Tree{
+      val: 3,
+      left: %Tree{val: 4}
+    }
+
+    res = lhs |> Tree.Manipulation.add(rhs)
+    expected = %Tree{val: 4, left: %Tree{val: 6}}
+    assert res.val == expected.val
+    assert res.left.val == expected.left.val
+  end
 end
