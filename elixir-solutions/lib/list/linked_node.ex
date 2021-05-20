@@ -15,6 +15,44 @@ defmodule LinkedNode do
   @enforce_keys [:val]
   defstruct [:val, :next]
 
+  @typedoc """
+  Linked List Node type
+  """
+  @type t() :: %LinkedNode{
+          val: any,
+          next: t() | nil
+        }
+
+  @doc """
+  Initialize from an array
+  """
+  @spec init([any]) :: t() | nil
+  def init([]), do: nil
+
+  def init([head | tail]) do
+    %LinkedNode{
+      val: head,
+      next: init(tail)
+    }
+  end
+
+  @doc """
+  """
+  @spec append(t(), t() | none()) :: t()
+  def append(%__MODULE__{val: val, next: next}, tail) do
+    if next == nil do
+      %LinkedNode{
+        val: val,
+        next: tail
+      }
+    else
+      %LinkedNode{
+        val: val,
+        next: append(next, tail)
+      }
+    end
+  end
+
   @doc """
   Remove all duplicates node
   """

@@ -31,7 +31,7 @@ defmodule Portal do
   @doc """
   Starts transfering `data` from `left` to `right`
   """
-  @spec transfer(Portal.Door.door(), Portal.Door.door(), list(any())) :: t()
+  @spec transfer(Portal.Door.door(), Portal.Door.door(), [any()]) :: t()
   def transfer(left, right, init_values) do
     Enum.each(init_values, fn x ->
       Portal.Door.push(left, x)
