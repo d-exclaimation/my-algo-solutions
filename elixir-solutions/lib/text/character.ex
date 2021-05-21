@@ -77,4 +77,22 @@ defmodule Character do
         end
     end
   end
+
+  @doc """
+  """
+  @spec palindromable?(String.t()) :: boolean()
+  def palindromable?(str) do
+    unmatched =
+      str
+      |> String.to_charlist()
+      |> Enum.reduce(Map.new(), fn x, acc ->
+        acc
+        |> Map.put(x, Map.get(acc, x, 0) + 1)
+      end)
+      |> Map.to_list()
+      |> Enum.filter(fn {_, val} -> rem(val, 2) != 0 end)
+      |> Enum.count()
+
+    unmatched == rem(String.length(str), 2)
+  end
 end

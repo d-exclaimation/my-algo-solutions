@@ -11,4 +11,9 @@ defmodule TextTest do
     expected = "a2bc3"
     assert(res == expected)
   end
+
+  test "Palindromable" do
+    assert Character.palindromable?("aeae")
+    assert not Character.palindromable?("hlloleh")
+  end
 end
