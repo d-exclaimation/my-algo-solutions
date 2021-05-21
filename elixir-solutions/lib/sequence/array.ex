@@ -180,4 +180,16 @@ defmodule Array do
         )
     end
   end
+
+  @doc """
+  Find unique from list
+  """
+  @spec unique([any]) :: [any]
+  def unique(arr) do
+    arr
+    |> Enum.reduce(%{}, fn x, acc -> Map.put(acc, x, Map.get(acc, x, 0) + 1) end)
+    |> Map.to_list()
+    |> Enum.filter(fn {_, value} -> value <= 1 end)
+    |> Enum.map(fn {key, _} -> key end)
+  end
 end

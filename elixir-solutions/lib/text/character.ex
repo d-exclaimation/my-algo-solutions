@@ -79,6 +79,7 @@ defmodule Character do
   end
 
   @doc """
+  Check if permutation can be palindrome
   """
   @spec palindromable?(String.t()) :: boolean()
   def palindromable?(str) do
