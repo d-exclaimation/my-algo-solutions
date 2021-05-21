@@ -89,4 +89,16 @@ defmodule FPX.TreeTest do
     assert res.val == expected.val
     assert res.left.val == expected.left.val
   end
+
+  test "Fast heapify" do
+    dataset = [3, 69, 1, 420]
+    resolver = fn l, r -> l >= r end
+    given = Heap.fast_heapify(dataset, resolver)
+
+    expected =
+      dataset
+      |> Enum.reduce(Heap.new(resolver), fn x, acc -> Heap.put(acc, x) end)
+
+    assert inspect(given) == inspect(expected)
+  end
 end

@@ -90,9 +90,7 @@ defmodule Heap do
   defp sift_down(data, _resolve, idx) when (idx + 1) * 2 > length(data), do: data
 
   defp sift_down(data, resolve, idx) do
-    left = (idx + 1) * 2 - 1
-    right = (idx + 1) * 2
-    sdx = if(resolve.(Enum.at(data, right), Enum.at(data, left)), do: right, else: left)
+    sdx = find_successor(data, resolve, idx)
     curr = Enum.at(data, idx)
     smallest = Enum.at(data, sdx)
 
@@ -103,6 +101,24 @@ defmodule Heap do
     end
   end
 
+  @spec find_successor([any], (any, any -> boolean), integer) :: integer
+  defp find_successor(data, resolve, idx) do
+    left = (idx + 1) * 2 - 1
+    right = (idx + 1) * 2
+
+    cond do
+      left >= length(data) ->
+        right
+
+      right >= length(data) ->
+        left
+
+      true ->
+        if(resolve.(Enum.at(data, right), Enum.at(data, left)), do: right, else: left)
+    end
+  end
+
+  @spec swap([any], integer, integer) :: [any]
   defp swap(data, i, j) do
     0..(length(data) - 1)
     |> Enum.map(fn
@@ -111,6 +127,32 @@ defmodule Heap do
       x -> x
     end)
     |> Enum.map(&Enum.at(data, &1))
+  end
+
+  @doc """
+  Fast heapify
+  """
+  @spec fast_heapify([any], (any, any -> boolean)) :: Heap.t()
+  def fast_heapify([only], resolver),
+    do: %__MODULE__{
+      data: [only],
+      resolve: resolver,
+      type: ""
+    }
+
+  def fast_heapify(arr, resolver) do
+    last_parent = div(length(arr), 2) - 1
+
+    data =
+      0..last_parent
+      |> Enum.reverse()
+      |> Enum.reduce(arr, fn i, acc -> sift_down(acc, resolver, i) end)
+
+    %__MODULE__{
+      data: data,
+      resolve: resolver,
+      type: ""
+    }
   end
 end
 
