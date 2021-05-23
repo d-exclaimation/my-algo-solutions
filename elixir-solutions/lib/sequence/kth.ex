@@ -103,4 +103,57 @@ defmodule Kth do
       _ -> do_find_smallest(arr, k + 1)
     end
   end
+
+  @doc """
+  Given a 2n size array of integers
+  returns the n-repeated integers, if the unique items' count is n + 1
+  """
+  @spec n_repeated([integer]) :: integer
+  def n_repeated(arr) do
+    length = Enum.count(arr)
+
+    if length == 4 and Enum.at(arr, 0) == Enum.at(arr, 3) do
+      [head | _] = arr
+      head
+    else
+      [head | _] =
+        1..2
+        |> Enum.flat_map(fn k ->
+          arr
+          |> Enum.with_index()
+          |> Enum.filter(fn {x, i} -> x == Enum.at(arr, i + k) end)
+          |> Enum.map(fn {x, _} -> x end)
+        end)
+
+      head
+    end
+  end
+
+  @doc """
+  Find smallest sorting window
+  """
+  @spec smallest_window_sort([integer]) :: {integer, integer}
+  def smallest_window_sort(arr) do
+    sorted_arr =
+      arr
+      |> Enum.sort()
+      |> Enum.with_index()
+
+    find_diff_window(Enum.with_index(arr), sorted_arr, {-1, -1})
+  end
+
+  defp find_diff_window([], [], {-1, -1}), do: {0, 0}
+  defp find_diff_window([], [], res), do: res
+
+  defp find_diff_window([{lhs, i} | lt], [{rhs, _} | rt], {-1, -1}) do
+    find_diff_window(lt, rt, if(lhs != rhs, do: {i, -1}, else: {-1, -1}))
+  end
+
+  defp find_diff_window([{lhs, i} | lt], [{rhs, _} | rt], {low, up}) do
+    if lhs == rhs do
+      find_diff_window([], [], {low, i - 1})
+    else
+      find_diff_window(lt, rt, {low, up})
+    end
+  end
 end
