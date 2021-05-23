@@ -23,4 +23,9 @@ defmodule ArrayTest do
     assert MapSet.difference(MapSet.new(Array.unique([3, 2, 1])), MapSet.new([3, 2, 1])) ==
              MapSet.new([])
   end
+
+  test "Matching index and values" do
+    assert 0 == Array.matching_index_values([0, 3, 2])
+    assert -1 == Array.matching_index_values([1, 3, 4, 5])
+  end
 end

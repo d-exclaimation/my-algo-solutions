@@ -192,4 +192,20 @@ defmodule Array do
     |> Enum.filter(fn {_, value} -> value <= 1 end)
     |> Enum.map(fn {key, _} -> key end)
   end
+
+  @doc """
+  Matching index and values
+  """
+  @spec matching_index_values([integer]) :: integer
+  def matching_index_values(arr) do
+    res =
+      arr
+      |> Enum.with_index()
+      |> Enum.filter(fn {x, i} -> x == i end)
+
+    case res do
+      [{_, i} | _] -> i
+      [] -> -1
+    end
+  end
 end
