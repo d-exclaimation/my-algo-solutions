@@ -71,6 +71,16 @@ defmodule Tree do
       right: inversed(left)
     }
   end
+
+  @doc """
+  Minimum depth of index
+  """
+  @spec min_depth(%Tree{} | none()) :: integer
+  def min_depth(nil), do: 0
+
+  def min_depth(%Tree{left: left, right: right}) do
+    1 + min(min_depth(left), min_depth(right))
+  end
 end
 
 defimpl Inspect, for: Tree do

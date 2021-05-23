@@ -101,4 +101,14 @@ defmodule FPX.TreeTest do
 
     assert inspect(given) == inspect(expected)
   end
+
+  test "Minimum depth" do
+    root = %Tree{
+      val: 1,
+      left: %Tree{val: 2},
+      right: %Tree{val: 3, left: %Tree{val: 4}}
+    }
+
+    assert Tree.min_depth(root) == 2
+  end
 end
