@@ -14,7 +14,6 @@ defmodule NodeTest do
       ]
     }
 
-    IO.puts(linked_list)
     assert LinkedList.cycle?(linked_list)
   end
 end

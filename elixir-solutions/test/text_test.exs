@@ -16,4 +16,9 @@ defmodule TextTest do
     assert Character.palindromable?("aeae")
     assert not Character.palindromable?("hlloleh")
   end
+
+  test "Programming string" do
+    assert Character.form_count("mingabcprojklgram", "programming") == 1
+    assert Character.form_count("rammingabcprogrammingdefprog", "programming") == 2
+  end
 end

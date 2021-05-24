@@ -96,4 +96,19 @@ defmodule Character do
 
     unmatched == rem(String.length(str), 2)
   end
+
+  @doc """
+  Find the maximum amount of formation of target can be done with source
+  """
+  @spec form_count(String.t(), String.t()) :: integer
+  def form_count(source, target) do
+    target_set = MapSet.new(String.to_charlist(target))
+
+    source
+    |> String.to_charlist()
+    |> Enum.filter(&MapSet.member?(target_set, &1))
+    |> Enum.frequencies()
+    |> Enum.map(fn {_, count} -> count end)
+    |> Enum.min()
+  end
 end
