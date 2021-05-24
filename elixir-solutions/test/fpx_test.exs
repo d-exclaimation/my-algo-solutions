@@ -24,4 +24,9 @@ defmodule FPXTest do
     expected = {2, 4}
     assert given == expected
   end
+
+  test "Three consecutive odd" do
+    assert Kth.consecutive?([1, 3, 4, 2, 3, 9, 15], 3, fn x -> rem(x, 2) == 1 end)
+    assert not Kth.consecutive?([1, 2, 3, 4, 5], 3, fn x -> rem(x, 2) == 1 end)
+  end
 end

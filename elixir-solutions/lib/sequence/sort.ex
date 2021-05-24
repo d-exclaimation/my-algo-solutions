@@ -166,4 +166,23 @@ defmodule Sort do
       l_head > r_head -> [r_head] ++ merge([l_head | l_rest], r_rest)
     end
   end
+
+  @doc """
+  Validation sort
+  Remove invalid sequence
+  """
+  @spec valid_sort([any]) :: [any]
+  def valid_sort([head | tail]) do
+    do_valid_sort(tail, head)
+  end
+
+  @spec do_valid_sort([any], any) :: [any]
+  defp do_valid_sort([], _curr), do: []
+
+  defp do_valid_sort([head | tail], prev) do
+    cond do
+      head >= prev -> [head | do_valid_sort(tail, head)]
+      true -> do_valid_sort(tail, prev)
+    end
+  end
 end

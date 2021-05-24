@@ -156,4 +156,22 @@ defmodule Kth do
       find_diff_window(lt, rt, {low, up})
     end
   end
+
+  @doc """
+  Check for consecutive
+  """
+  @spec consecutive?([any], integer, (any -> boolean)) :: boolean()
+  def consecutive?(seq, limit, condition) do
+    res =
+      seq
+      |> Enum.reduce(limit, fn x, acc ->
+        cond do
+          acc <= 0 -> 0
+          condition.(x) -> acc - 1
+          true -> limit
+        end
+      end)
+
+    res == 0
+  end
 end
