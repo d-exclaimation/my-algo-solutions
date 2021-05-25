@@ -28,4 +28,11 @@ defmodule ArrayTest do
     assert 0 == Array.matching_index_values([0, 3, 2])
     assert -1 == Array.matching_index_values([1, 3, 4, 5])
   end
+
+  test "Operator mix side by side" do
+    import Array
+    assert [{1, 1}, {2, 2}] == [1, 2] <|> [1, 2]
+    assert [{1, 1}, {2, nil}] == [1, 2] <|> [1]
+    assert [{1, 1}, {nil, 2}] == [1] <|> [1, 2]
+  end
 end

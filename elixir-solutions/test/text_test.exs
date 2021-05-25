@@ -21,4 +21,13 @@ defmodule TextTest do
     assert Character.form_count("mingabcprojklgram", "programming") == 1
     assert Character.form_count("rammingabcprogrammingdefprog", "programming") == 2
   end
+
+  test "Mapping key values" do
+    assert %{97 => 98} == Character.map(String.to_charlist("a"), String.to_charlist("b"))
+  end
+
+  test "Mappable" do
+    assert Character.mappable?("abc", "def")
+    assert not Character.mappable?("aba", "def")
+  end
 end

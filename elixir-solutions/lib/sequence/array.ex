@@ -12,6 +12,16 @@ defmodule Array do
   """
 
   @doc """
+  """
+  @spec list() <|> list() :: list()
+  def a <|> b when a == [], do: Enum.map(b, fn x -> {nil, x} end)
+  def a <|> b when b == [], do: Enum.map(a, fn x -> {x, nil} end)
+
+  def [lhs | lt] <|> [rhs | rt] do
+    [{lhs, rhs} | lt <|> rt]
+  end
+
+  @doc """
   Get the only unique element in a list
   """
   def one_value(list) when is_list(list) do

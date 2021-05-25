@@ -10,6 +10,7 @@ defmodule Character do
   @moduledoc """
   Character module
   """
+  import MapMerge
 
   @doc """
   Common character for all words
@@ -110,5 +111,42 @@ defmodule Character do
     |> Enum.frequencies()
     |> Enum.map(fn {_, count} -> count end)
     |> Enum.min()
+  end
+
+  @doc """
+  Map Character left and right
+  """
+  @spec map([String.Chars.t()], [String.Chars.t()]) :: %{String.Chars.t() => String.Chars.t()}
+  def map([], []), do: %{}
+
+  def map([lhs | lt], [rhs | rt]) do
+    %{lhs => rhs} &&& map(lt, rt)
+  end
+
+  @doc """
+  """
+  @spec mappable?(String.t(), String.t()) :: boolean
+  def mappable?(keys, values) do
+    import Array
+    keys_arr = String.graphemes(keys)
+    values_arr = String.graphemes(values)
+
+    {sign, _} =
+      keys_arr
+      <|> values_arr
+      |> Enum.reduce({:ok, %{}}, fn {a, b}, acc ->
+        case acc do
+          {:error, res} ->
+            {:error, res}
+
+          {:ok, res} ->
+            case Map.get(res, a, b) do
+              ^b -> {:ok, res &&& %{a => b}}
+              _ -> {:error, res}
+            end
+        end
+      end)
+
+    sign == :ok
   end
 end
