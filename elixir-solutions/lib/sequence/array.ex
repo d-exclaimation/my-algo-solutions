@@ -218,4 +218,38 @@ defmodule Array do
       [] -> -1
     end
   end
+
+  @doc """
+  Mountain
+  """
+  @spec mountain?([integer]) :: boolean()
+  def mountain?([]), do: true
+
+  def mountain?(arr) do
+    {_, index} =
+      arr
+      |> Enum.with_index()
+      |> Enum.max_by(fn {x, _} -> x end)
+
+    do_mountain(Enum.slice(arr, 0..index), :increasing) and
+      do_mountain(Enum.slice(arr, (index + 1)..-1), :decreasing)
+  end
+
+  defp do_mountain(arr, :decreasing) do
+    do_mountain(Enum.reverse(arr), :increasing)
+  end
+
+  defp do_mountain(arr, :increasing) do
+    {res, _} =
+      arr
+      |> Enum.reduce({false, nil}, fn x, {acc, prev} ->
+        if prev == nil do
+          {true, x}
+        else
+          {prev <= x and acc, x}
+        end
+      end)
+
+    res
+  end
 end

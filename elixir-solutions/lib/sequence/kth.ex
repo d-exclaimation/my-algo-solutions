@@ -174,4 +174,16 @@ defmodule Kth do
 
     res == 0
   end
+
+  @doc """
+  """
+  @spec largest_product([integer]) :: integer
+  def largest_product(arr) do
+    [a, b | _] =
+      arr
+      |> Enum.sort()
+      |> Enum.reverse()
+
+    a * b
+  end
 end
