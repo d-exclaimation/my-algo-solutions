@@ -30,4 +30,9 @@ defmodule TextTest do
     assert Character.mappable?("abc", "def")
     assert not Character.mappable?("aba", "def")
   end
+
+  test "Lowercase" do
+    assert Character.lowercase("ABC") == "abc"
+    assert Character.lowercase("ABc") == "abc"
+  end
 end

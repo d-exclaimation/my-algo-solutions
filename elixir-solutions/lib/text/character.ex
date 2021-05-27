@@ -149,4 +149,14 @@ defmodule Character do
 
     sign == :ok
   end
+
+  @doc """
+  """
+  @spec lowercase(String.t()) :: String.t()
+  def lowercase(word) do
+    word
+    |> String.to_charlist()
+    |> Enum.map(fn c -> if c <= 90, do: c + 32, else: c end)
+    |> to_string()
+  end
 end
