@@ -142,4 +142,14 @@ defmodule MyMath do
   def fibonacci(n) do
     fibonacci(n - 1) + fibonacci(n - 2)
   end
+
+  @doc """
+  Count how many odd number between two numbers
+  """
+  @spec count_odd(integer, integer) :: integer
+  def count_odd(start, ending) when start >= ending, do: 0
+
+  def count_odd(start, ending) do
+    count_odd(start, ending - 1) + rem(ending - start, 2)
+  end
 end
