@@ -10,10 +10,35 @@ package main
 
 import (
 	"fmt"
-	"github.com/d-exclaimation/al-go/array"
+	"time"
+
+	. "github.com/d-exclaimation/al-go/websocket"
 )
 
 func main() {
-	fmt.Printf("Unique count is %d", array.CountUnique([]int{1, 2, 2, 4, 4, 6, 8, 8}))
+	ctx := NewConcurrentMap()
+
+	ctx.Set("one", 0)
+	go setOne(time.Second*1, "one second 1", ctx)
+	go setOne(time.Second*2, "two second", ctx)
+	go setOne(time.Second*3, "3 second", ctx)
+	go setOne(time.Second*1, "one second 2", ctx)
+	go setOne(time.Second*10, "ten second", ctx)
+	go setOne(time.Second*4, "four second", ctx)
+	go setOne(time.Second*5, "five second", ctx)
+	go setOne(time.Second*30, "last", ctx)
+
+	ctx.Subscribe("one", func(i interface{}) {
+		fmt.Printf("%v\n", i)
+	})
+
+	ctx.Subscribe("one", func(i interface{}) {
+		fmt.Printf("lol: %v\n", i)
+	})
+	time.Sleep(time.Second * 40)
 }
 
+func setOne(delay time.Duration, val interface{}, ctx *ConcurrentMap) {
+	time.Sleep(delay)
+	ctx.Set("one", val)
+}
