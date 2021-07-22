@@ -39,7 +39,7 @@ object NumericalSequence {
    * @param arr List of Integers.
    * @return Boolean whether it is possible.
    */
-  def upUpAndAway(arr: Array[Int]): Boolean = {
+  def upUpAndAway(arr: Vector[Int]): Boolean = {
     arr
       .indices
       .count(i =>

@@ -5,7 +5,7 @@
 //  Created by d-exclaimation on 6:36 AM.
 //
 
-import array.NumericalSequence.upUpAndAway
+import array.NumericalSequence
 import linked.Link
 import math.{Clock, Stairs}
 import tree.Tree
@@ -29,7 +29,7 @@ object Main {
     println(Clock.clockAngle(3, 25))
 
     println("Up, Up, and Away")
-    println(upUpAndAway(Array(3, 1, 2, 0)))
+    println(NumericalSequence.upUpAndAway(Vector(3, 1, 2, 0)))
 
     println("Create staircase")
     println(Stairs.createStaircase(7))

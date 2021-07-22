@@ -21,6 +21,7 @@ class Pipeable[T](val wrapped: T) {
    * Pipe a function [Operator]
    *
    * ''* :: Piping function can do side effects, but not perform mutation''
+   *
    * @param pipe Piping *pure function.
    * @tparam K Transformation result type.
    * @return A new value of type K.
@@ -31,6 +32,7 @@ class Pipeable[T](val wrapped: T) {
    * Pipe a function [Method]
    *
    * ''* :: Piping function can do side effects, but not perform mutation''
+   *
    * @param pipe Piping *pure function.
    * @tparam K Transformation result type.
    * @return A new value of type K.
@@ -39,7 +41,15 @@ class Pipeable[T](val wrapped: T) {
 
 
   /**
+   * Perform a tap on the value and return original value
+   * @param effect Side effect perform (Must not mutate the data piped).
+   * @return The initial value piped.
+   */
+  def tap(effect: (T) => Unit): T = { effect(this.wrapped); this.wrapped }
+
+  /**
    * Checking whether this value can be piped
+   *
    * @return boolean
    */
   def isPipeable: Boolean = true
@@ -48,6 +58,7 @@ class Pipeable[T](val wrapped: T) {
 object Pipeable {
   /**
    * To make value pipeable
+   *
    * @param s Value being transformed.
    * @tparam T Type of the value.
    * @return Pipeable[T]
