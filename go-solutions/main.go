@@ -42,3 +42,5 @@ func setOne(delay time.Duration, val interface{}, ctx *ConcurrentMap) {
 	time.Sleep(delay)
 	ctx.Set("one", val)
 }
+
+const youtubevideolink = "https://www.youtube.com/watch?v=_0-_0-_0-_0"

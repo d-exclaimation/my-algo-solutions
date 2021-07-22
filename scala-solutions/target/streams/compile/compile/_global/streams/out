@@ -1,0 +1,16 @@
+[0m[[0m[31merror[0m] [0m[0m/Users/paladynamovincent/Cloud/Libraries/my-algo-solutions/scala-solutions/src/main/scala/array/NumericalSequence.scala:47:20: not found: value s[0m
+[0m[[0m[31merror[0m] [0m[0m        val curr = s(i)[0m
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/paladynamovincent/Cloud/Libraries/my-algo-solutions/scala-solutions/src/main/scala/array/NumericalSequence.scala:48:31: not found: value s[0m
+[0m[[0m[31merror[0m] [0m[0m        val prev = if (i > 0) s(i - 1) else curr[0m
+[0m[[0m[31merror[0m] [0m[0m                              ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/paladynamovincent/Cloud/Libraries/my-algo-solutions/scala-solutions/src/main/scala/array/NumericalSequence.scala:49:28: not found: value s[0m
+[0m[[0m[31merror[0m] [0m[0m        val next = if (i < s.length - 1) s(i + 1) else curr[0m
+[0m[[0m[31merror[0m] [0m[0m                           ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/paladynamovincent/Cloud/Libraries/my-algo-solutions/scala-solutions/src/main/scala/array/NumericalSequence.scala:49:42: not found: value s[0m
+[0m[[0m[31merror[0m] [0m[0m        val next = if (i < s.length - 1) s(i + 1) else curr[0m
+[0m[[0m[31merror[0m] [0m[0m                                         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/paladynamovincent/Cloud/Libraries/my-algo-solutions/scala-solutions/src/main/scala/array/NumericalSequence.scala:52:12: not found: value s[0m
+[0m[[0m[31merror[0m] [0m[0m      .map(s(_))[0m
+[0m[[0m[31merror[0m] [0m[0m           ^[0m
+[0m[[0m[31merror[0m] [0m[0m5 errors found[0m
