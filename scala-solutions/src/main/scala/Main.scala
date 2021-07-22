@@ -7,7 +7,7 @@
 
 import array.NumericalSequence.upUpAndAway
 import linked.Link
-import math.Clock.clockAngle
+import math.{Clock, Stairs}
 import tree.Tree
 
 object Main {
@@ -26,10 +26,13 @@ object Main {
     println(oak.removed(2))
 
     println("Clock angle")
-    println(clockAngle(3, 25))
+    println(Clock.clockAngle(3, 25))
 
     println("Up, Up, and Away")
-    println(upUpAndAway(List(3, 1, 2, 0)))
+    println(upUpAndAway(Array(3, 1, 2, 0)))
+
+    println("Create staircase")
+    println(Stairs.createStaircase(7))
   }
 
 }

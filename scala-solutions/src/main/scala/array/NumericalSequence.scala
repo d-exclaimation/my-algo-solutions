@@ -39,16 +39,13 @@ object NumericalSequence {
    * @param arr List of Integers.
    * @return Boolean whether it is possible.
    */
-  def upUpAndAway(arr: List[Int]): Boolean = {
+  def upUpAndAway(arr: Array[Int]): Boolean = {
     arr
       .indices
-      .iterator
-      .count(i => {
-        val curr = arr(i)
-        val prev = if (i > 0) arr(i - 1) else curr
-        val next = if (i < arr.length - 1) arr(i + 1) else curr
-        prev <= curr && curr <= next
-      }) == 1
+      .count(i =>
+        (if (i > 0) arr(i - 1) else arr(i)) <= arr(i)
+          && arr(i) <= (if (i < arr.length - 1) arr(i + 1) else arr(i))
+      ) == 1
   }
 }
 
