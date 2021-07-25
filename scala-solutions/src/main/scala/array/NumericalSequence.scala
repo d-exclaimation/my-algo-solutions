@@ -7,6 +7,8 @@
 
 package array
 
+import option.Nullable.optionToNullable
+
 import scala.language.implicitConversions
 
 class NumericalSequence(val wrapped: Iterable[Int]) {
@@ -46,6 +48,17 @@ object NumericalSequence {
         (if (i > 0) arr(i - 1) else arr(i)) <= arr(i)
           && arr(i) <= (if (i < arr.length - 1) arr(i + 1) else arr(i))
       ) == 1
+  }
+
+  def discountedPrice(vec: Vector[Int]): Vector[Int] = {
+    vec.indices.map(i => {
+      val discount = vec
+        .indices
+        .slice(i + 1, vec.length)
+        .find(j => vec(j) <= vec(i))
+        .?>(vec(_))
+      vec(i) - (discount ?? 0)
+    }).toVector
   }
 }
 

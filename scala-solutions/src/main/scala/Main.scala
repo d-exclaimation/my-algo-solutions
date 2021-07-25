@@ -6,6 +6,7 @@
 //
 
 import array.NumericalSequence
+import bits.Binary
 import linked.Link
 import math.{Clock, Stairs}
 import tree.Tree
@@ -33,6 +34,13 @@ object Main {
 
     println("Create staircase")
     println(Stairs.createStaircase(7))
+
+    println("Binary sequence max even")
+    println(Binary.maxEqualCountSeq(Vector(1, 1)))
+
+
+    println("Discount next price")
+    println(NumericalSequence.discountedPrice(Vector(3, 2, 2)))
   }
 
 }
