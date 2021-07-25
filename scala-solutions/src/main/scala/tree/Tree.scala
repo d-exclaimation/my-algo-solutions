@@ -7,6 +7,7 @@
 package tree
 
 import linked.Link
+import option.Nullable.optionToNullable
 
 /**
  * Binary Tree node
@@ -27,13 +28,10 @@ case class Tree[T](value: T,
    * @return A new tree with target removed bottom-up.
    */
   def removed(target: T): Option[Tree[T]] = {
-    val performRecursion = (x: Option[Tree[T]]) => x match {
-      case Some(value) => value.removed(target)
-      case None => None
-    }
-
-    val newLeft = performRecursion(left)
-    val newRight = performRecursion(right)
+    val newLeft = left
+      .?>>(_.removed(target))
+    val newRight = right
+      .?>>(_.removed(target))
     if (newLeft.isEmpty && newRight.isEmpty && value == target)
       None
     else
@@ -76,6 +74,7 @@ case class Tree[T](value: T,
 
   /**
    * Property shorthand for Tree to be null safe
+   *
    * @return Option[Tree] of Some
    */
   def some: Some[Tree[T]] = Some(this)
