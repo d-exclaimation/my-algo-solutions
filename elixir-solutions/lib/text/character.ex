@@ -159,4 +159,37 @@ defmodule Character do
     |> Enum.map(fn c -> if c <= 90, do: c + 32, else: c end)
     |> to_string()
   end
+
+  @doc """
+  Smallest Lexicographical characters
+  """
+  @spec smallest_lexicographical(String.t()) :: [String.Chars.t()]
+  def smallest_lexicographical(s) do
+    res =
+      s
+      |> String.to_charlist()
+      |> Enum.sort()
+      |> Enum.at(0, nil)
+
+    s
+    |> String.to_charlist()
+    |> Enum.filter(fn x -> x == res end)
+  end
+
+  @doc """
+  Smallest count of letter in words that have a smaller count of its smallest lex char
+  """
+  @spec smallest_count_letter([String.t()], [String.t()]) :: [integer()]
+  def smallest_count_letter(queries, words) do
+    queries
+    |> Enum.map(fn query ->
+      curr =
+        query
+        |> smallest_lexicographical()
+        |> Enum.count()
+
+      words
+      |> Enum.count(fn word -> curr < Enum.count(smallest_lexicographical(word)) end)
+    end)
+  end
 end

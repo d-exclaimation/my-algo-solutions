@@ -35,4 +35,12 @@ defmodule TextTest do
     assert Character.lowercase("ABC") == "abc"
     assert Character.lowercase("ABc") == "abc"
   end
+
+  test "Smallest Lex" do
+    queries = ["abc"]
+    words = ["def"]
+    assert Character.smallest_count_letter(queries, words) == [0]
+
+    assert Character.smallest_count_letter(["abc"], ["ddef", "xxyz"]) == [2]
+  end
 end
