@@ -7,11 +7,10 @@
 
 import option.??
 import pipe.|>
+import array.NumericalSeq
 
-@main def hello: Unit =
-  Some(10000) ?? 0
-    .toString
-    .|>(append(_, "World"))
+@main def hello: Unit = {
+  List(1, 9, 13, 22)
+    .|>(NumericalSeq.missingKth(_, 4))
     .|>(println)
-
-def append(s: String, r: String): String = s + " " + r
+}

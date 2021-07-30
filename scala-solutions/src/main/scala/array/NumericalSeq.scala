@@ -59,4 +59,21 @@ object NumericalSeq {
         vec(i) - (discount ?? 0)
       }.toVector
   }
+
+
+  def missingKth(seq: Seq[Int], k: Int): Int = {
+    var i = 0
+    var stack = List[Int]()
+    var j = 1
+    while (i < seq.length && stack.length < k) {
+      var curr = seq(i)
+      while (j < curr && stack.length < k) {
+        stack = j +: stack
+        j += 1
+      }
+      i += 1
+      j += 1
+    }
+    if(stack.isEmpty) seq.last else stack.head
+  }
 }
