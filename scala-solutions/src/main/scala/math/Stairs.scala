@@ -10,7 +10,8 @@ package math
 object Stairs {
   /**
    * Count the column staircase can be created
-   * @param num Number of block given.
+   *
+   * @param num   Number of block given.
    * @param start Starting height (Default: 1)
    * @return Number of steps / height
    */

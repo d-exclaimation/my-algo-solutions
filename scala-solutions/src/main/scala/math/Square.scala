@@ -7,6 +7,8 @@
 
 package math
 
+import option.{?>, ??}
+
 object Square {
   /**
    * Finding if value is a perfect square
@@ -14,13 +16,9 @@ object Square {
    * @param num Numerical value.
    * @return True of False.
    */
-  def perfectSquare(num: Int): Boolean = {
+  def perfectSquare(num: Int): Boolean =
     val res = (0 to num / 2)
       .map(x => x * x)
       .find(x => x == num)
-    res match {
-      case Some(_) => true
-      case None => false
-    }
-  }
+    res.?>(_ => true) ?? false
 }

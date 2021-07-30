@@ -7,7 +7,7 @@
 package tree
 
 import linked.Link
-import option.Nullable.optionToNullable
+import option.*
 
 /**
  * Binary Tree node
@@ -18,9 +18,11 @@ import option.Nullable.optionToNullable
  * @param right Right child tree node of the same type.
  * @tparam T Any type that can hashed and immutable.
  */
-case class Tree[T](value: T,
-                   left: Option[Tree[T]] = None,
-                   right: Option[Tree[T]] = None) {
+case class Tree[T](
+  value: T,
+  left: Option[Tree[T]] = None,
+  right: Option[Tree[T]] = None
+) {
   /**
    * Removed a value from the bottom to up
    *
@@ -72,10 +74,24 @@ case class Tree[T](value: T,
     }
   }
 
+  override def equals(obj: Any): Boolean = obj match {
+    case Tree(v2, l2, r2) =>
+      val valueMatch = value == v2
+      val leftMatch = left.?>(_.equals(l2)).??(l2 == None)
+      val rightMatch = right.?>(_.equals(r2)).??(r2 == None)
+      valueMatch && leftMatch && rightMatch
+    case Some(tree) => equals(tree)
+    case _ => false
+  }
+}
+
+object Tree {
   /**
    * Property shorthand for Tree to be null safe
    *
    * @return Option[Tree] of Some
    */
-  def some: Some[Tree[T]] = Some(this)
+  def node[T](value: T, left: Option[Tree[T]] = None, right: Option[Tree[T]] = None): Option[Tree[T]] = Some(
+    Tree(value, left, right)
+  )
 }

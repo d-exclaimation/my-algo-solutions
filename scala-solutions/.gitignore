@@ -1,7 +1,4 @@
-target/
-
-project/target
-
 .idea/
-
-.env
+.bsp/
+project/target/
+target/

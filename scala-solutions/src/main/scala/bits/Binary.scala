@@ -8,15 +8,13 @@
 package bits
 
 object Binary {
-  def maxEqualCountSeq(bits: Vector[Int]): Int = {
-    val initState = (0, (0, 0))
-    val (max, (_, _)) = bits.foldLeft(initState)((acc, curr) => {
-      val (maxCount, (ones, zeros)) = acc
+  def maxEqualCountSeq(bits: Vector[Int], maxCount: Int = 0, ones: Int = 0, zeros: Int = 0): Int = bits match {
+    case curr +: tail => {
       val newOnes = ones + (if (curr == 1) 1 else 0)
       val newZeros = zeros + (if (curr == 0) 1 else 0)
       val newMax = if (newOnes == newZeros) newOnes + newZeros else maxCount
-      (newMax, (newOnes, newZeros))
-    })
-    max
+      maxEqualCountSeq(bits, newMax, newOnes, newZeros)
+    }
+    case _ => maxCount
   }
 }
