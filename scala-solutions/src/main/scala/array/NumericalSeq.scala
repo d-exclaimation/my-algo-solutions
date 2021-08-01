@@ -74,6 +74,18 @@ object NumericalSeq {
       i += 1
       j += 1
     }
-    if(stack.isEmpty) seq.last else stack.head
+    if (stack.isEmpty) seq.last else stack.head
+  }
+
+  def weirdSort(nums1: Seq[Int], nums2: Seq[Int]): Seq[Int] = {
+    val set: Set[Int] = Set(nums2: _*)
+    val other = nums1.filter(!set.contains(_)).sorted
+    val owned = nums1
+      .filter(set.contains(_))
+      .sortWith { (lhs, rhs) =>
+        nums2.indexOf(lhs) < nums2.indexOf(rhs)
+      }
+
+    owned ++ other
   }
 }

@@ -5,12 +5,10 @@
 //  Created by d-exclaimation on 17:09..
 //
 
-import async.StructuredConcurrency.timeout
+import string.StringTransform.transformAllOccurrence
 
 @main def hello: Unit = {
-  val ref = timeout(() => println("DONE"), 5000)
-  ref.cancel()
-  println("ok")
+  println(transformAllOccurrence("aba", "bbc"))
 }
 
 

@@ -13,6 +13,7 @@ import scala.util.{Failure, Success, Try}
 
 object StructuredConcurrency {
 
+  // -- Structured Asynchronous Programming
 
   /**
    * Async function wrapped on Future
@@ -51,6 +52,8 @@ object StructuredConcurrency {
    */
   def unsafeAwait[T](f: Future[T], duration: Duration = Duration.Inf) = Await.result(f, duration)
 
+
+  // -- Structured Timing Concurrency
 
   /**
    * Timeout wrapper for future to be cancellable

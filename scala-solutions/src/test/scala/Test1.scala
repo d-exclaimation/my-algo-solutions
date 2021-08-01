@@ -1,10 +1,12 @@
 import array.{Crunching, NumericalSeq}
 import org.junit.Assert.*
 import org.junit.Test
-import tree.Tree
+import string.StringTransform
 import pipe.*
+import tree.Tree
 
-class Test1:
+class Test1 {
+
   @Test def t1(): Unit = println("ok")
 
   @Test def treeTest(): Unit = {
@@ -50,3 +52,20 @@ class Test1:
       .|>(Crunching.largestSmallest(_, 3))
       .|>(x => assert(x == 1))
   }
+
+  @Test def weirdSortTest(): Unit = {
+    List(3, 2, 5, 8, 2, 7)
+      .|>(NumericalSeq.weirdSort(_, List(7, 8, 3)))
+      .|>(x => assert(x equals List(7, 8, 3, 2, 2, 5)))
+  }
+
+  @Test def stringTransform(): Unit = {
+    "abc"
+      .|>(StringTransform.transformAllOccurrence(_, "bbc"))
+      .|>(assert(_))
+
+    "aba"
+      .|>(StringTransform.transformAllOccurrence(_, "bbc"))
+      .|>(x => assert(!x))
+  }
+}
