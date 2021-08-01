@@ -5,12 +5,13 @@
 //  Created by d-exclaimation on 17:09..
 //
 
-import option.??
-import pipe.|>
-import array.NumericalSeq
+import async.StructuredConcurrency.timeout
 
 @main def hello: Unit = {
-  List(1, 9, 13, 22)
-    .|>(NumericalSeq.missingKth(_, 4))
-    .|>(println)
+  val ref = timeout(() => println("DONE"), 5000)
+  ref.cancel()
+  println("ok")
 }
+
+
+
