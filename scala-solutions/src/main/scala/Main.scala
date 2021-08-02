@@ -5,10 +5,21 @@
 //  Created by d-exclaimation on 17:09..
 //
 
-import string.StringTransform.transformAllOccurrence
+@main def main: Unit = {
+  val res = Hello(name = "Vin")
+  println("Construction")
+  println(res.greetings)
+  println(res.greetings)
+  println(res.greetings)
+}
 
-@main def hello: Unit = {
-  println(transformAllOccurrence("aba", "bbc"))
+case class Hello(
+  name: String
+) {
+  def greetings: String = {
+    println("Greetings called")
+    s"Hello from $name"
+  }
 }
 
 

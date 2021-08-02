@@ -1,4 +1,5 @@
 import array.{Crunching, NumericalSeq}
+import bits.Binary._
 import org.junit.Assert.*
 import org.junit.Test
 import string.StringTransform
@@ -67,5 +68,11 @@ class Test1 {
     "aba"
       .|>(StringTransform.transformAllOccurrence(_, "bbc"))
       .|>(x => assert(!x))
+  }
+
+  @Test def maxOneBits(): Unit = {
+    List(0, 1, 1, 0, 1)
+      .|>(oneBitsSequence)
+      .|>(x => assert(x == 3))
   }
 }
