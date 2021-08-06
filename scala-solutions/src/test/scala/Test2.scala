@@ -5,6 +5,7 @@
 //  Created by d-exclaimation on 3:32 PM.
 //
 
+import array.StringChain
 import bits.Binary
 import math.Divisible.sumDivisibleByThree
 import math.Vault
@@ -41,6 +42,16 @@ class Test2 {
     val res1 = Vault.vaultCode(Vector(4, 1, 3), -1)
     val exp1 = Vector(3, 4, 1)
     assert(equalsSeq(res1, exp1))
+  }
+
+  @Test def chainSizeTest(): Unit = {
+    val res0 = StringChain.chainSize(Vector("a", "ab", "abc"))
+    val exp0 = 3
+    assert(res0 == exp0)
+
+    val res1 = StringChain.chainSize(Vector("a", "abc"))
+    val exp1 = 1
+    assert(res1 == exp1)
   }
 
   private def equalsSeq[T](lhs: Seq[T], rhs: Seq[T]): Boolean = lhs
