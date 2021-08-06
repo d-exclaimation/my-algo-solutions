@@ -132,6 +132,21 @@ class Heap[T](
     siftUp(data.length - 1)
   }
 
+  def <<(value: T): Heap[T] = {
+    push(value)
+    this
+  }
+
+  /**
+   * Push a new value into the heap and return the heap
+   *
+   * @param value of T.
+   */
+  def pushed(value: T): Heap[T] = {
+    push(value)
+    this
+  }
+
   /**
    * Pop the highest priority value based on resolver
    *

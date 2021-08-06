@@ -35,4 +35,7 @@ object Binary {
     }
     case _ => max(prevMax, count)
   }
+
+
+  def applyXOR(n: Int, start: Int = 0): Int = (0 until n).map(start + 2 * _).reduce(_ ^ _)
 }
