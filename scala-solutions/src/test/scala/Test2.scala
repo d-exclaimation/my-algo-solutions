@@ -8,7 +8,7 @@
 import array.StringChain
 import bits.Binary
 import math.Divisible.sumDivisibleByThree
-import math.Vault
+import math.{Fibonacci, Vault}
 import matrix.StudentGrid
 import org.junit.Assert.*
 import org.junit.Test
@@ -52,6 +52,15 @@ class Test2 {
     val res1 = StringChain.chainSize(Vector("a", "abc"))
     val exp1 = 1
     assert(res1 == exp1)
+  }
+
+  @Test def tribonaaciTest(): Unit = {
+    val res0 = Fibonacci.tribonacci(25)
+    val res1 = Fibonacci.optimizedTresbonacci(25)
+    val res2 = Fibonacci.blazingTribonacci(25)
+    val exp = 1389537
+    assert(res0 == exp)
+    assert(res1 == exp)
   }
 
   private def equalsSeq[T](lhs: Seq[T], rhs: Seq[T]): Boolean = lhs
