@@ -41,4 +41,10 @@ object Link {
     value: T, next: Option[Link[T]] = None
   ): Option[Link[T]] =
     Some(Link(value, next))
+
+
+  def swapPairs[T](some: Option[Link[T]]): Option[Link[T]] = some.flatMap {
+    case Link(first, Some(Link(second, next))) => Link.node(second, Link.node(first, swapPairs(next)))
+    case Link(first, None) => Link.node(first)
+  }
 }

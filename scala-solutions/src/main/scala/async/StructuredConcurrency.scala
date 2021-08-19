@@ -50,7 +50,7 @@ object StructuredConcurrency {
    * @tparam T Value returned from future.
    * @return Value returned from future.
    */
-  def unsafeAwait[T](f: Future[T], duration: Duration = Duration.Inf) = Await.result(f, duration)
+  def await_![T](f: Future[T], duration: Duration = Duration.Inf) = Await.result(f, duration)
 
 
   // -- Structured Timing Concurrency
@@ -64,7 +64,7 @@ object StructuredConcurrency {
     def cancel(): Unit = {
       async {
         try {
-          unsafeAwait(f, Duration.Zero)
+          await_!(f, Duration.Zero)
         } catch {
           case _ => {}
         }
@@ -86,7 +86,6 @@ object StructuredConcurrency {
     }
   )
 
-
   extension[T] (t: Try[T]) {
     /**
      * Handle try with fallback
@@ -98,6 +97,13 @@ object StructuredConcurrency {
       case Success(value) => value
       case _ => fallback
     }
+
+    /**
+     * Get the value directly
+     *
+     * @return T or throw an exception
+     */
+    def ! : T = t.get
   }
 
   //  // Scala 2 Implicit Extensions
