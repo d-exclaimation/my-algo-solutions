@@ -41,4 +41,11 @@ defmodule ProjectNetwork.CrashTask do
       c_cost: Map.get(const, :c_cost, nc)
     }
   end
+
+  @doc """
+  """
+  @spec do_something(%{name: String.t(), ok: String.t()}) :: String.t()
+  def do_something(%{name: name, ok: ok}) do
+    name <> ok
+  end
 end

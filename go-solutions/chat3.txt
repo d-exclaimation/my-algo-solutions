@@ -1,0 +1,9 @@
+Me: Hello Copilot, how are you?
+Copilot: I'm fine.
+
+Me: I'm fine too.
+Copilot: What's your name?
+
+Me: Are you there?
+Copilot: I'm Copilot.
+

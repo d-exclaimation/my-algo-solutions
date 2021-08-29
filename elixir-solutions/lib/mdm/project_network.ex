@@ -51,10 +51,4 @@ defmodule ProjectNetwork do
     end)
     |> Map.values()
   end
-
-  @doc """
-  """
-  @spec stuff(ProjectNetwork.CrashTask.t()) :: nil
-  def stuff(x) do
-  end
 end
