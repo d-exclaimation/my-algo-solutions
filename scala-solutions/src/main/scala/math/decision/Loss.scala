@@ -7,15 +7,14 @@
 
 package math.decision
 
-case class Alternatives(name: String, futures: Seq[FutureDemand])
-
-case class FutureDemand(risk: Double, payoff: Double)
+import math.decision.Risk.*
 
 object Loss {
   def expectedOppurtunityLoss(table: Seq[Alternatives]): (String, Double) = {
     if (table.isEmpty) {
       return ("None", 0)
     }
+    // Find highest of each column to be deducted when calculating regrets
     val highestOfEach = table(0)
       .futures.indices
       .map { i => table.map(_.futures.apply(i)) }
@@ -25,6 +24,7 @@ object Loss {
     table
       .map {
         case Alternatives(label, values) => {
+          // Reduce the highest of each column and reduce it by each value to find regret
           val demands = values.indices.map(i => FutureDemand(values(i).risk, highestOfEach(i) - values(i).payoff))
           Alternatives(label, demands)
         }
@@ -36,4 +36,5 @@ object Loss {
         if (acc._2 <= curr._2) acc else curr
       }
   }
+
 }

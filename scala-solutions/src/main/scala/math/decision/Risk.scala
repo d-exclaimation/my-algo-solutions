@@ -9,4 +9,8 @@ package math.decision
 
 
 
-object Risk {}
+object Risk {
+  case class Alternatives(name: String, futures: Seq[FutureDemand])
+
+  case class FutureDemand(risk: Double, payoff: Double)
+}

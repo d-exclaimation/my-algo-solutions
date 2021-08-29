@@ -50,7 +50,7 @@ object StructuredConcurrency {
    * @tparam T Value returned from future.
    * @return Value returned from future.
    */
-  def await_![T](f: Future[T], duration: Duration = Duration.Inf) = Await.result(f, duration)
+  def awaits[T](f: Future[T], duration: Duration = Duration.Inf) = Await.result(f, duration)
 
 
   // -- Structured Timing Concurrency
@@ -64,7 +64,7 @@ object StructuredConcurrency {
     def cancel(): Unit = {
       async {
         try {
-          await_!(f, Duration.Zero)
+          awaits(f, Duration.Zero)
         } catch {
           case _ => {}
         }

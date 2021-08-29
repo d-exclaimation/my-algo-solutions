@@ -24,4 +24,16 @@ object Crunching {
       case _ => max - cache.getOrElse(0)
     }
   }
+  
+  def sumUnique(seq: Seq[Int]): Int = {
+    val valid = seq.foldLeft(Map.empty[Int, Int]) { (acc, curr) =>
+      val prev = acc.get(curr) getOrElse 0
+      acc.updated(curr, prev + 1)
+    }
+    
+    valid
+      .filter(_._2 <= 1)
+      .map(_._1)
+      .sum
+  }
 }
