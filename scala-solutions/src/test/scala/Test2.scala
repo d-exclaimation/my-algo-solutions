@@ -12,8 +12,14 @@ import math.{Fibonacci, Vault}
 import matrix.StudentGrid
 import org.junit.Assert.*
 import org.junit.Test
+import tree.Branch
 
 class Test2 {
+  extension [T](lhs: Seq[T]) {
+    infix def equivalent(rhs: Seq[T]): Boolean = equalsSeq(lhs, rhs)
+  }
+
+
   @Test def divisibleByThreeTest(): Unit = {
     assert(sumDivisibleByThree(List(3, 1, 2, 5, 8)) == 18)
   }
@@ -62,6 +68,19 @@ class Test2 {
     assert(res0 == exp)
     assert(res1 == exp)
   }
+
+  @Test def branches(): Unit = {
+    val start = Branch(1,
+      Seq(1, 2, 3, 4).map(x => Branch(x))
+    )
+
+    val expected = Seq(1, 1, 2, 3, 4)
+    val res0 = start.preorder
+    
+    assert(res0 equivalent expected)
+  }
+
+
 
   private def equalsSeq[T](lhs: Seq[T], rhs: Seq[T]): Boolean = lhs
     .indices
