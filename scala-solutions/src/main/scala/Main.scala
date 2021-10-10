@@ -6,7 +6,20 @@
 //
 
 import array.Crunching
+import unions.UnionApproaches
+import unions.UnionApproaches.{Charitable, Helpful}
 
 @main def main: Unit = {
-  println(Crunching.sumUnique(Seq(1, 3, 5, 5, 2)))
+  val person1 = new Helpful with Charitable {
+    val name = "Person1"
+
+    def help() = println(s"I ($name) help people")
+
+    def donate(money: Double) = println(s"I ($name) donate some money of $money amount")
+
+    def giveMoney(): Double = 100.25
+  }
+
+
+  UnionApproaches.handleBoth(person1)
 }
