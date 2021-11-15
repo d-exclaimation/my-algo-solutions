@@ -8,7 +8,7 @@ type ConcurrentMap struct {
 	subscriber chan interface{}
 }
 
-// Create a new instance of a concurrent hashmap and run it
+// NewConcurrentMap create a new instance of a concurrent hashmap and run it
 func NewConcurrentMap() *ConcurrentMap {
 	c := &ConcurrentMap{
 		data:       make(map[string]interface{}),
@@ -31,8 +31,8 @@ func (c *ConcurrentMap) Get(key string) interface{} {
 	return <-c.receiver
 }
 
-// Add a subscriber to check for value added
-func (c *ConcurrentMap) Subscribe(key string, handler func(interface{})) {
+// Subscribe Add a subscriber to check for value added
+func (c *ConcurrentMap) Subscribe(handler func(interface{})) {
 	go func() {
 		for {
 			select {
@@ -43,7 +43,7 @@ func (c *ConcurrentMap) Subscribe(key string, handler func(interface{})) {
 	}()
 }
 
-// Get all result
+// GetAll Get all result
 func (c *ConcurrentMap) GetAll() map[string]interface{} {
 	return c.data
 }
