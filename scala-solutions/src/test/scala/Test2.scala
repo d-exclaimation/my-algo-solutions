@@ -5,10 +5,10 @@
 //  Created by d-exclaimation on 3:32 PM.
 //
 
-import array.StringChain
+import array.{StringChain, NumericalSeq}
 import bits.Binary
 import math.Divisible.sumDivisibleByThree
-import math.{Fibonacci, Vault}
+import math.{Fibonacci, Vault, Employees}
 import matrix.StudentGrid
 import org.junit.Assert.*
 import org.junit.Test
@@ -80,7 +80,27 @@ class Test2 {
     assert(res0 equivalent expected)
   }
 
+  @Test def averageSalariesWithoutOutliers(): Unit = {
+    val salaries = Vector(
+      5000.0,
+      4000.0,
+      3000.0,
+      2000.0
+    )
+    val expected = 3500.0
+    val result = Employees.averageSalaryWithoutOutlier0(salaries)
+    assert(expected == result)
+  }
 
+  @Test def isRotatedSorted(): Unit = {
+    assert(NumericalSeq.isRotatedFromSorted(Vector(
+      4, 5, 1, 2, 3
+    )))
+    assert(!NumericalSeq.isRotatedFromSorted(Vector(
+      4, 5, 1, 2, 3, 6
+    )))
+
+  }
 
   private def equalsSeq[T](lhs: Seq[T], rhs: Seq[T]): Boolean = lhs
     .indices

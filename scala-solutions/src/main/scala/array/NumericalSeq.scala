@@ -23,7 +23,7 @@ object NumericalSeq {
      * Boolean whether it's increasing
      */
     def isIncreasing: Boolean = {
-      val (_, res) = iter.foldLeft((0, false)) { (acc, x) =>
+      val (_, res) = iter.foldLeft((0, true)) { (acc, x) =>
         val (prev, res) = acc
         (x, res && prev <= x)
       }
@@ -87,5 +87,11 @@ object NumericalSeq {
       }
 
     owned ++ other
+  }
+
+  def isRotatedFromSorted(nums: Seq[Int], count: Int = 0): Boolean = {
+    if (nums.isIncreasing) true
+    else if (count == nums.length) false
+    else isRotatedFromSorted(nums.tail :+ nums.head, count + 1)
   }
 }
