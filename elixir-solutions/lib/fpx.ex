@@ -35,17 +35,7 @@ defmodule FPX do
   """
   @spec main() :: :ok
   def main() do
-    ProjectNetwork.reduction_on_crashing(
-      [
-        %{activity: "A", n_time: 5, c_time: 4, n_cost: 400, c_cost: 750},
-        %{activity: "B", n_time: 8, c_time: 7, n_cost: 1800, c_cost: 2100},
-        %{activity: "E", n_time: 8, c_time: 7, n_cost: 1700, c_cost: 1950},
-        %{activity: "H", n_time: 4, c_time: 3, n_cost: 400, c_cost: 600},
-        %{activity: "I", n_time: 6, c_time: 5, n_cost: 900, c_cost: 1300}
-      ],
-      3
-    )
-    |> IO.inspect()
+    Async.test1()
 
     :ok
   end
