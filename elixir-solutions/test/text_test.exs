@@ -43,4 +43,14 @@ defmodule TextTest do
 
     assert Character.smallest_count_letter(["abc"], ["ddef", "xxyz"]) == [2]
   end
+
+  test "Evenly / Equaly distributed Vowels" do
+    import Array
+    queries = ["laptop", "computer"]
+    expected = [true, false]
+
+    for {given, should} <- Enum.map(queries, &Vowel.evenly_vowel/1) <|> expected do
+      assert given == should
+    end
+  end
 end
