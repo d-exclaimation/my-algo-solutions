@@ -35,8 +35,6 @@ defmodule FPX do
   """
   @spec main() :: :ok
   def main() do
-    Async.test1()
-
     :ok
   end
 end

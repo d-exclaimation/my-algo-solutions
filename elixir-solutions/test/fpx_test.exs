@@ -62,4 +62,20 @@ defmodule FPXTest do
       assert inspect(exp) == inspect(given)
     end
   end
+
+  test "Soup and Salad side dishes" do
+    customers0 = [1, 1, 1]
+    sides0 = [1, 1, 1]
+    expected0 = 0
+    given0 = Engine.Restaurant.side_dish(customers0, sides0)
+
+    assert expected0 == given0
+
+    customers1 = [1, 0, 1]
+    sides1 = [0, 0, 1]
+    expected1 = 2
+    given1 = Engine.Restaurant.side_dish(customers1, sides1)
+
+    assert expected1 == given1
+  end
 end
