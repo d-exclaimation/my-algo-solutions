@@ -35,7 +35,9 @@ defmodule HexaDecimal do
     # append from of the rest if any
     curr = rem(num, 16)
     rest = div(num, 16)
-    if rest > 0, do: from(rest) <> hexa_digit(curr), else: hexa_digit(curr)
+
+    front = if rest > 0, do: from(rest), else: ""
+    front <> hexa_digit(curr)
   end
 
   @doc """
