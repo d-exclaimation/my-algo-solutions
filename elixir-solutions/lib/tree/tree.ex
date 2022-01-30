@@ -45,7 +45,7 @@ defmodule Tree do
   def pre_order(root) when root == nil, do: []
 
   def pre_order(%Tree{val: val, left: left, right: right}) do
-    [val] ++ in_order(left) ++ in_order(right)
+    [val] ++ pre_order(left) ++ pre_order(right)
   end
 
   @doc """
@@ -55,7 +55,7 @@ defmodule Tree do
   def post_order(root) when root == nil, do: []
 
   def post_order(%Tree{val: val, left: left, right: right}) do
-    in_order(left) ++ in_order(right) ++ [val]
+    post_order(left) ++ post_order(right) ++ [val]
   end
 
   @doc """
@@ -80,6 +80,46 @@ defmodule Tree do
 
   def min_depth(%Tree{left: left, right: right}) do
     1 + min(min_depth(left), min_depth(right))
+  end
+
+  @doc """
+  """
+  @spec reconstruct([any()], [any()]) :: t(any()) | nil
+  def reconstruct([], []), do: nil
+  def reconstruct(pre_order, in_order) when length(pre_order) != length(in_order), do: nil
+
+  def reconstruct([top_node | pre_order], in_order) do
+    find_index = fn arr, elem ->
+      res =
+        arr
+        |> Enum.find_index(fn each ->
+          each == elem
+        end)
+
+      if res == nil,
+        do: :error,
+        else: {:ok, res}
+    end
+
+    with {:ok, i} <- find_index.(in_order, top_node),
+         {:ok, j} <- find_index.(pre_order, Enum.at(in_order, i - 1)) do
+      # In orders
+      l_in_order = Enum.slice(in_order, 0..(i - 1))
+      r_in_order = Enum.slice(in_order, (i + 1)..-1)
+
+      # Pre orders
+      l_pre_order = Enum.slice(pre_order, 0..j)
+      r_pre_order = Enum.slice(pre_order, (j + 1)..-1)
+
+      %Tree{
+        val: top_node,
+        left: reconstruct(l_pre_order, l_in_order),
+        right: reconstruct(r_pre_order, r_in_order)
+      }
+    else
+      _ ->
+        %Tree{val: top_node}
+    end
   end
 end
 

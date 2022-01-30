@@ -111,4 +111,32 @@ defmodule FPX.TreeTest do
 
     assert Tree.min_depth(root) == 2
   end
+
+  test "Reconstruct tree from lists" do
+    tree = %Tree{
+      val: 1,
+      left: %Tree{
+        val: 2,
+        left: %Tree{val: 4},
+        right: %Tree{val: 5}
+      },
+      right: %Tree{
+        val: 3,
+        left: %Tree{val: 6},
+        right: %Tree{val: 7}
+      }
+    }
+
+    pre_order =
+      tree
+      |> Tree.pre_order()
+
+    in_order =
+      tree
+      |> Tree.in_order()
+
+    tree1 = Tree.reconstruct(pre_order, in_order)
+
+    assert inspect(tree) == inspect(tree1)
+  end
 end
