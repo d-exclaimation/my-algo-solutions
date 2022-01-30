@@ -252,4 +252,16 @@ defmodule Array do
 
     res
   end
+
+  @doc """
+  Indices of this array
+  """
+  @spec indices([any()]) :: [non_neg_integer()]
+  def indices([]), do: []
+  def indices([_first]), do: [0]
+
+  def indices(arr) do
+    max = Enum.count(arr)
+    Enum.to_list(0..(max - 1))
+  end
 end

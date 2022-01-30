@@ -186,4 +186,27 @@ defmodule Kth do
 
     a * b
   end
+
+  @doc """
+  Find all contiguous subarrays that sum to K
+  """
+  @spec contiguous_subarrays([non_neg_integer()], non_neg_integer()) :: non_neg_integer()
+  def contiguous_subarrays([], _k), do: 0
+  def contiguous_subarrays([head | tail], k) when head == k, do: 1 + contiguous_subarrays(tail, k)
+
+  def contiguous_subarrays([head | tail], k) do
+    _cont_subarrays(head, tail, k) + contiguous_subarrays(tail, k)
+  end
+
+  defp _cont_subarrays(curr, [], k), do: if(curr == k, do: 1, else: 0)
+
+  defp _cont_subarrays(curr, [head | tail], k) do
+    new_curr = curr + head
+
+    cond do
+      new_curr == k -> 1
+      new_curr > k -> 0
+      true -> _cont_subarrays(new_curr, tail, k)
+    end
+  end
 end
