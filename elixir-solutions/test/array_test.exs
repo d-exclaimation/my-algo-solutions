@@ -39,4 +39,12 @@ defmodule ArrayTest do
   test "Count of contiguous subarrays that sum to k" do
     assert Kth.contiguous_subarrays([1, 3, 1, 2, 5], 7) == 2
   end
+
+  test "Least Unique Elements after removing K element" do
+    assert Kth.least_unique_count([1, 4, 3, 3], 2) == 1
+    assert Kth.least_unique_count([1, 1, 4, 3, 3], 2) == 2
+    assert Kth.least_unique_count([1, 1, 4, 4, 3, 3], 2) == 2
+    assert Kth.least_unique_count([1, 1, 1, 4, 4, 4, 3, 3], 2) == 2
+    assert Kth.least_unique_count([1, 1, 1, 4, 4, 4, 3, 3, 3], 2) == 3
+  end
 end

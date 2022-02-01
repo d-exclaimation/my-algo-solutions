@@ -209,4 +209,54 @@ defmodule Kth do
       true -> _cont_subarrays(new_curr, tail, k)
     end
   end
+
+  @doc """
+  Least amount of unique element possible if must remove k element
+  """
+  @spec least_unique_count([non_neg_integer()], non_neg_integer()) :: non_neg_integer()
+  def least_unique_count(nums, k) do
+    nums_to_counts =
+      nums
+      # 0(n) time + O(n) space
+      |> Enum.reduce(Map.new(), fn num, acc ->
+        acc |> Map.update(num, 1, fn count -> count + 1 end)
+      end)
+      |> Map.to_list()
+
+    count_to_nums =
+      nums_to_counts
+      # 0(n) time + O(n) space
+      |> Enum.reduce(Map.new(), fn {num, count}, acc ->
+        acc |> Map.update(count, [num], fn all -> [num | all] end)
+      end)
+
+    # O(n) time + O(n) space
+    _least_unique_count(count_to_nums, k, 1)
+  end
+
+  defp _least_unique_count(count_to_nums, 0, _iter),
+    do:
+      count_to_nums
+      |> Map.to_list()
+      |> Enum.flat_map(fn {_, elems} -> elems end)
+      |> Enum.count()
+
+  defp _least_unique_count(count_to_nums, k, iter) do
+    case Map.fetch(count_to_nums, iter) do
+      {:ok, []} when iter > k ->
+        _least_unique_count(count_to_nums, 0, iter + 1)
+
+      {:ok, _} when iter > k ->
+        _least_unique_count(count_to_nums, 0, iter)
+
+      {:ok, []} ->
+        _least_unique_count(count_to_nums, k, iter + 1)
+
+      {:ok, [_ | remains]} ->
+        _least_unique_count(count_to_nums |> Map.replace(iter, remains), k - iter, iter)
+
+      :error ->
+        _least_unique_count(count_to_nums, k, iter + 1)
+    end
+  end
 end
