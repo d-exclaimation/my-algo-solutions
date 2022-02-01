@@ -243,18 +243,19 @@ defmodule Kth do
 
   defp _least_unique_count(count_to_nums, k, iter) do
     case Map.fetch(count_to_nums, iter) do
-      {:ok, []} when iter > k ->
-        _least_unique_count(count_to_nums, 0, iter + 1)
-
+      # If current iteration of the count is more that can be removed, we end recursive
       {:ok, _} when iter > k ->
         _least_unique_count(count_to_nums, 0, iter)
 
+      # If current iteration is less than equal to what can removed, but there are no element, we skip this current count
       {:ok, []} ->
         _least_unique_count(count_to_nums, k, iter + 1)
 
+      # If current iteration is less than equal to what can removed, we remove one of the element (any) and continue with the same count
       {:ok, [_ | remains]} ->
         _least_unique_count(count_to_nums |> Map.replace(iter, remains), k - iter, iter)
 
+      # If current iteration count doesn't exist, we skip
       :error ->
         _least_unique_count(count_to_nums, k, iter + 1)
     end
