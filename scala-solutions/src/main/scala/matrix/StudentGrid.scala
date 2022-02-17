@@ -10,6 +10,7 @@ package matrix
 import option.??
 import tree.Heap
 
+import scala.annotation.tailrec
 import scala.collection.immutable.HashMap
 
 object StudentGrid {
@@ -17,22 +18,23 @@ object StudentGrid {
     val result = gradesDatabaseRec(grades)
 
     val result2 = result.map {
-      case (id, grades) => {
+      case (id, grades) =>
         val top5 = (for (_ <- 1 to 5) yield grades.pop() ?? 0).sum
         Vector(id, top5 / 5)
-      }
+
     }
 
     result2.toSeq
   }
 
+  @tailrec
   private def gradesDatabaseRec(
     input: Seq[Seq[Int]], source: HashMap[Int, Heap[Int]] = HashMap()
   ): HashMap[Int, Heap[Int]] = input match {
     // Case of not empty seq
     case head +: tail => head match {
 
-      case Seq(id, grade) => {
+      case Seq(id, grade) =>
         val prev = source.getOrElse(id,
           new Heap[Int](
             resolver = _ >= _,
@@ -40,7 +42,6 @@ object StudentGrid {
           )
         )
         gradesDatabaseRec(tail, source updated(id, prev pushed grade))
-      }
 
       case _ => gradesDatabaseRec(tail, source)
     }
