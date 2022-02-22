@@ -7,13 +7,18 @@
 
 import array.{Crunching, NumericalSeq}
 import math.Employees
+import string.Cipher
 import unions.UnionApproaches
 import unions.UnionApproaches.{Charitable, Helpful}
 
-@main def main: Unit = {
-  val result = NumericalSeq.isRotatedFromSorted(Vector(
-    4, 5, 1, 2, 3
-  ))
+@main def main(): Unit = {
+  val result = Cipher.repeatedSubstring(
+    str = "FVLYPIPGLULYPQHFFSDEMDHEVOKNCBGEPSMFNCKYGSSBUPURKIUFOHHQZRYSFUHELCXSAPBUOVAEIFYLUPWEDSWGFKZBFGEGUIHLUPQEUFPUBDKBOVKYFTZPQUMRBOLUHNNHNRWMAQPABCFIPSMHKBUHEDOVHEMOSGIFBCFKVUGBBGKCXXXX",
+    reps = 2
+  )
+//  Cipher.reverseSubstring(
+//    str = "FVLYPIPGLULYPQHFFSDEMDHEVOKNCBGEPSMFNCKYGSSBUPURKIUFOHHQZRYSFUHELCXSAPBUOVAEIFYLUPWEDSWGFKZBFGEGUIHLUPQEUFPUBDKBOVKYFTZPQUMRBOLUHNNHNRWMAQPABCFIPSMHKBUHEDOVHEMOSGIFBCFKVUGBBGKCXXXX",
+//  )
   println(result)
 //  val person1 = new Helpful with Charitable {
 //    val name = "Person1"
