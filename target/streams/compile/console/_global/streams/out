@@ -1,46 +1,10 @@
 [0m[[0m[0mdebug[0m] [0m[0mWaiting for threads to exit or System.exit to be called.[0m
 [0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.12:1.5.4:compile for Scala 2.12.14[0m
 [0m[[0m[0mdebug[0m] [0m[0mWaiting for thread run-main-0 to terminate.[0m
-[0m[[0m[0minfo[0m] [0m[0mNon-compiled module 'compiler-bridge_2.12' for Scala 2.12.14. Compiling...[0m
-[0m[[0m[0mdebug[0m] [0m[0mCreating plain compiler interface for 2.12.14.[0m
-[0m[[0m[0mdebug[0m] [0m[0m  > Arguments: [0m
-[0m[[0m[0mdebug[0m] [0m[0m	-d[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_a97393e7[0m
-[0m[[0m[0mdebug[0m] [0m[0m	-nowarn[0m
-[0m[[0m[0mdebug[0m] [0m[0m	-bootclasspath[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/Users/paladynamovincent/.sbt/boot/scala-2.12.14/lib/scala-library.jar[0m
-[0m[[0m[0mdebug[0m] [0m[0m	-classpath[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/Users/paladynamovincent/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/compiler-interface/1.5.4/compiler-interface-1.5.4.jar:/Users/paladynamovincent/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/util-interface/1.5.0/util-interface-1.5.0.jar:/Users/paladynamovincent/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/org/scala-sbt/compiler-bridge_2.12/1.5.4/compiler-bridge_2.12-1.5.4-sources.jar:/Users/paladynamovincent/.sbt/boot/scala-2.12.14/lib/scala-compiler.jar:/Users/paladynamovincent/.sbt/boot/scala-2.12.14/lib/scala-reflect.jar:/Users/paladynamovincent/.sbt/boot/scala-2.12.14/lib/scala-xml_2.12-1.0.6.jar[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/scala/ZincCompat.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/API.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/AbstractZincFile.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/Analyzer.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/CallbackGlobal.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/ClassName.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/Compat.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/CompilerBridge.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/ConsoleBridge.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/DelegatingReporter.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/Dependency.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/ExtractAPI.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/ExtractUsedNames.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/GlobalHelpers.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/InteractiveConsoleBridge.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/InteractiveConsoleFactoryBridge.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/InteractiveConsoleHelper.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/InteractiveConsoleResponse.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/JarUtils.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/JavaUtils.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/LocalToNonLocalClass.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/LocateClassFile.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/Log.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/Message.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/PlainNioFile.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m	/var/folders/6_/1vdlvldj7ljc01jlkz1kbhrc0000gn/T/sbt_fd30a773/xsbt/ScaladocBridge.scala[0m
-[0m[[0m[0mdebug[0m] [0m[0m      [0m
-[0m[[0m[0minfo[0m] [0m[0m  Compilation completed in 7.97s.[0m
 [0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.12:1.5.4:compile for Scala 2.12.14[0m
 [0m[[0m[0minfo[0m] [0m[0mStarting scala interpreter...[0m
 [0m[[0m[33mwarn[0m] [0m[0mRun canceled.[0m
-[0m[[0m[0mdebug[0m] [0m[0mInterrupting thread Thread-518[0m
-[0m[[0m[0mdebug[0m] [0m[0m	Interrupted Thread-518[0m
+[0m[[0m[0mdebug[0m] [0m[0mInterrupting thread run-main-0[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Interrupted run-main-0[0m
+[0m[[0m[0mdebug[0m] [0m[0mInterrupting thread Thread-23[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Interrupted Thread-23[0m
