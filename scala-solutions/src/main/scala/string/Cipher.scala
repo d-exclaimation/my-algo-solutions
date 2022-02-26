@@ -22,25 +22,27 @@ object Cipher {
   }
 
 
-  def vigenere(plain: String, key: String): String =
-    val newKey = key.extend(plain.length).toCharInts
-    val newPlain = plain.toCharInts
-    newPlain.zip(newKey)
-      .map { case (p, k) =>
-        (p + k) % 26 + 97
-      }
-      .map(_.toChar)
-      .mkString
+  def vigenere(plain: String, key: String): String = plain
+    .toCharInts
+    .zip(
+      key.extend(plain.length).toCharInts
+    )
+    .map { case (p, k) =>
+      (p + k) % 26 + 97
+    }
+    .map(_.toChar)
+    .mkString
 
-  def deVigenere(plain: String, key: String): String =
-    val newKey = key.extend(plain.length).toCharInts
-    val newPlain = plain.toCharInts
-    newPlain.zip(newKey)
-      .map { case (p, k) =>
-        (p - k) + (if (p < k) 26 else 0) + 97
-      }
-      .map(_.toChar)
-      .mkString
+  def deVigenere(plain: String, key: String): String = plain
+    .toCharInts
+    .zip(
+      key.extend(plain.length).toCharInts
+    )
+    .map { case (p, k) =>
+      (p - k) + (if (p < k) 26 else 0) + 97
+    }
+    .map(_.toChar)
+    .mkString
 
   def repeatedSubstring(str: String, reps: Int = 4): Seq[String] = {
     var res = Seq.empty[String]

@@ -6,30 +6,21 @@
 //
 
 import array.{Crunching, NumericalSeq}
-import math.Employees
+import math.{Clock, Employees}
 import string.Cipher
+import string.Cipher.toCharInts
 import unions.UnionApproaches
 import unions.UnionApproaches.{Charitable, Helpful}
 
 @main def main(): Unit = {
-  val result = Cipher.repeatedSubstring(
-    str = "FVLYPIPGLULYPQHFFSDEMDHEVOKNCBGEPSMFNCKYGSSBUPURKIUFOHHQZRYSFUHELCXSAPBUOVAEIFYLUPWEDSWGFKZBFGEGUIHLUPQEUFPUBDKBOVKYFTZPQUMRBOLUHNNHNRWMAQPABCFIPSMHKBUHEDOVHEMOSGIFBCFKVUGBBGKCXXXX",
-    reps = 2
-  )
-//  Cipher.reverseSubstring(
-//    str = "FVLYPIPGLULYPQHFFSDEMDHEVOKNCBGEPSMFNCKYGSSBUPURKIUFOHHQZRYSFUHELCXSAPBUOVAEIFYLUPWEDSWGFKZBFGEGUIHLUPQEUFPUBDKBOVKYFTZPQUMRBOLUHNNHNRWMAQPABCFIPSMHKBUHEDOVHEMOSGIFBCFKVUGBBGKCXXXX",
-//  )
-  println(result)
-//  val person1 = new Helpful with Charitable {
-//    val name = "Person1"
-//
-//    def help() = println(s"I ($name) help people")
-//
-//    def donate(money: Double) = println(s"I ($name) donate some money of $money amount")
-//
-//    def giveMoney(): Double = 100.25
-//  }
-//
-//
-//  UnionApproaches.handleBoth(person1)
+  //  val result = Cipher.repeatedSubstring(
+  //    str = "FVLYPIPGLULYPQHFFSDEMDHEVOKNCBGEPSMFNCKYGSSBUPURKIUFOHHQZRYSFUHELCXSAPBUOVAEIFYLUPWEDSWGFKZBFGEGUIHLUPQEUFPUBDKBOVKYFTZPQUMRBOLUHNNHNRWMAQPABCFIPSMHKBUHEDOVHEMOSGIFBCFKVUGBBGKCXXXX",
+  //    reps = 2
+  //  )
+  //  Cipher.reverseSubstring(
+  //    str = "FVLYPIPGLULYPQHFFSDEMDHEVOKNCBGEPSMFNCKYGSSBUPURKIUFOHHQZRYSFUHELCXSAPBUOVAEIFYLUPWEDSWGFKZBFGEGUIHLUPQEUFPUBDKBOVKYFTZPQUMRBOLUHNNHNRWMAQPABCFIPSMHKBUHEDOVHEMOSGIFBCFKVUGBBGKCXXXX",
+  //  )
+  //  val result = Cipher.vigenere("iamvincent", "code")
+  val data = Seq("00:00", "12:23", "05:50", "23:12")
+  println(Clock.minIntervalTimeString(data))
 }
