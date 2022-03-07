@@ -5,10 +5,10 @@
 //  Created by d-exclaimation on 3:32 PM.
 //
 
-import array.{StringChain, NumericalSeq}
+import array.{NumericalSeq, StringChain}
 import bits.Binary
 import math.Divisible.sumDivisibleByThree
-import math.{Fibonacci, Vault, Employees}
+import math.{Employees, Fibonacci, Vault, gcd}
 import matrix.StudentGrid
 import org.junit.Assert.*
 import org.junit.Test
@@ -92,14 +92,18 @@ class Test2 {
     assert(expected == result)
   }
 
-  @Test def isRotatedSorted(): Unit = {
+  @Test def rotatedSortedTest(): Unit = {
     assert(NumericalSeq.isRotatedFromSorted(Vector(
       4, 5, 1, 2, 3
     )))
     assert(!NumericalSeq.isRotatedFromSorted(Vector(
       4, 5, 1, 2, 3, 6
     )))
+  }
 
+  @Test def gcdTest(): Unit = {
+    assert(gcd(15, 10) == 5)
+    assert(gcd(1250, 10) == 10)
   }
 
   private def equalsSeq[T](lhs: Seq[T], rhs: Seq[T]): Boolean = lhs
