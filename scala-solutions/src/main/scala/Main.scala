@@ -7,7 +7,7 @@
 
 import array.{Crunching, NumericalSeq}
 import graph.AdjacencyMatrixGraph
-import math.{Clock, Employees}
+import math.{Clock, Employees, bezoutIdentity, inverseInZ}
 import string.Cipher
 import string.Cipher.toCharInts
 import unions.UnionApproaches
@@ -24,4 +24,6 @@ import unions.UnionApproaches.{Charitable, Helpful}
 
   val parentTree = graph.bfs(0)
   println(AdjacencyMatrixGraph.shortestPath(parentTree, 0, 3))
+
+  println(inverseInZ(5, 3))
 }
