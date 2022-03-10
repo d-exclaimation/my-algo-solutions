@@ -6,15 +6,15 @@
 //
 
 import array.{Crunching, NumericalSeq}
-import graph.AdjacencyMatrixGraph
-import math.{Clock, Employees, bezoutIdentity, inverseInZ}
+import graph.*
+import math.{Clock, Employees, Euler, bezoutIdentity, inverseInZ}
 import string.Cipher
 import string.Cipher.toCharInts
 import unions.UnionApproaches
 import unions.UnionApproaches.{Charitable, Helpful}
 
 @main def main(): Unit = {
-  val graph = AdjacencyMatrixGraph(
+  val graph = AdjacencyListGraph(
     """U 4
       |1 2
       |0 1
@@ -22,8 +22,9 @@ import unions.UnionApproaches.{Charitable, Helpful}
       |2 3
       |""".stripMargin)
 
-  val parentTree = graph.bfs(0)
-  println(AdjacencyMatrixGraph.shortestPath(parentTree, 0, 3))
+  println(graph.shortestPath(0, 2).pathString)
 
-  println(inverseInZ(5, 3))
+  println(graph)
+
+  println(Euler.phi(7))
 }
