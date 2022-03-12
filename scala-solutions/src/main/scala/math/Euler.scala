@@ -10,8 +10,9 @@ package math
 object Euler {
   def phi(m: Int): Int = (2 to m)
     .filter(m % _ == 0)
-    .map(_.toDouble).map(p => 1.0 - (1.0 / p))
-    .appended(m.toDouble)
-    .product
-    .toInt
+    .filter(_.isPrime)
+    .map(p => (p - 1, p))
+    .foldLeft(m) {
+      case (acc, (m, d)) => acc * m / d
+    }
 }

@@ -6,7 +6,10 @@ package object math {
     if b == 0 then a else gcd(b, a % b)
 
   def inverseInZ(z: Int, x: Int): Option[Int] = gcd(z, x) match {
-    case 1 => Some(bezoutIdentity(z, x)._2)
+    case 1 => Some(bezoutIdentity(x, z)._1).map {
+      case num if num < 0 => z + num
+      case num => num
+    }
     case _ => None
   }
 
@@ -32,6 +35,16 @@ package object math {
         prevY = y - q * prevY,
         y = prevY
       )
+    }
+  }
+
+  def zStarMembers(z: Int): Seq[Int] =
+    (1 until z).filter(gcd(_, z) == 1)
+
+
+  extension (i: Int) {
+    def isPrime: Boolean = {
+      !(2 to (i / 2)).map(i % _).contains(0)
     }
   }
 }
