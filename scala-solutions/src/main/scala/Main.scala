@@ -7,27 +7,40 @@
 
 import array.{Crunching, NumericalSeq}
 import graph.*
-import math.{Clock, Employees, Euler, bezoutIdentity, gcd, inverseInZ, isPrime, zStarMembers}
+import math.*
 import string.Cipher
 import string.Cipher.toCharInts
 import unions.UnionApproaches
 import unions.UnionApproaches.{Charitable, Helpful}
 
 @main def main(): Unit = {
-  val q1 = 3
-  val q2 = 5
-  val p1 = p(q1)
-  val p2 = p(q2)
+  val graphStr =
+    """U 7 W
+      |0 1 5
+      |0 2 7
+      |0 3 12
+      |1 2 9
+      |2 3 4
+      |1 4 7
+      |2 4 4
+      |2 5 3
+      |3 5 7
+      |4 5 2
+      |4 6 5
+      |5 6 2""".stripMargin
 
-  val n = p1 * p2
-  println("Phi1")
-  val phi1 = Euler.phi(n)
-  println("Phi12")
-  val expected = s"${Euler.phi(phi1)}/$phi1"
-  val res = s"${2 * (q1 - 1) * (q2 - 1)}/$phi1"
-  println(s"expected: $expected, given: $res")
-  println(s"${(1 to phi1).count(m => gcd(phi1, m) == 1)}")
-  println(s"${(1 to phi1).length}")
+  val graph = AdjacencyListGraph(graphStr)
+  println(graph)
+  val (parent, distance) = graph.prim(0)
+
+  println(s"[${
+    parent.map {
+      case Some(value) => s"$value"
+      case None => "-"
+    }.mkString(", ")
+  }] [${
+    distance.mkString(", ")
+  }]")
 }
 
 def p(q: Int): Int = 2 * q + 1
