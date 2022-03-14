@@ -8,7 +8,6 @@
 
 package graph
 
-import graph.AdjacencyListGraph.nextVertex
 import utils.not
 
 import scala.annotation.tailrec
@@ -25,7 +24,7 @@ import scala.util.control.NonFatal
 case class AdjacencyListGraph(
   n: Int,
   list: IndexedSeq[Seq[(Int, Option[Int])]]
-) {
+) extends Graph {
 
   /**
    * Check if these two vertices have an edge
@@ -78,37 +77,6 @@ case class AdjacencyListGraph(
     }
     .not
 
-  def topologicalOrdering: Seq[Int] = {
-    val state = mutable.ArrayBuffer.fill[String](n){ "U" }
-    val parent = mutable.ArrayBuffer.fill[Option[Int]](n) { None }
-    val stack = mutable.Stack.empty[Int]
-
-    for (u <- 0 until n) {
-      if (state(u) == "U") {
-        topologicalDfsLoop(u, state, parent, stack)
-      }
-    }
-
-    stack.popAll().toSeq
-  }
-
-  private def topologicalDfsLoop(
-    u: Int,
-    state: mutable.ArrayBuffer[String],
-    parent: mutable.ArrayBuffer[Option[Int]],
-    stack: mutable.Stack[Int]
-  ): Unit = {
-    edge(u).foreach { case (v, _) =>
-      if (state(v) == "U") {
-        state.update(v, "D")
-        parent(v) = Some(u)
-        topologicalDfsLoop(v, state, parent, stack)
-      }
-    }
-    state.update(u, "P")
-    stack.push(u)
-  }
-
   def transposed: AdjacencyListGraph =
     if (isDirected.not) new AdjacencyListGraph(n, list)
     else {
@@ -142,79 +110,6 @@ case class AdjacencyListGraph(
 
   def hubs: Seq[Int] = list.indices.filter(isHub)
 
-  /**
-   * Breath first search to find the parent tree from a starting vertex
-   *
-   * @param start Staring vertex
-   * @return A parent tree in form of a sequence where the value is the parent of the vertex of that index.
-   */
-  def bfs(start: Int): IndexedSeq[Option[Int]] =
-    val (_, mapped) = bfsOuterLoop(
-      Queue.apply(start),
-      Map.empty,
-      Map.empty
-    )
-    (0 until n).map(mapped.get)
-
-  @tailrec
-  private def bfsOuterLoop(
-    queue: Queue[Int],
-    state: Map[Int, String],
-    parent: Map[Int, Int]
-  ): (Map[Int, String], Map[Int, Int]) =
-    if (queue.isEmpty) (state, parent)
-    else {
-      val (curr, newQueue) = queue.dequeue
-      val (latestQueue, newState, newParent) = bfsInnerLoop(curr, edge(curr), newQueue, state, parent)
-      bfsOuterLoop(latestQueue, newState.updated(curr, "P"), newParent)
-    }
-
-  @tailrec
-  private def bfsInnerLoop(
-    curr: Int,
-    edges: Seq[(Int, Option[Int])],
-    queue: Queue[Int],
-    state: Map[Int, String],
-    parent: Map[Int, Int]
-  ): (Queue[Int], Map[Int, String], Map[Int, Int]) =
-    if (edges.isEmpty) (queue, state, parent)
-    else {
-      val (v, _) +: remains = edges
-      val isUndiscovered = state.getOrElse(v, "U") == "U"
-
-      bfsInnerLoop(curr, remains,
-        if (isUndiscovered) queue.enqueue(v) else queue,
-        if (isUndiscovered) state.updated(v, "D") else state,
-        if (isUndiscovered) parent.updated(v, curr) else parent
-      )
-    }
-
-
-  /**
-   * Finding the shortest path from a vertex to another
-   *
-   * @param from Staring vertex
-   * @param to   Ending vertex
-   * @return A sequence showing the path `from` -> `to` or None if path doesn't exist
-   */
-  def shortestPath(from: Int, to: Int): Option[Seq[Int]] =
-    if (from < 0 || from >= n || to < 0 || to >= n) None
-    else if (isWeighted) shortWalk(dijkstra(from)._1, from, to)
-    else shortWalk(bfs(from), from, to)
-
-  @tailrec
-  private def shortWalk(
-    parent: IndexedSeq[Option[Int]],
-    from: Int,
-    to: Int,
-    carry: Seq[Int] = Seq.empty
-  ): Option[Seq[Int]] =
-    if (from == to) Some(from +: carry)
-    else parent.applyOrElse(to, _ => None) match {
-      case None => None
-      case Some(value) => shortWalk(parent, from, value, to +: carry)
-    }
-
 
   override def toString: String =
     s"<#AdjacencyListGraph(n: $n, edges:" + "\n" + list.zipWithIndex.map {
@@ -227,55 +122,6 @@ case class AdjacencyListGraph(
           .mkString(", ")
       }}"
     }.mkString("\n") + "\n)>"
-
-
-  def prim(start: Int): (IndexedSeq[Option[Int]], IndexedSeq[Int]) = {
-    if (isWeighted.not || isDirected) return (IndexedSeq.empty, IndexedSeq.empty);
-
-    val inTree = mutable.ArrayBuffer.fill[Boolean](n)(false)
-    val distance = mutable.ArrayBuffer.fill[Int](n)(Int.MaxValue)
-    val parent = mutable.ArrayBuffer.fill[Option[Int]](n)(None)
-
-    distance.update(start, 0)
-
-    while (inTree.exists(_.not)) {
-      val (u, _) = nextVertex(inTree, distance)
-
-      inTree.update(u, true)
-
-      for ((v, Some(weight)) <- edge(u).filter{ case (v, weight) => inTree(v).not && weight.exists(_ < distance(v)) }) {
-        distance.update(v, weight)
-        parent.update(v, Some(u))
-      }
-    }
-
-    (parent.toIndexedSeq, distance.toIndexedSeq)
-  }
-
-  def dijkstra(start: Int): (IndexedSeq[Option[Int]], IndexedSeq[Int]) = {
-    if (isWeighted.not || isDirected) return (IndexedSeq.fill(n)(None), IndexedSeq.fill(n)(-1));
-
-    val distance = mutable.ArrayBuffer.fill[Int](n)(Int.MaxValue)
-    val inTree = mutable.ArrayBuffer.fill[Boolean](n)(false)
-    val parent = mutable.ArrayBuffer.fill[Option[Int]](n)(None)
-
-    distance.update(start, 0)
-
-    while (inTree.exists(_.not)) {
-      val (u, _) = nextVertex(inTree, distance)
-      inTree.update(u, true)
-
-      for ((v, Some(weight)) <- edge(u)) {
-        if (inTree(v).not && distance(u) + weight < distance(v)) {
-          distance.update(v, distance(u) + weight)
-          parent.update(v, Some(u))
-        }
-      }
-    }
-
-    (parent.toIndexedSeq, distance.toIndexedSeq)
-  }
-
 }
 
 object AdjacencyListGraph {
@@ -293,11 +139,4 @@ object AdjacencyListGraph {
       list = (0 until n).map(res.getOrElse(_, Seq.empty))
     )
   }
-
-  def nextVertex(inTree: mutable.ArrayBuffer[Boolean], distance: mutable.ArrayBuffer[Int]): (Int, Int) = inTree
-    .zipWithIndex
-    .filter(_._1.not)
-    .map(_._2)
-    .map(i => (i, distance.apply(i)))
-    .minBy(_._2)
 }

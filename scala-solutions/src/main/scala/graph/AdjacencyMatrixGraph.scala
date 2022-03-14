@@ -14,16 +14,20 @@ import scala.collection.mutable
 class AdjacencyMatrixGraph(
   val n: Int,
   val isDirected: Boolean = false,
-  private val matrix: IndexedSeq[IndexedSeq[Boolean]] = IndexedSeq.empty
-) {
+  private val matrix: IndexedSeq[IndexedSeq[Option[Int]]] = IndexedSeq.empty
+) extends Graph {
   def isEdge(from: Int, to: Int): Boolean =
     if (from < 0 || from >= n || to < 0 || to >= n) false
-    else matrix(from)(to)
+    else matrix(from)(to).isDefined
 
   def edges: Seq[(Int, Int)] =
     val directed = matrix
       .zipWithIndex
-      .flatMap { case (vertices, i) => vertices.zipWithIndex.filter(_._1).map(tup => (i, tup._2)) }
+      .flatMap { case (vertices, i) => vertices
+        .zipWithIndex
+        .filter(_._1.isDefined)
+        .map(tup => (i, tup._2)) 
+      }
 
     if (isDirected) directed
     else {
@@ -33,35 +37,20 @@ class AdjacencyMatrixGraph(
         .toSeq
     }
 
-  def edges(from: Int): IndexedSeq[Int] =
-    if (from < 0 || from >= n) IndexedSeq.empty
+  def isWeighted: Boolean =
+    matrix.exists(_.exists {
+      case Some(value) if value > 0 => true
+      case _ => false
+    }
+    )
+
+  def edge(from: Int): Seq[(Int, Option[Int])] =
+    if (from < 0 || from >= n) Seq.empty
     else matrix(from).zipWithIndex.flatMap {
-      case (true, i) => Some(i)
+      case (Some(0), i) => Some((i, None))
+      case (Some(weight), i) => Some((i, Some(weight)))
       case _ => None
     }
-
-  def bfs(start: Int): Seq[Option[Int]] = {
-    val state = mutable.ArrayBuffer.fill(n)("U")
-    val parent = mutable.ArrayBuffer.fill[Option[Int]](n)(None)
-    val queue = mutable.ArrayDeque.empty[Int]
-
-    state(start) = "D"
-    queue.append(start)
-
-    while (queue.nonEmpty) {
-      val u = queue.removeHead()
-      for (v: Int <- edges(u)) {
-        if (state(v) == "U") {
-          state(v) = "D"
-          parent(v) = Some(u)
-          queue.append(v)
-        }
-      }
-      state(u) = "P"
-    }
-
-    parent.toIndexedSeq
-  }
 
 
   def dfs(start: Int): Seq[Option[Int]] = {
@@ -75,7 +64,7 @@ class AdjacencyMatrixGraph(
   }
 
   private def dfsLoop(u: Int, state: mutable.ArrayBuffer[String], parent: mutable.ArrayBuffer[Option[Int]]): Unit = {
-    for (v: Int <- edges(u)) {
+    for ((v, _) <- edge(u)) {
       if (state(v) == "U") {
         state(v) = "D"
         parent(v) = Some(u)
@@ -87,7 +76,7 @@ class AdjacencyMatrixGraph(
 }
 
 object AdjacencyMatrixGraph {
-  type AdjacentMatrix = IndexedSeq[IndexedSeq[Boolean]]
+  type AdjacentMatrix = IndexedSeq[IndexedSeq[Option[Int]]]
   type ParentTree = Seq[Option[Int]]
 
   def apply(n: Int, isDirected: Boolean = false, matrix: AdjacentMatrix): AdjacencyMatrixGraph =
@@ -117,15 +106,15 @@ object AdjacencyMatrixGraph {
       new AdjacencyMatrixGraph(n, isDirected)
     else {
       val matrix = edges.
-        foldLeft(IndexedSeq.fill(n)(IndexedSeq.fill(n)(false))) {
+        foldLeft(IndexedSeq.fill(n)(IndexedSeq.fill[Option[Int]](n)(None))) {
           case (matrix, (i, j)) =>
             matrix.zipWithIndex.map {
               case (row, `i`) => row.zipWithIndex.map {
-                case (_, `j`) => true
+                case (_, `j`) => Some(0)
                 case (prev, _) => prev
               }
               case (row, `j`) => row.zipWithIndex.map {
-                case (prev, `i`) => if (!isDirected) true else prev
+                case (prev, `i`) => if (!isDirected) Some(0) else prev
                 case (prev, _) => prev
               }
               case (row, _) => row
@@ -134,14 +123,4 @@ object AdjacencyMatrixGraph {
       new AdjacencyMatrixGraph(n, isDirected, matrix)
     }
   }
-
-  @tailrec
-  def shortestPath(parentTree: ParentTree, from: Int, to: Int, carry: Seq[Int] = Seq.empty): Seq[Int] =
-    if (from == to) from +: carry
-    else {
-      parentTree.applyOrElse(to, _ => None) match {
-        case None => carry
-        case Some(value) => shortestPath(parentTree, from, value, to +: carry)
-      }
-    }
 }
