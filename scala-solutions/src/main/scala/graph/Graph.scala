@@ -23,6 +23,7 @@ trait Graph {
 
   def isDirected: Boolean
 
+
   /**
    * Find a sequence that follow the topological ordering, where
    * given aa vertex u and its edge (u, v), u is always before v
@@ -30,11 +31,14 @@ trait Graph {
    * @return A sequence following the ruleset
    */
   def topologicalOrdering: Seq[Int] = {
-    val (_, _, stack) = (0 until n).foldLeft((Map.empty[Int, String], Map.empty[Int, Option[Int]], Vector.empty[Int])) {
-      case ((state, parent, stack), u) =>
-        if (state.getOrElse(u, "U") == "U") topologicalDfsRec(u, state, parent, stack)
-        else (state, parent, stack)
-    }
+    val staringStates = (Map.empty[Int, String], Map.empty[Int, Option[Int]], Vector.empty[Int])
+
+    val (_, _, stack) = (0 until n)
+      .foldLeft(staringStates) {
+        case ((state, parent, stack), u) =>
+          if (state.getOrElse(u, "U") == "U") topologicalDfsRec(u, state, parent, stack)
+          else (state, parent, stack)
+      }
 
     stack.reverse
   }
@@ -45,13 +49,17 @@ trait Graph {
     parent: Map[Int, Option[Int]],
     stack: Vector[Int]
   ): (Map[Int, String], Map[Int, Option[Int]], Vector[Int]) = {
-    val (newState, newParent, newStack) = edge(u).foldLeft((state, parent, stack)) {
-      case ((currState, currParent, currStack), (v, _)) =>
-        if (state.getOrElse(v, "U") == "U") topologicalDfsRec(v, currState.updated(v, "D"),
-          currParent.updated(v, Some(u)), currStack
-        )
-        else (currState, currParent, currStack)
-    }
+    val (newState, newParent, newStack) = edge(u)
+      .foldLeft((state, parent, stack)) {
+        case ((currState, currParent, currStack), (v, _)) if state.getOrElse(v, "U") == "U" =>
+          topologicalDfsRec(v,
+            currState.updated(v, "D"),
+            currParent.updated(v, Some(u)),
+            currStack
+          )
+        case (states, _) => states
+      }
+
     (newState.updated(u, "P"), newParent, newStack.appended(u))
   }
 
@@ -131,43 +139,17 @@ trait Graph {
 
 
   /**
-   * Prim algorithm to find minimum spanning tree (min total weight)
+   * Spanning tree algorithm construct a parent tree and its corresponding weights based on
+   * certain criteria describe in the algorithm given as parameter.
    *
-   * @param start Starting vertex
-   * @return a tuple of parent tree and the distance for each vertex
+   * @param start     Starting vertex of these algorithm.
+   * @param algorithm The criteria algorithm used to dictate the decision in contructing the tree
+   * @return A spanning tree described in a parent tree and its weight sequence.
    */
-  def prim(start: Int): (IndexedSeq[Option[Int]], IndexedSeq[Int]) = {
-    if (isWeighted.not || isDirected) return (IndexedSeq.fill(n)(None), IndexedSeq.fill(n)(-1))
-
-    val inTree = mutable.ArrayBuffer.fill[Boolean](n)(false)
-    val distance = mutable.ArrayBuffer.fill[Int](n)(Int.MaxValue)
-    val parent = mutable.ArrayBuffer.fill[Option[Int]](n)(None)
-
-    distance.update(start, 0)
-
-    while (inTree.exists(_.not)) {
-      val (u, _) = Graph.nextVertex(inTree, distance)
-
-      inTree.update(u, true)
-
-      for ((v, Some(weight)) <- edge(u).filter
-      { case (v, weight) => inTree(v).not && weight.exists(_ < distance(v)) }) {
-        distance.update(v, weight)
-        parent.update(v, Some(u))
-      }
-    }
-
-    (parent.toIndexedSeq, distance.toIndexedSeq)
-  }
-
-  /**
-   * Dijkstra algorithm to find the shortest spanning tree from a vertex (min weight from `start` vertex)
-   *
-   * @param start Starting vertex
-   * @return a tuple of parent tree and the distance for each vertex to `start`
-   */
-  def dijkstra(start: Int): (IndexedSeq[Option[Int]], IndexedSeq[Int]) = {
-    if (isWeighted.not || isDirected) return (IndexedSeq.fill(n)(None), IndexedSeq.fill(n)(-1))
+  private def spanningTree(start: Int)(
+    algorithm: (Int, Int, Int, mutable.ArrayBuffer[Int]) => (Boolean, Int)
+  ): (IndexedSeq[Option[Int]], IndexedSeq[Int]) = {
+    if (isWeighted.not) return (IndexedSeq.fill(n)(None), IndexedSeq.fill(n)(-1))
 
     val distance = mutable.ArrayBuffer.fill[Int](n)(Int.MaxValue)
     val inTree = mutable.ArrayBuffer.fill[Boolean](n)(false)
@@ -180,8 +162,9 @@ trait Graph {
       inTree.update(u, true)
 
       for ((v, Some(weight)) <- edge(u)) {
-        if (inTree(v).not && distance(u) + weight < distance(v)) {
-          distance.update(v, distance(u) + weight)
+        val (valid, res) = algorithm(u, v, weight, distance)
+        if (inTree(v).not && valid) {
+          distance.update(v, res)
           parent.update(v, Some(u))
         }
       }
@@ -190,6 +173,30 @@ trait Graph {
     (parent.toIndexedSeq, distance.toIndexedSeq)
   }
 
+  /**
+   * Prim algorithm to find minimum spanning tree (min total weight)
+   *
+   * @param start Starting vertex
+   * @return a tuple of parent tree and the distance for each vertex
+   */
+  def prim(start: Int): (IndexedSeq[Option[Int]], IndexedSeq[Int]) =
+    spanningTree(start) {
+      case (_, v, weight, distances) if weight < distances(v) => (true, weight)
+      case _ => (false, Int.MaxValue)
+    }
+
+
+  /**
+   * Dijkstra algorithm to find the shortest spanning tree from a vertex (min weight from `start` vertex)
+   *
+   * @param start Starting vertex
+   * @return a tuple of parent tree and the distance for each vertex to `start`
+   */
+  def dijkstra(start: Int): (IndexedSeq[Option[Int]], IndexedSeq[Int]) =
+    spanningTree(start) {
+      case (u, v, weight, distances) if distances(u) + weight < distances(v) => (true, distances(v) + weight)
+      case _ => (false, Int.MaxValue)
+    }
 }
 
 object Graph {
@@ -197,8 +204,24 @@ object Graph {
     inTree: mutable.ArrayBuffer[Boolean], distance: mutable.ArrayBuffer[Int]
   ): (Int, Int) = inTree
     .zipWithIndex
-    .filter(_._1.not)
+    .filterNot(_._1)
     .map(_._2)
     .map(i => (i, distance.apply(i)))
     .minBy(_._2)
+
+
+  def edgesFor(
+    algorithm: Int => (IndexedSeq[Option[Int]], IndexedSeq[Int]),
+    start: Int
+  ): Seq[(Int, Int, Int)] = {
+    val (parent, distances) = algorithm(start)
+    parent.zipWithIndex
+      .flatMap { 
+        case (Some(v), u) => Some(
+            if (u <= v) (u, v, distances(u))
+            else (v, u, distances(u))
+        )
+        case _ => None
+      }
+  }
 }

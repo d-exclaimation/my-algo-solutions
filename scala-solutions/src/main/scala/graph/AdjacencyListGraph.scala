@@ -113,14 +113,14 @@ case class AdjacencyListGraph(
 
   override def toString: String =
     s"<#AdjacencyListGraph(n: $n, edges:" + "\n" + list.zipWithIndex.map {
-      case (value, i) => s"  $i -> {${
+      case (value, i) => s"  $i -> [${
         value
           .map(edge => edge._2
             .map(weight => s"(${edge._1}, $weight)")
             .getOrElse(s"${edge._1}")
           )
           .mkString(", ")
-      }}"
+      }]"
     }.mkString("\n") + "\n)>"
 }
 

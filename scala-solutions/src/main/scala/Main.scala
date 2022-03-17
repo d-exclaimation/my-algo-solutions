@@ -33,14 +33,14 @@ import unions.UnionApproaches.{Charitable, Helpful}
   println(graph)
   val (parent, distance) = graph.prim(0)
 
-  println(s"[${
-    parent.map {
-      case Some(value) => s"$value"
-      case None => "-"
-    }.mkString(", ")
-  }] [${
-    distance.mkString(", ")
-  }]")
+
+  Graph
+    .edgesFor(graph.prim, 0)
+    .map {
+      case (u, v, weight) => s"($u) - $weight -> ($v)"
+    }
+    .foreach(println)
+
 }
 
 def p(q: Int): Int = 2 * q + 1
