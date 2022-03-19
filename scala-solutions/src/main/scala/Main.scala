@@ -16,9 +16,7 @@ import unions.UnionApproaches.{Charitable, Helpful}
 import minigames.Snakes
 
 @main def main(): Unit = {
-  val n = 10
-  val (body, foods) = Snakes.start(n)
-  Snakes.show(body, foods, n)
-
-  val _ = Snakes.apply(body, foods, n)
+  Snakes.apply(
+    foodCount = 7
+  )
 }

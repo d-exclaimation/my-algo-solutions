@@ -13,50 +13,108 @@ import scala.collection.mutable
 import scala.math.{max, min}
 import scala.util.Random
 
+/**
+ * Snake mini-game, where a snake chase a food and grow longer.
+ */
 object Snakes {
+
+  /**
+   * Point in a area of x and y square
+   * @param x Horizontal location
+   * @param y Vertical location
+   */
   case class Point(x: Int, y: Int) {
+    /**
+     * Change the x and y point to be within the n x n square space
+     * @param n The side of the square
+     * @return A point with normalized values
+     */
     def normalized(n: Int): Point =
       Point(max(0, min(n - 1, x)), max(0, min(n - 1, y)))
 
-    def move(direction: Point, n: Int): Point = {
+    /**
+     * Apply a direction into this point
+     * @param direction A point as direction
+     * @param n The side of the square to bound the point
+     * @return A new point after the applied direction within the n x n square
+     */
+    def apply(direction: Point, n: Int): Point = {
       val Point(dx, dy) = direction
       Point(x + dx, y + dy).normalized(n)
     }
   }
-  
+
   object Point {
-    val left = Snakes.Point(-1, 0)
-    val right = Snakes.Point(1, 0)
-    val up = Snakes.Point(0, -1)
-    val down = Snakes.Point(0, 1)
+    /** Left direction point */
+    val left = Point(-1, 0)
+    /** Right direction point */
+    val right = Point(1, 0)
+    /** Up direction point */
+    val up = Point(0, -1)
+    /** Down direction point */
+    val down = Point(0, 1)
   }
 
+  /** A snake body represented in a queue where the last element is the head */
   type Body = Queue[Point]
+  /** A food point collection in a set */
   type Foods = Set[Point]
 
 
-  @tailrec
-  def apply(body: Body, foods: Foods, n: Int = 10): (Body, Foods, Boolean) = {
-    val (newBody, newFoods, stillGoing) = scala.io.StdIn.readLine() match {
-      case "w" => next(Point.up, body, foods, n)
-      case "a" => next(Point.left, body, foods, n)
-      case "s" => next(Point.down, body, foods, n)
-      case "d" => next(Point.right, body, foods, n)
-      case _ => (body, foods, false)
-    }
-    
-    Snakes.show(newBody, newFoods, n)
-    
-    if (!stillGoing) (newBody, newFoods, false)
-    else apply(newBody, newFoods, n)
-  }
-  
-  def start(n: Int = 10): (Body, Foods) = {
-    (Queue.apply(Point(n/2, n/2)), Set.apply(randomFood(n), randomFood(n), randomFood(n)))
+  /**
+   * Create a new game
+   * @param n The side of the bounding square
+   * @param foodCount The count of the food in the game
+   */
+  def apply(n: Int = 10, foodCount: Int = 3): Unit = {
+    val (body, foods) = Snakes.start(n, foodCount)
+    Snakes.show(body, foods, n)
+
+    next(body, foods, n)
   }
 
-  def next(direction: Point, body: Body, foods: Foods, n: Int = 10): (Body, Foods, Boolean) = {
-    val head = body.last.move(direction, n)
+  /**
+   * Next turn with the current body, foods and n bound
+   * @param body Body of the snake
+   * @param foods The foods in the square
+   * @param n The bounding square side
+   */
+  @tailrec
+  def next(body: Body, foods: Foods, n: Int = 10): Unit = {
+    val (newBody, newFoods, stillGoing) = scala.io.StdIn.readLine() match {
+      case "w" => move(Point.up, body, foods, n)
+      case "a" => move(Point.left, body, foods, n)
+      case "s" => move(Point.down, body, foods, n)
+      case "d" => move(Point.right, body, foods, n)
+      case _ => (body, foods, false)
+    }
+
+    Snakes.show(newBody, newFoods, n)
+
+    if (!stillGoing) ()
+    else next(newBody, newFoods, n)
+  }
+
+  /**
+   * Generate the starting state
+   * @param n The bound size
+   * @param foodCount The amount of foods
+   * @return The body of the snake, and the foods
+   */
+  def start(n: Int = 10, foodCount: Int = 3): (Body, Foods) = {
+    (Queue.apply(Point(n/2, n/2)), Set.from((1 to foodCount).map(_ => randomFood(n))))
+  }
+
+  /**
+   * Move the snake with the direction and apply game logic
+   * @param direction The direction point
+   * @param body The body of snake
+   * @param foods The foods available
+   * @param n The bounding size
+   * @return The body of snake, the remaining foods, and a boolean for check if game ended after the movement
+   */
+  def move(direction: Point, body: Body, foods: Foods, n: Int = 10): (Body, Foods, Boolean) = {
+    val head = body.last.apply(direction, n)
     val withHead = body.enqueue(head)
     val collision = Set.from(body)
     if (collision.contains(head))
@@ -67,6 +125,11 @@ object Snakes {
       (withHead.dequeue._2, foods, true)
   }
 
+  /**
+   * A generate a new food within the bound
+   * @param n The bounding size
+   * @return A food point
+   */
   private def randomFood(n: Int): Point = {
     val x = Random.between(0, n)
     val y = Random.between(0, n)
@@ -74,6 +137,12 @@ object Snakes {
   }
 
 
+  /**
+   * Display the snake game state
+   * @param body Body of the snake
+   * @param foods The foods available
+   * @param n The bound of the size
+   */
   def show(body: Body, foods: Foods, n: Int = 10): Unit = {
     val lines = (0 to (n + 1)).map(_ => "🔘").mkString
     val grid = Vector.fill(n)(
@@ -98,12 +167,5 @@ object Snakes {
       println("🔘" + arr.mkString + "🔘")
     }
     println(lines)
-  }
-
-
-  extension (state: (Body, Foods)) {
-    def output(n: Int): Unit = {
-      show(state._1, state._2, n)
-    }
   }
 }
