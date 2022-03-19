@@ -81,11 +81,11 @@ object Snakes {
    */
   @tailrec
   def next(body: Body, foods: Foods, n: Int = 10): Unit = {
-    val (newBody, newFoods, stillGoing) = scala.io.StdIn.readLine() match {
-      case "w" => move(Point.up, body, foods, n)
-      case "a" => move(Point.left, body, foods, n)
-      case "s" => move(Point.down, body, foods, n)
-      case "d" => move(Point.right, body, foods, n)
+    val (newBody, newFoods, stillGoing) = scala.io.StdIn.readLine().toLowerCase.headOption match {
+      case Some('w') => move(Point.up, body, foods, n)
+      case Some('a') => move(Point.left, body, foods, n)
+      case Some('s') => move(Point.down, body, foods, n)
+      case Some('d') => move(Point.right, body, foods, n)
       case _ => (body, foods, false)
     }
 
