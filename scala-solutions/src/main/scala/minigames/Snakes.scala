@@ -7,6 +7,7 @@
 
 package minigames
 
+import scala.annotation.tailrec
 import scala.collection.immutable.Queue
 import scala.collection.mutable
 import scala.math.{max, min}
@@ -22,23 +23,48 @@ object Snakes {
       Point(x + dx, y + dy).normalized(n)
     }
   }
+  
+  object Point {
+    val left = Snakes.Point(-1, 0)
+    val right = Snakes.Point(1, 0)
+    val up = Snakes.Point(0, -1)
+    val down = Snakes.Point(0, 1)
+  }
 
   type Body = Queue[Point]
   type Foods = Set[Point]
 
 
+  @tailrec
+  def apply(body: Body, foods: Foods, n: Int = 10): (Body, Foods, Boolean) = {
+    val (newBody, newFoods, stillGoing) = scala.io.StdIn.readLine() match {
+      case "w" => next(Point.up, body, foods, n)
+      case "a" => next(Point.left, body, foods, n)
+      case "s" => next(Point.down, body, foods, n)
+      case "d" => next(Point.right, body, foods, n)
+      case _ => (body, foods, false)
+    }
+    
+    Snakes.show(newBody, newFoods, n)
+    
+    if (!stillGoing) (newBody, newFoods, false)
+    else apply(newBody, newFoods, n)
+  }
+  
   def start(n: Int = 10): (Body, Foods) = {
-    (Queue.apply(Point(n/2, n/2)), Set.apply(randomFood(n)))
+    (Queue.apply(Point(n/2, n/2)), Set.apply(randomFood(n), randomFood(n), randomFood(n)))
   }
 
-  def apply(direction: Point, body: Body, foods: Foods, n: Int = 10): (Body, Foods) = {
+  def next(direction: Point, body: Body, foods: Foods, n: Int = 10): (Body, Foods, Boolean) = {
     val head = body.last.move(direction, n)
     val withHead = body.enqueue(head)
-
-    if (foods.contains(head))
-      (withHead, foods - head + randomFood(n))
+    val collision = Set.from(body)
+    if (collision.contains(head))
+      (withHead, foods, false)
+    else if (foods.contains(head))
+      (withHead, foods - head + randomFood(n), true)
     else
-      (withHead.dequeue._2, foods)
+      (withHead.dequeue._2, foods, true)
   }
 
   private def randomFood(n: Int): Point = {
