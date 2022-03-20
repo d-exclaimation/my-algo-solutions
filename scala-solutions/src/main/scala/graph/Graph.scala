@@ -8,6 +8,7 @@
 
 package graph
 
+import graph.Graph.edgesFor
 import utils.not
 
 import scala.annotation.tailrec
@@ -197,6 +198,51 @@ trait Graph {
       case (u, v, weight, distances) if distances(u) + weight < distances(v) => (true, distances(v) + weight)
       case _ => (false, Int.MaxValue)
     }
+
+  def d(i: Int, j: Int, k: Int): Int =
+    if (k <= -1) {
+      if (i == j) 0
+      else edge(i).find(_._1 == j).map(_._2.getOrElse(0)).getOrElse(Int.MaxValue)
+    }
+    else {
+      val ik = d(i, k, k - 1)
+      val kj = d(k, j, k - 1)
+      val ij = if (ik == Int.MaxValue || kj == Int.MaxValue) Int.MaxValue else ik + kj
+      scala.math.min(ij, d(i, j, k - 1))
+    }
+
+  def immediateDistances: (IndexedSeq[mutable.ArrayBuffer[Int]], IndexedSeq[mutable.ArrayBuffer[Option[Int]]]) = {
+    val distances = (0 until n)
+      .map(_ => mutable.ArrayBuffer.fill(n)(Int.MaxValue))
+    val parent = (0 until n)
+      .map(_ => mutable.ArrayBuffer.fill[Option[Int]](n)(None))
+
+    for (i <- 0 until n) {
+      for ((j, weight) <- edge(i)) {
+        distances(i).update(j, weight.getOrElse(0))
+        parent(i).update(j, Some(i))
+      }
+    }
+    (distances, parent)
+  }
+
+  def floyd: (IndexedSeq[mutable.ArrayBuffer[Int]], IndexedSeq[mutable.ArrayBuffer[Option[Int]]]) = {
+    val (distances, parent) = immediateDistances
+    for (k <- 0 until n) {
+      for (i <- 0 until n) {
+        for (j <- 0 until n) {
+          val ik = distances(i)(k)
+          val kj = distances(k)(j)
+          val ij = if (ik == Int.MaxValue || kj == Int.MaxValue) Int.MaxValue else ik + kj
+          if (distances(i)(j) > ij) {
+            distances(i).update(j, ij)
+            parent(i).update(j, parent(k)(j))
+          }
+        }
+      }
+    }
+    (distances, parent)
+  }
 }
 
 object Graph {
