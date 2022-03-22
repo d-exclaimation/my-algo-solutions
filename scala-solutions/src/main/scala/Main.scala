@@ -13,10 +13,10 @@ import string.Cipher
 import string.Cipher.toCharInts
 import unions.UnionApproaches
 import unions.UnionApproaches.{Charitable, Helpful}
-import minigames.Snakes
+import minigames.{ReverseSnake, Snakes}
 
 @main def main(): Unit = {
-  Snakes.apply(
+  ReverseSnake.apply(
     foodCount = 7
   )
 }
