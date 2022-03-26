@@ -99,19 +99,19 @@ object ReverseSnake {
    * @param n     The bounding square side
    */
   @tailrec
-  def next(self: Point, body: Body, foods: Foods, n: Int = 10): Unit = {
+  def next(self: Point, body: Body, foods: Foods, n: Int = 10, isMoving: Boolean = true): Unit = {
     val (newSelf, newBody, newFoods, stillGoing) = scala.io.StdIn.readLine().toLowerCase.headOption match {
-      case Some('w') => move(Point.up, self, body, foods, n)
-      case Some('a') => move(Point.left, self, body, foods, n)
-      case Some('s') => move(Point.down, self, body, foods, n)
-      case Some('d') => move(Point.right, self, body, foods, n)
+      case Some('w') => move(Point.up, self, body, foods, n, isMoving)
+      case Some('a') => move(Point.left, self, body, foods, n, isMoving)
+      case Some('s') => move(Point.down, self, body, foods, n, isMoving)
+      case Some('d') => move(Point.right, self, body, foods, n, isMoving)
       case _ => (self, body, foods, false)
     }
 
     ReverseSnake.show(newSelf, newBody, newFoods, n)
 
     if (!stillGoing) ()
-    else next(newSelf, newBody, newFoods, n)
+    else next(newSelf, newBody, newFoods, n, !isMoving)
   }
 
   /**
@@ -134,17 +134,24 @@ object ReverseSnake {
    * @param n         The bounding size
    * @return The body of snake, the remaining foods, and a boolean for check if game ended after the movement
    */
-  def move(direction: Point, self: Point, body: Body, foods: Foods, n: Int = 10): (Point, Body, Foods, Boolean) = {
+  def move(
+    direction: Point,
+    self: Point,
+    body: Body,
+    foods: Foods,
+    n: Int = 10,
+    isMoving: Boolean = true
+  ): (Point, Body, Foods, Boolean) = {
     val newSelf = self.apply(direction, n)
-    val head = body.last.approach(self, n)
-    val withHead = body.enqueue(head)
     val collision = Set.from(body)
-    if (head == newSelf || collision.contains(newSelf) || collision.contains(head))
+    val head = if (isMoving) body.last.approach(self, n) else body.last
+    val withHead = if (isMoving) body.enqueue(head) else body
+    if (head == newSelf || collision.contains(newSelf) || (isMoving && collision.contains(head)))
       (newSelf, withHead, foods, false)
     else if (foods.contains(head) || foods.contains(newSelf))
       (newSelf, withHead, foods - head + randomFood(n), true)
     else
-      (newSelf, withHead.dequeue._2, foods, true)
+      (newSelf, if (isMoving) withHead.dequeue._2 else withHead, foods, true)
   }
 
   /**
@@ -168,11 +175,8 @@ object ReverseSnake {
    * @param n     The bound of the size
    */
   def show(self: Point, body: Body, foods: Foods, n: Int = 10): Unit = {
-    val lines = (0 to (n + 1)).map(_ => "🔘").mkString
-    val grid = Vector.fill(n)(
-      mutable.ArrayBuffer.fill(n)("✖️")
-    )
-
+    val lines = (0 to (n + 1)).map(_ => "🔳").mkString
+    val grid = Vector.fill(n)(mutable.ArrayBuffer.fill(n)("⬛️"))
     foods.foreach {
       case Point(x, y) => grid(y).update(x, "🍏")
     }
@@ -180,18 +184,17 @@ object ReverseSnake {
     grid(self.y).update(self.x, "🫐")
 
     body.zipWithIndex.foreach {
-      case (Point(x, y), i) if i % 2 == 0 => grid(y).update(x, "🟨")
-      case (Point(x, y), _) => grid(y).update(x, "🟧")
+      case (Point(x, y), i) if i % 2 == 0 => grid(y).update(x, "🟦")
+      case (Point(x, y), _) => grid(y).update(x, "🟪")
     }
 
 
-    val headOpt = body.lastOption
-    headOpt.foreach(head => grid(head.y).update(head.x, "🟥"))
+    body.lastOption.foreach(head => grid(head.y).update(head.x, "🟥"))
 
 
     println(lines)
     grid.foreach { arr =>
-      println("🔘" + arr.mkString + "🔘")
+      println("🔳" + arr.mkString + "🔳")
     }
     println(lines)
   }

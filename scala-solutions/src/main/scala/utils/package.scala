@@ -15,9 +15,10 @@ package object utils {
     if (shouldPrune(candidate)) output
     else if (isSolution(candidate, input)) addToOutput(candidate, output)
     else children(candidate, input).foldLeft(output) {
-      case (out, childCandidate) => dfsBacktrack(
+      case (out, childCandidate) =>
+        dfsBacktrack(
         childCandidate, input, out, isSolution, shouldPrune, children, addToOutput
-      )
+        )
     }
 
 }

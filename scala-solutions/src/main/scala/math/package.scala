@@ -47,4 +47,56 @@ package object math {
       !(2 to (i / 2)).map(i % _).contains(0)
     }
   }
+
+
+
+  @tailrec
+  def divideInZ2(div: Seq[Int], root: Seq[Int]): Seq[Int] =
+    if (root.length < div.length) root
+    else {
+      val eq = Seq.fill(root.length - div.length)(0) ++ div
+      val res = root
+        .zipAll(eq, 0, 0)
+        .map {
+          case (lhs, rhs) => (lhs - rhs) % 2
+        }
+        .map(scala.math.abs)
+      divideInZ2(div, trimZerosPoly(res))
+    }
+
+  def trimZerosPoly(poly: Seq[Int]): Seq[Int] =
+    poly.reverse.foldLeft((List.empty[Int], true)) {
+      case ((acc, true), 0) => (acc, true)
+      case ((acc, true), 1) => (1 :: acc, false)
+      case ((acc, false), i) => (i :: acc, false)
+    }._1
+
+  def printPolyinZ2(seq: Seq[Int]) =
+    if (seq.isEmpty) println("0")
+    else println(seq.zipWithIndex.flatMap { case (x, i) => if (x == 0) None else if (i == 0) Some("1") else Some(s"x^$i") }.reverse.mkString(" + "))
+
+
+  def lfsr(c: Seq[Int], s: Seq[Int]): Int = {
+    c.zip(s)
+      .map {
+        case (ci, si) => if (ci > 0 && si > 0) 1 else 0
+      }
+      .sum % 2
+  }
+
+  def lfsrNext(c: Seq[Int], s: Seq[Int]): Seq[Int] = s
+    .reverse
+    .tail
+    .appended(lfsr(c, s))
+    .reverse
+
+  def lfsrPeriod(c: Seq[Int], s: Seq[Int]): Int =
+    lfsrPeriodRec(c, s, s)
+
+  @tailrec
+  private def lfsrPeriodRec(c: Seq[Int], s: Seq[Int], original: Seq[Int], count: Int = 0): Int =
+    if (count != 0 && original == s) count
+    else {
+      lfsrPeriodRec(c, lfsrNext(c, s), original, count + 1)
+    }
 }
