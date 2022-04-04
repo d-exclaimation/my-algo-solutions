@@ -243,6 +243,10 @@ trait Graph {
     }
     (distances, parent)
   }
+
+  def degree(u: Int): Int =
+    if (u < 0 || u >= n) 0
+    else edge(u).length
 }
 
 object Graph {
