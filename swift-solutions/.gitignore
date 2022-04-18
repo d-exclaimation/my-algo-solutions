@@ -1,4 +1,6 @@
 # compiled output
+/.build
+/.vscode
 /dist
 /node_modules
 
