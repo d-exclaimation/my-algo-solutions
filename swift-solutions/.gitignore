@@ -24,6 +24,7 @@ lerna-debug.log*
 
 # IDEs and editors
 /.idea
+/.swiftpm
 .project
 .classpath
 .c9/
