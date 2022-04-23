@@ -35,6 +35,9 @@ defmodule FPX do
   """
   @spec main() :: :ok
   def main() do
+    Sentence.longest_updated_substring("BBABA", 2)
+    |> IO.puts()
+
     :ok
   end
 end

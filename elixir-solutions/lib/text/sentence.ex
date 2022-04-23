@@ -104,6 +104,37 @@ defmodule Sentence do
   end
 
   @doc """
+  Longest substring given a rule
+  """
+  def longest_substring(str, rule) do
+    cond do
+      String.length(str) <= 1 -> str
+      true -> _longest_substring(str |> String.graphemes(), String.length(str), rule)
+    end
+  end
+
+  defp _longest_substring(_, len, _rule) when len <= 0, do: nil
+
+  defp _longest_substring(str_arr, len, rule) do
+    try do
+      _substring(str_arr, len, len - 1, rule)
+    catch
+      _ -> _longest_substring(str_arr, len - 1, rule)
+    end
+  end
+
+  defp _substring(str_arr, _len, idx, _rule) when idx >= length(str_arr), do: throw(:error)
+
+  defp _substring(str_arr, len, idx, rule) do
+    curr = str_arr |> Enum.slice((idx - len + 1)..idx) |> Enum.join()
+
+    cond do
+      rule.(curr) -> curr
+      true -> _substring(str_arr, len, idx + 1, rule)
+    end
+  end
+
+  @doc """
   Count the depth of nested brackets
   """
   def depth_parentheses(str) do
@@ -127,5 +158,24 @@ defmodule Sentence do
     |> Enum.sort(fn {l, _}, {r, _} -> l <= r end)
     |> Enum.map(fn {_, g} -> g end)
     |> Enum.join()
+  end
+
+  @doc """
+  """
+  @spec longest_updated_substring(String.t(), integer()) :: integer()
+  def longest_updated_substring(str, k) do
+    res =
+      str
+      |> longest_substring(fn
+        sub ->
+          char = String.first(sub)
+
+          sub
+          |> String.graphemes()
+          |> Enum.all?(fn x -> x == char end)
+      end)
+      |> String.length()
+
+    res + k
   end
 end
