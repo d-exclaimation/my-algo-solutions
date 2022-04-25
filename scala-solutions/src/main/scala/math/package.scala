@@ -99,4 +99,9 @@ package object math {
     else {
       lfsrPeriodRec(c, lfsrNext(c, s), original, count + 1)
     }
+    
+  def powerInZ(z: Int, a: Int, b: Int): Int =
+    (1 to b).map(_ => a % z).fold(1) {
+      case (acc, x) => (acc * x) % z
+    }
 }
