@@ -17,7 +17,6 @@ import unions.UnionApproaches.{Charitable, Helpful}
 import minigames.{ReverseSnake, Snakes}
 
 @main def main(): Unit = {
-  println(Coins.greedy(68, Seq(1, 20, 50)).values.sum)
-  println(Coins.optimal(68, Seq(1, 20, 50)).values.sum)
+  println(powerInZ(12959, 12958, 2))
 }
 
