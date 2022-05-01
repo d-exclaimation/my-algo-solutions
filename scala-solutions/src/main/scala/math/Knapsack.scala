@@ -52,26 +52,34 @@ object Knapsack {
     innerFunc(limit, n)
   }
 
-  def dynamicRecurrence(limit: Int, seq: Seq[(Int, Int)], n: Int): Int = {
+  def dynamicRecurrence(limit: Int, seq: Seq[(Int, Int)], n: Int): Seq[(Int, Int)] = {
     @tailrec
     def innerFunc(
       c: Int = 1,
       i: Int = 1,
-      cache: IndexedSeq[IndexedSeq[Int]] = IndexedSeq.fill(n)(IndexedSeq.fill(limit)(0))
+      cache: IndexedSeq[IndexedSeq[Int]] = IndexedSeq.fill(limit + 1)(IndexedSeq.fill(n + 1)(0))
     ): IndexedSeq[IndexedSeq[Int]] = {
-      if (c == limit) cache
-      else if (i == 1) innerFunc(c + 1)
+      if (c > limit) cache
+      else if (i > n) innerFunc(c + 1, 1, cache)
       else
-        val (value, weight) = seq.applyOrElse(n - 1, _ => (-1, limit))
-        val without = cache(i - 1)(c)
+        val (value, weight) = seq.applyOrElse(i - 1, _ => (-1, limit))
+        val without = cache(c)(i - 1)
         val nextCache =
           if (weight > c)
-            cache.updated(i, cache(i).updated(c, without))
+            cache.updated(c, cache(c).updated(i, without))
           else
-            cache.updated(i, cache(i).updated(c, Seq(without, value + cache(i - 1)(c - weight)).max))
+            cache.updated(c, cache(c).updated(i, Seq(without, value + cache(c - weight)(i - 1)).max))
         innerFunc(c, i + 1, nextCache)
     }
-
-    innerFunc()(n)(limit)
+    val table = innerFunc()
+    @tailrec
+    def reconstruct(c: Int = limit, i: Int = n, res: Seq[(Int, Int)] = Seq.empty): Seq[(Int, Int)] = {
+      if (c == 0 || i == 0) res
+      else if (table(c)(i) == table(c)(i - 1)) reconstruct(c, i - 1, res)
+      else
+        val (value, weight) = seq(i - 1)
+        reconstruct(c - weight, i - 1, res :+ (value, weight))
+    }
+    reconstruct()
   }
 }
