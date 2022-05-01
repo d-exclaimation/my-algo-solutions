@@ -5,18 +5,23 @@
 //  Created by d-exclaimation on 17:09..
 //
 
-import array.{Crunching, NumericalSeq, LinearSort}
+import array.{Crunching, LinearSort, NumericalSeq}
 import graph.*
 import math.*
-import tree.HuffmanTree
+import matrix.Terrain
+import matrix.Terrain.*
+import minigames.{ReverseSnake, Snakes}
 import string.Character.{decodeCharacters, headUntil}
 import string.Cipher
 import string.Cipher.toCharInts
+import tree.HuffmanTree
 import unions.UnionApproaches
 import unions.UnionApproaches.{Charitable, Helpful}
-import minigames.{ReverseSnake, Snakes}
+import utils.*
+
+import scala.collection.mutable
 
 @main def main(): Unit = {
-  println(powerInZ(12959, 12958, 2))
+  println(SubsetSum.dynamic(Seq(1, 2, 3, 1, -1), 5, 0))
 }
 
