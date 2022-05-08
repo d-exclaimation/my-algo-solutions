@@ -12,7 +12,7 @@ import matrix.Terrain
 import matrix.Terrain.*
 import minigames.{ReverseSnake, Snakes}
 import string.Character.{decodeCharacters, headUntil}
-import string.{Cipher, Substring}
+import string.{Cipher, Diff, Substring}
 import string.Cipher.toCharInts
 import tree.HuffmanTree
 import unions.UnionApproaches
@@ -22,6 +22,6 @@ import utils.*
 import scala.collection.mutable
 
 @main def main(): Unit = {
-  println(Knapsack.dynamicRecurrence(10, Seq((3, 2), (4, 3), (5, 4), (6, 5), (12, 9)), 5))
+  println(Diff.distanceRecurrence("GACTGC", "ATCTCCG"))
 }
 
