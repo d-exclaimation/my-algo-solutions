@@ -22,6 +22,6 @@ import utils.*
 import scala.collection.mutable
 
 @main def main(): Unit = {
-  println(Diff.distanceRecurrence("GACTGC", "ATCTCCG"))
+  println(Crunching.maxNonAdjacentSum(Seq(2, 1, 2, 7, 3)))
 }
 

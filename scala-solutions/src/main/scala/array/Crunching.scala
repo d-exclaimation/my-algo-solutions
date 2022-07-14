@@ -33,7 +33,19 @@ object Crunching {
     
     valid
       .filter(_._2 <= 1)
-      .map(_._1)
+      .keys
       .sum
+  }
+
+  def maxNonAdjacentSum(nums: Seq[Int]): Int = {
+    val res = nums
+      .indices
+      .reverse
+      .tail
+      .foldLeft(Seq.fill(nums.length)(0)) {
+        (cache, i) =>
+          cache.updated(i, Seq(nums(i) + cache.applyOrElse(i + 2, _ => 0), cache.applyOrElse(i + 1, _ => 0)).max)
+      }
+    res.head
   }
 }
