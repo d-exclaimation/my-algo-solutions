@@ -16,7 +16,7 @@ struct Reducer<State: Sendable, Actions> {
         self.state = state
     }
     
-    mutating func dispatch(_ action: Actions) -> {
+    mutating func dispatch(_ action: Actions) {
         state = reducer(state, action)
     }
 }
