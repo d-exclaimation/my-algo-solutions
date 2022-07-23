@@ -52,6 +52,18 @@ enum Number: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral, Hashable, C
 
 }
 
+extension Int {
+    var number: Number {
+        return .int(self)
+    }
+}
+
+extension Double {
+    var number: Number {
+        return .decimal(self)
+    }
+}
+
 extension Number: AdditiveArithmetic, Numeric {
     init?<T>(exactly source: T) where T : BinaryInteger {
         switch (source) {
