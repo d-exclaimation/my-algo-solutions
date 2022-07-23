@@ -7,15 +7,14 @@
 
 import Foundation
 
+print(lexicographicalOrder(n: 11))
 
-for a in 0..<4 {
-    let binA = (a % 2 == 1, a / 2 > 0)
-    for b in 0..<4 {
-        let binB = (b % 2 == 1, b / 2 > 0)
-        let expected = a > b
-        let res = gt(a: binA, b: binB)
-        if expected != res {
-            print("Failure for a: \(a) (\(binA)), b: \(b) \(binB), with expected: \(expected) but received \(res)")
-        }
-    }
-}
+let tree = BiTree<Int>.node(1, 
+    left: .leaf(2), 
+    right: .node(4, 
+        left: .leaf(8), 
+        right: .leaf(16)
+    )
+)
+
+print(tree.zipZag())
