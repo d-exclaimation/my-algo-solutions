@@ -27,7 +27,7 @@ object Crunching {
   
   def sumUnique(seq: Seq[Int]): Int = {
     val valid = seq.foldLeft(Map.empty[Int, Int]) { (acc, curr) =>
-      val prev = acc.get(curr) getOrElse 0
+      val prev = acc.getOrElse(curr, 0)
       acc.updated(curr, prev + 1)
     }
     

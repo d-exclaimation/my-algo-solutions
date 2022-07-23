@@ -33,7 +33,7 @@ object LinearSort {
   def keyPositions[Element](arr: Seq[Element], key: Element => Int): Seq[Int] = {
     val k = arr.map(key).max
 
-    val c0 = arr.foldLeft((0 to k).map(_ => 0)) {
+    val c0 = arr.foldLeft(Seq.fill(k + 1)(0)) {
       case (c, a) =>
         val ka = key(a)
         c.updated(ka, c(ka) + 1)
@@ -64,5 +64,17 @@ object LinearSort {
 
     def inPower10: Int =
       scala.math.log10(i.toDouble).floor.toInt + 1
+  }
+
+  def lexicographicalSort(n: Int): Seq[Int] = {
+    val seq: Seq[Int] = 1 to n
+    val key = (i: Int) => s"$i".toSeq.head.toInt
+    val keys = keyPositions(seq, key)
+    val (_, res) = seq.foldLeft((keys, Seq.fill(seq.length)(0))) {
+      case ((keys, res), i) =>
+        val k = key(i)
+        (keys.updated(k, keys(k) + 1), res.updated(keys(k), i))
+    }
+    res
   }
 }
