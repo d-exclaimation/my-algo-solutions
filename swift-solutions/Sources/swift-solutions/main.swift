@@ -17,3 +17,5 @@ let tree = BiTree<Int>.node(1,
 )
 
 print(tree.zipZag())
+
+print(Number.orderedDigits(low: 10, high: 25))
