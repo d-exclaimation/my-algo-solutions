@@ -9,7 +9,7 @@ import Foundation
 
 print(lexicographicalOrder(n: 11))
 
-let tree = BiTree<Int>.node(1, 
+let tree: BiTree<Int> = .node(1, 
     left: .leaf(2), 
     right: .lnode(4, 
         left: .leaf(8)
@@ -18,4 +18,6 @@ let tree = BiTree<Int>.node(1,
 
 print(tree.zipZag())
 
-print(Number.orderedDigits(low: 10, high: 25))
+print(Number.orderedDigits(low: 15, high: 48))
+
+print(rearrange([4, 1, 3, 3, 2]) { $0 != $1 })
