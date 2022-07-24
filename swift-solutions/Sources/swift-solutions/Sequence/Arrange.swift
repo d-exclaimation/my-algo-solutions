@@ -7,6 +7,10 @@
 
 import Foundation
 
+func rearrangeAdjacent(_ ids: [Int]) -> [Int] {
+    rearrange(ids, rule: { $0 != $1})
+}
+
 func rearrange<T>(_ ids: [T], rule: (T, T) -> Bool) -> [T] {
     var saved = T?.none 
     var res = [T]()
