@@ -5,29 +5,6 @@
 //  Created by d-exclaimation on 20:40.
 //
 
-typealias BinaryList = [Bool]
-
-extension BinaryList {
-    init(_ elements: Int...) {
-        self.init(elements.map { $0 != 0 })
-    }
-
-}
-
-extension Int {
-    var binaryList: BinaryList {
-        var curr = self
-        var res = [Bool]()
-        while (curr > 0) {
-            let next = curr % 2
-            curr = curr / 2
-            res.append(next != 0)
-        }
-        res.reverse()
-        return res
-    }
-}
-
 extension Bool {
     func gt(_ other: Bool) -> Bool {
         self && !other

@@ -21,3 +21,11 @@ print(tree.zipZag())
 print(Number.orderedDigits(low: 15, high: 48))
 
 print(rearrange([4, 1, 3, 3, 2]) { $0 != $1 })
+
+print(farFromLand([
+  [0, 0, 1],
+  [0, 0, 0],
+  [0, 0, 0]
+]))
+
+print(isLastCharacter(for: [1, 0, 1, 1, 0]))
