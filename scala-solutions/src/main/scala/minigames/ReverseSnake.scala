@@ -32,7 +32,7 @@ object ReverseSnake {
       Point(max(0, min(n - 1, x)), max(0, min(n - 1, y)))
 
     /**
-     * Apply a direction into this point
+     * Apply cu
      *
      * @param direction A point as direction
      * @param n         The side of the square to bound the point
