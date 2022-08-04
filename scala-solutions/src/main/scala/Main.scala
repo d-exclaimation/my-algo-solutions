@@ -22,6 +22,7 @@ import utils.*
 import scala.collection.mutable
 
 @main def main(): Unit = {
-  println(Crunching.maxNonAdjacentSum(Seq(2, 1, 2, 7, 3)))
+  ReverseSnake.apply(n = 12, foodCount = 5)
+  //  println(Crunching.maxNonAdjacentSum(Seq(2, 1, 2, 7, 3)))
 }
 

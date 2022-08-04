@@ -1,6 +1,6 @@
 package object graph {
   def parse(graphString: String): (Seq[(Int, Int, Option[Int])], Boolean, Boolean, Int) = {
-    graphString.strip().split('\n').map(_.strip().split(' ').toSeq).toSeq match {
+    graphString.trim.split('\n').map(_.trim.split(' ').toSeq).toSeq match {
       case header +: edgeLines =>
         val isWeighted = header.length == 3
         val isUndirected = header.headOption.exists(_.toUpperCase == "U")
