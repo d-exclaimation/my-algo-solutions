@@ -14,6 +14,87 @@ defmodule Binary do
   @type binary_str :: String.t()
   @type binary_arr :: list(integer())
 
+  @type t() :: binary_str()
+
+  @doc """
+  Binary string from integer
+  """
+  @spec from(integer()) :: t()
+  def from(num) when num < 0 do
+    ("0" <> from(-num))
+    |> inverse()
+    |> add("1")
+    |> compress()
+  end
+
+  def from(num) do
+    do_from([], num)
+  end
+
+  @spec do_from(binary_arr(), integer()) :: t()
+  defp do_from(acc, 0), do: acc |> Enum.map(&Integer.to_string/1) |> Enum.join()
+
+  defp do_from(acc, value) do
+    do_from([rem(value, 2) | acc], div(value, 2))
+  end
+
+  @doc """
+  Invert all bits in binary
+  """
+  @spec inverse(t()) :: t()
+  def inverse(bin) do
+    to_arr(bin)
+    |> Enum.map(fn x -> abs(x - 1) end)
+    |> Enum.map(&Integer.to_string/1)
+    |> Enum.join()
+  end
+
+  @doc """
+  Add two binary string
+  """
+  @spec add(t(), t()) :: t()
+  def add(bin1, bin2) do
+    bins1 =
+      bin1
+      |> to_arr()
+      |> Enum.reverse()
+
+    bins2 =
+      bin2
+      |> to_arr()
+      |> Enum.reverse()
+
+    {acc, carry} =
+      0..max(length(bins1), length(bins2))
+      |> Enum.map(fn i -> {Enum.at(bins1, i, 0), Enum.at(bins2, i, 0)} end)
+      |> Enum.reduce({[], 0}, fn
+        {l, r}, {acc, carry} ->
+          res = l + r + carry
+          {[rem(res, 2) | acc], div(res, 2)}
+      end)
+
+    if(carry == 1, do: [carry | acc], else: acc)
+    |> Enum.map(&Integer.to_string/1)
+    |> Enum.join()
+  end
+
+  @doc """
+  Compress binary to remove front zeros
+  """
+  @spec compress(binary_arr()) :: binary_arr()
+  def compress([1 | res]), do: [1 | res]
+
+  def compress([0 | res]) do
+    compress(res)
+  end
+
+  @spec compress(t()) :: t()
+  def compress("0" <> res), do: compress(res)
+
+  def compress("1" <> res) do
+    "1" <> res
+  end
+
   @doc """
   Find highest binary
   """
@@ -22,25 +103,6 @@ defmodule Binary do
       idx - 1
     else
       find_highest_binary(val, idx + 1)
-    end
-  end
-
-  @doc """
-  Convert to binary
-  """
-  def to_binary(val) do
-    highest = find_highest_binary(val, 0)
-    _to_binary(val, highest)
-  end
-
-  defp _to_binary(_val, idx) when idx < 0, do: ""
-
-  defp _to_binary(val, idx) do
-    curr = :math.pow(2, idx)
-
-    cond do
-      val >= curr -> "1" <> _to_binary(val - curr, idx - 1)
-      true -> "0" <> _to_binary(val, idx - 1)
     end
   end
 
