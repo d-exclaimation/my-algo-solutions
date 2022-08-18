@@ -119,7 +119,11 @@ defmodule Binary do
   Turn binary into integers
   """
   @spec to_integer(binary_arr()) :: integer()
-  def to_integer([] = bins) do
+  def to_integer([]), do: 0
+
+  def to_integer([head | tail]) do
+    bins = [head | tail]
+
     bins
     |> Enum.reverse()
     |> Enum.zip(Array.indices(bins))
@@ -128,7 +132,26 @@ defmodule Binary do
   end
 
   @spec to_integer(binary_str()) :: integer()
-  def to_integer(bin), do: to_integer(to_arr(bin))
+  def to_integer("" <> bins), do: to_integer(to_arr(bins))
+
+  @doc """
+  Turn binary into float
+  """
+  @spec to_float(binary_str()) :: number()
+  def to_float(bin) do
+    [int, frac] = String.split(bin, ".")
+
+    res =
+      1..String.length(frac)
+      |> Enum.map(&(&1 * -1))
+      |> Enum.zip(to_arr(frac))
+      |> Enum.map(fn {d, x} ->
+        x * 2 ** d
+      end)
+      |> Enum.sum()
+
+    to_integer(int) + res
+  end
 
   @doc """
   Sum all paths of a binary tree
