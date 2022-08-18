@@ -7,31 +7,25 @@
 #
 
 defmodule Tree do
-  alias __MODULE__
-
   @moduledoc """
   Tree Node for Binary Trees
   """
-  @enforce_keys [:val]
-  defstruct [:val, :left, :right]
-
-  @typedoc """
-  Custom tree with values
-  """
-  @type t(k) ::
-          %Tree{
-            val: k,
-            left: t(k),
-            right: t(k)
-          }
-          | nil
+  use TypedStruct
+  alias __MODULE__
 
   @type value() :: any()
+
+  typedstruct do
+    @typedoc ""
+    field(:val, any(), enforce: true)
+    field(:left, Tree.t())
+    field(:right, Tree.t())
+  end
 
   @doc """
   In Order Traversal, leftest first, mid then right
   """
-  @spec in_order(%Tree{} | none()) :: list(value())
+  @spec in_order(Tree.t() | none()) :: list(value())
   def in_order(root) when root == nil, do: []
 
   def in_order(%Tree{val: val, left: left, right: right}) do
@@ -41,7 +35,7 @@ defmodule Tree do
   @doc """
   Pre Order Traversal, mid first, left then right
   """
-  @spec pre_order(%Tree{} | none()) :: list(value())
+  @spec pre_order(Tree.t() | none()) :: list(value())
   def pre_order(root) when root == nil, do: []
 
   def pre_order(%Tree{val: val, left: left, right: right}) do
@@ -51,7 +45,7 @@ defmodule Tree do
   @doc """
   Post Order Traversal, left first, right then mid
   """
-  @spec post_order(%Tree{} | none()) :: list(value())
+  @spec post_order(Tree.t() | none()) :: list(value())
   def post_order(root) when root == nil, do: []
 
   def post_order(%Tree{val: val, left: left, right: right}) do
@@ -61,7 +55,7 @@ defmodule Tree do
   @doc """
   Inverse a tree
   """
-  @spec inversed(%Tree{} | none()) :: nil
+  @spec inversed(Tree.t() | none()) :: nil
   def inversed(nil), do: nil
 
   def inversed(%Tree{val: val, left: left, right: right}) do
@@ -75,7 +69,7 @@ defmodule Tree do
   @doc """
   Minimum depth of index
   """
-  @spec min_depth(%Tree{} | none()) :: integer
+  @spec min_depth(Tree.t() | none()) :: integer
   def min_depth(nil), do: 0
 
   def min_depth(%Tree{left: left, right: right}) do
@@ -84,7 +78,7 @@ defmodule Tree do
 
   @doc """
   """
-  @spec reconstruct([any()], [any()]) :: t(any()) | nil
+  @spec reconstruct([any()], [any()]) :: t() | nil
   def reconstruct([], []), do: nil
   def reconstruct(pre_order, in_order) when length(pre_order) != length(in_order), do: nil
 
@@ -121,13 +115,44 @@ defmodule Tree do
         %Tree{val: top_node}
     end
   end
+
+  @doc """
+  Get all paths
+  """
+  @spec paths(Tree.t(), (any(), any() -> any())) :: [any()]
+  def paths(%Tree{val: val, left: nil, right: nil}, _apply),
+    do: [val]
+
+  def paths(%Tree{val: val, left: left, right: nil}, apply),
+    do: paths(left, apply, val)
+
+  def paths(%Tree{val: val, left: nil, right: right}, apply),
+    do: paths(right, apply, val)
+
+  def paths(%Tree{val: val, left: left, right: right}, apply) do
+    paths(left, apply, val) ++ paths(right, apply, val)
+  end
+
+  @spec paths(Tree.t(), (any(), any() -> any()), any()) :: [any()]
+  def paths(%Tree{val: val, left: nil, right: nil}, apply, carry),
+    do: [apply.(carry, val)]
+
+  def paths(%Tree{val: val, left: left, right: nil}, apply, carry),
+    do: paths(left, apply, apply.(carry, val))
+
+  def paths(%Tree{val: val, left: nil, right: right}, apply, carry),
+    do: paths(right, apply, apply.(carry, val))
+
+  def paths(%Tree{val: val, left: left, right: right}, apply, carry) do
+    paths(left, apply, apply.(carry, val)) ++ paths(right, apply, apply.(carry, val))
+  end
 end
 
 defimpl Inspect, for: Tree do
   @doc """
   Inspect a tree
   """
-  @spec inspect(%Tree{}, any()) :: String.t()
+  @spec inspect(Tree.t(), any()) :: String.t()
   def inspect(%Tree{val: val, left: nil, right: nil}, _), do: "#Tree<{#{val}}>"
 
   def inspect(%Tree{val: val, left: left, right: nil}, _),

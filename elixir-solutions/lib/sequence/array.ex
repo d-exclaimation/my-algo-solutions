@@ -264,4 +264,42 @@ defmodule Array do
     max = Enum.count(arr)
     Enum.to_list(0..(max - 1))
   end
+
+  @doc """
+  Sort by the bitsize it needed to encode all of them
+  """
+  @spec sort_by_bitsize(list(non_neg_integer())) :: list(non_neg_integer())
+  def sort_by_bitsize(nums) do
+    nums
+    |> Enum.sort(fn lhs, rhs ->
+      left =
+        lhs
+        |> Binary.from()
+        |> Binary.compress()
+        |> String.length()
+
+      right =
+        rhs
+        |> Binary.from()
+        |> Binary.compress()
+        |> String.length()
+
+      cond do
+        left == right -> lhs <= rhs
+        true -> left < right
+      end
+    end)
+  end
+
+  @doc """
+  For each, find all elements strictly smaller than itself
+  """
+  @spec smaller_elements(list(integer())) :: list(integer())
+  def smaller_elements(arr) do
+    arr
+    |> Enum.map(fn x ->
+      arr
+      |> Enum.count(fn y -> y < x end)
+    end)
+  end
 end

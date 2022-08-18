@@ -35,12 +35,8 @@ defmodule FPX do
   """
   @spec main() :: :ok
   def main() do
-    Binary.from(5)
-    |> Binary.add("0")
-    |> IO.puts()
-
-    Binary.from(-5)
-    |> IO.puts()
+    Binary.float(23.25)
+    |> IO.inspect()
 
     :ok
   end

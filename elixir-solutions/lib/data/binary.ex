@@ -116,40 +116,52 @@ defmodule Binary do
   end
 
   @doc """
-  Sum binary
+  Turn binary into integers
   """
-  @spec sum(binary_str(), binary_str()) :: binary_str()
-  def sum(bin1, bin2) do
-    lhs = to_arr(bin1) |> Enum.reverse()
-    rhs = to_arr(bin2) |> Enum.reverse()
-
-    do_sum(lhs, rhs, 0)
-    |> Enum.map(fn x -> "#{x}" end)
-    |> Enum.join("")
+  @spec to_integer(binary_arr()) :: integer()
+  def to_integer([] = bins) do
+    bins
+    |> Enum.reverse()
+    |> Enum.zip(Array.indices(bins))
+    |> Enum.map(fn {x, i} -> x * 2 ** i end)
+    |> Enum.sum()
   end
 
-  @spec do_sum(binary_arr(), binary_arr(), integer()) :: binary_arr()
-  defp do_sum([], [], carry),
-    do: if(carry == 0, do: [], else: do_sum([], [], div(carry, 2)) ++ [1])
+  @spec to_integer(binary_str()) :: integer()
+  def to_integer(bin), do: to_integer(to_arr(bin))
 
-  defp do_sum(lhs, rhs, carry) when length(lhs) == 0 or length(rhs) == 0 do
-    still = if length(rhs) == 0, do: lhs, else: rhs
-    tot = Enum.at(still, 0) + carry
-    extra = div(tot, 2)
-    remain = rem(tot, 2)
-    rest = Enum.slice(still, 1..-1)
+  @doc """
+  Sum all paths of a binary tree
+  """
+  @spec sum_tree_paths(Tree.t()) :: integer()
+  def sum_tree_paths(tree) do
+    tree
+    |> Tree.paths(fn acc, x -> acc <> "#{x}" end)
+    |> Enum.map(&Binary.to_integer/1)
+    |> Enum.sum()
+  end
 
-    cond do
-      extra == 0 -> rest ++ [remain]
-      length(rhs) == 0 -> do_sum(rest, [], extra) ++ [remain]
-      true -> do_sum([], rest, extra) ++ [remain]
+  @doc """
+  Binary string from fraction
+  """
+  @spec float(float()) :: t()
+  def float(num) do
+    floored = floor(num)
+    remainder = num - floored
+    "#{from(floored)}.#{do_float(remainder, -1, "")}"
+  end
+
+  @spec do_float(float(), neg_integer(), t()) :: t()
+  defp do_float(0.0, _depth, res), do: res
+  defp do_float(_f, depth, res) when depth < -32, do: res
+
+  defp do_float(fractional, depth, res) do
+    removing = 2 ** depth
+
+    if fractional < removing do
+      do_float(fractional, depth - 1, res <> "0")
+    else
+      do_float(fractional - removing, depth - 1, res <> "1")
     end
-  end
-
-  defp do_sum([hl | tl], [hr | tr], carry) do
-    total = hl + hr + carry
-    extra = div(total, 2)
-    remain = rem(total, 2)
-    do_sum(tl, tr, extra) ++ [remain]
   end
 end
