@@ -35,8 +35,8 @@ defmodule FPX do
   """
   @spec main() :: :ok
   def main() do
-    Binary.float(0.3)
-    |> Binary.to_float()
+    "AabBcC"
+    |> Sentence.acceptable()
     |> IO.inspect()
 
     :ok

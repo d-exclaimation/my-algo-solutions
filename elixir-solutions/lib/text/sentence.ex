@@ -178,4 +178,31 @@ defmodule Sentence do
 
     res + k
   end
+
+  @doc """
+  Remove any adjacent characters that are the same but just in different cases
+  """
+  @spec acceptable(String.t()) :: String.t()
+  def acceptable(str) do
+    str
+    |> String.to_charlist()
+    |> do_acceptable([])
+  end
+
+  @spec do_acceptable(charlist(), charlist()) :: String.t()
+  defp do_acceptable([], saved) do
+    saved
+    |> Enum.reverse()
+    |> to_string()
+  end
+
+  defp do_acceptable([head | tail], []), do: do_acceptable(tail, [head])
+
+  defp do_acceptable([head | tail], [prev | saved]) do
+    if abs(head - prev) == 32 do
+      do_acceptable(tail, saved)
+    else
+      do_acceptable(tail, [head | [prev | saved]])
+    end
+  end
 end
