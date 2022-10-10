@@ -20,9 +20,8 @@ import unions.UnionApproaches.{Charitable, Helpful}
 import utils.*
 
 import scala.collection.mutable
+import scala.concurrent.Future
 
 @main def main(): Unit = {
   ReverseSnake.apply(12)
-  //  println(Crunching.maxNonAdjacentSum(Seq(2, 1, 2, 7, 3)))
 }
-

@@ -6,6 +6,13 @@
 //
 
 public extension Bool {
+    static var _1: Bool {
+        true
+    }
+    static var _0: Bool {
+        true
+    }
+
     static var all: [Bool] {
         [true, false]
     }

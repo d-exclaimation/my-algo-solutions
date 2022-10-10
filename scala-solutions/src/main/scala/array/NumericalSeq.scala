@@ -31,6 +31,14 @@ object NumericalSeq {
     }
   }
 
+  def oneFourth(arr: Seq[Int]): Seq[Int] = {
+    val res = arr.foldLeft(Map.empty[Int, Int]) { (acc, x) =>
+      acc.updated(x, acc.getOrElse(x, 0) + 1)
+    }
+    arr.filter(res.getOrElse(_, 0) > (arr.length / 4))
+      .distinct
+  }
+
   /** Up, Up and Away
    *
    * Check if possible to change one value to make it all increasing order

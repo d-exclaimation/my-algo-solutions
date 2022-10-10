@@ -112,7 +112,7 @@ object ReverseSnake {
       case Some('a') => move(Point.left, self, body, n, isMoving)
       case Some('s') => move(Point.down, self, body, n, isMoving)
       case Some('d') => move(Point.right, self, body, n, isMoving)
-      case _ => (self, body, false)
+      case _ => (self, body, true)
     }
 
     ReverseSnake.show(newSelf, newBody, n)
@@ -175,12 +175,11 @@ object ReverseSnake {
     grid(self.y).update(self.x, "🍏")
 
     body.zipWithIndex.foreach {
-      case (Point(x, y), i) if i % 2 == 0 => grid(y).update(x, "🟦")
-      case (Point(x, y), _) => grid(y).update(x, "🟪")
+      case (Point(x, y), i) => grid(y).update(x, "⚪")
     }
 
 
-    body.lastOption.foreach(head => grid(head.y).update(head.x, "🟥"))
+    body.lastOption.foreach(head => grid(head.y).update(head.x, "🟠"))
 
 
     println(lines)

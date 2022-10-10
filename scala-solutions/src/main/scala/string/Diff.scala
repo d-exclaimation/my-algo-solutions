@@ -12,6 +12,17 @@ import scala.collection.mutable
 
 object Diff {
 
+  def brokenKeyboard(a: String, b: String): Boolean =
+    ignoreDups(a.toCharArray, b.toCharArray)
+
+  @tailrec
+  private def ignoreDups(a: Seq[Char], b: Seq[Char]): Boolean = (a, b) match {
+    case (_, Seq()) => true
+    case (Seq(), _) => false
+    case (lhead +: ltail, rhead +: rtail) if lhead == rhead => ignoreDups(ltail, rtail)
+    case (_ +: ltail, rhs) => ignoreDups(ltail, rhs)
+  }
+
   def distance(a: String, b: String, i: Int = -1, j: Int = -1): Int =
     if (i < 0 || j < 0) distance(a, b, a.length, b.length)
     else if (i == 0 || j == 0) Seq(i, j).max
