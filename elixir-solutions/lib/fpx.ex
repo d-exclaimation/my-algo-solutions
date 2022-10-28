@@ -36,7 +36,7 @@ defmodule FPX do
   @spec main() :: :ok
   def main() do
     [2, 9, 3, 5, 7, 4, 4]
-    |> Array.classify()
+    |> Array.largest_right()
     |> IO.inspect()
 
     :ok

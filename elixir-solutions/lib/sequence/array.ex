@@ -323,4 +323,19 @@ defmodule Array do
     elements
     |> Enum.map(&Map.fetch!(classes, &1))
   end
+
+  @doc """
+  Largest right hand side
+  """
+  @spec largest_right(nums :: list(integer())) :: list(integer())
+  def largest_right([]), do: []
+  def largest_right([_head]), do: [-1]
+
+  def largest_right([_head | tail]) do
+    res =
+      tail
+      |> Enum.max()
+
+    [res | largest_right(tail)]
+  end
 end
