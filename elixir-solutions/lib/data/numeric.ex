@@ -124,4 +124,17 @@ defmodule Numeric do
     |> Enum.filter(rule)
     |> Enum.count()
   end
+
+  @doc """
+  Perfect number
+  """
+  @spec perfect(num :: non_neg_integer()) :: boolean()
+  def perfect(num) do
+    res =
+      1..div(num, 2)
+      |> Enum.filter(fn x -> rem(num, x) == 0 end)
+      |> Enum.sum()
+
+    res == num
+  end
 end
