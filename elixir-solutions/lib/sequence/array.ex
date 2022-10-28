@@ -12,16 +12,6 @@ defmodule Array do
   """
 
   @doc """
-  """
-  @spec list() <|> list() :: list()
-  def a <|> b when a == [], do: Enum.map(b, fn x -> {nil, x} end)
-  def a <|> b when b == [], do: Enum.map(a, fn x -> {x, nil} end)
-
-  def [lhs | lt] <|> [rhs | rt] do
-    [{lhs, rhs} | lt <|> rt]
-  end
-
-  @doc """
   Get the only unique element in a list
   """
   def one_value(list) when is_list(list) do
@@ -266,6 +256,16 @@ defmodule Array do
   end
 
   @doc """
+  Indices and value of this array
+  """
+  @spec enumerated([any()]) :: [{non_neg_integer(), any()}]
+  def enumerated(arr) do
+    arr
+    |> Array.indices()
+    |> Enum.zip(arr)
+  end
+
+  @doc """
   Sort by the bitsize it needed to encode all of them
   """
   @spec sort_by_bitsize(list(non_neg_integer())) :: list(non_neg_integer())
@@ -301,5 +301,26 @@ defmodule Array do
       arr
       |> Enum.count(fn y -> y < x end)
     end)
+  end
+
+  @doc """
+  Classification based on the list ordering
+  """
+  @spec classify(elements :: list(integer())) :: list(non_neg_integer())
+  def classify(elements) do
+    classes =
+      elements
+      |> Enum.uniq()
+      |> Enum.sort()
+      |> Array.enumerated()
+      |> Enum.reduce(
+        Map.new(),
+        fn {i, x}, acc ->
+          Map.put_new(acc, x, i + 1)
+        end
+      )
+
+    elements
+    |> Enum.map(&Map.fetch!(classes, &1))
   end
 end

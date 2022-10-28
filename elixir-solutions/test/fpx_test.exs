@@ -30,39 +30,6 @@ defmodule FPXTest do
     assert not Kth.consecutive?([1, 2, 3, 4, 5], 3, fn x -> rem(x, 2) == 1 end)
   end
 
-  test "Flatten and spread map" do
-    import Array
-
-    input = [
-      %{
-        name: "a1",
-        arr1: [%{name: "aa1"}, %{name: "aa2"}, %{name: "aa3"}],
-        arr2: [%{name: "a21"}]
-      },
-      %{
-        name: "a2",
-        arr1: [%{name: "a22"}, %{name: "a23"}],
-        arr2: [%{name: "a31"}, %{name: "a32"}]
-      }
-    ]
-
-    expected = [
-      %{name: "a1", arr1: %{name: "aa1"}, arr2: %{name: "a21"}},
-      %{name: "a1", arr1: %{name: "aa2"}, arr2: nil},
-      %{name: "a1", arr1: %{name: "aa3"}, arr2: nil},
-      %{name: "a2", arr1: %{name: "a22"}, arr2: %{name: "a31"}},
-      %{name: "a2", arr1: %{name: "a23"}, arr2: %{name: "a32"}}
-    ]
-
-    res = MapSplit.split_reduce(input)
-
-    assert length(expected) == length(res)
-
-    for {exp, given} <- expected <|> res do
-      assert inspect(exp) == inspect(given)
-    end
-  end
-
   test "Soup and Salad side dishes" do
     customers0 = [1, 1, 1]
     sides0 = [1, 1, 1]

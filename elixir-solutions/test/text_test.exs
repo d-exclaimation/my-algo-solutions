@@ -49,7 +49,7 @@ defmodule TextTest do
     queries = ["laptop", "computer"]
     expected = [true, false]
 
-    for {given, should} <- Enum.map(queries, &Vowel.evenly_vowel/1) <|> expected do
+    for {given, should} <- Enum.map(queries, &Vowel.evenly_vowel/1) |> Enum.zip(expected) do
       assert given == should
     end
   end

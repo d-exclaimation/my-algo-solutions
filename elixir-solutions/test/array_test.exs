@@ -29,13 +29,6 @@ defmodule ArrayTest do
     assert -1 == Array.matching_index_values([1, 3, 4, 5])
   end
 
-  test "Operator mix side by side" do
-    import Array
-    assert [{1, 1}, {2, 2}] == [1, 2] <|> [1, 2]
-    assert [{1, 1}, {2, nil}] == [1, 2] <|> [1]
-    assert [{1, 1}, {nil, 2}] == [1] <|> [1, 2]
-  end
-
   test "Count of contiguous subarrays that sum to k" do
     assert Kth.contiguous_subarrays([1, 3, 1, 2, 5], 7) == 2
   end

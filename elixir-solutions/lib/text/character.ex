@@ -127,13 +127,14 @@ defmodule Character do
   """
   @spec mappable?(String.t(), String.t()) :: boolean
   def mappable?(keys, values) do
-    import Array
     keys_arr = String.graphemes(keys)
     values_arr = String.graphemes(values)
 
     {sign, _} =
-      keys_arr
-      <|> values_arr
+      Enum.zip(
+        keys_arr,
+        values_arr
+      )
       |> Enum.reduce({:ok, %{}}, fn {a, b}, acc ->
         case acc do
           {:error, res} ->
