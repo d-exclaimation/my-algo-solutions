@@ -28,4 +28,18 @@ defmodule BaseTen do
     base = rem(acc, 10)
     [base | do_plus(rest, div(acc, 10))]
   end
+
+  @doc """
+  Base 10 digits
+  """
+  @spec digits(non_neg_integer()) :: list(non_neg_integer())
+  def digits(num) when num < 10, do: [num]
+
+  def digits(num) do
+    next =
+      div(num, 10)
+      |> digits()
+
+    next ++ [rem(num, 10)]
+  end
 end

@@ -137,4 +137,19 @@ defmodule Numeric do
 
     res == num
   end
+
+  @doc """
+  """
+  @spec max_six_nine(non_neg_integer()) :: non_neg_integer()
+  def max_six_nine(num) do
+    {res, _is} =
+      num
+      |> BaseTen.digits()
+      |> Enum.reduce({0, false}, fn
+        6, {acc, false} -> {acc * 10 + 9, true}
+        x, {acc, is} -> {acc * 10 + x, is}
+      end)
+
+    res
+  end
 end

@@ -68,4 +68,11 @@ defmodule Limit do
       true -> ["#{lower}->#{head - 1}" | missing_bounds(rest, head + 1, upper)]
     end
   end
+
+  @doc """
+  """
+  @spec max_six_nine(num :: non_neg_integer()) :: non_neg_integer()
+  def max_six_nine(num) do
+    num
+  end
 end
