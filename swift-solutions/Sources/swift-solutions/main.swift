@@ -7,6 +7,11 @@
 
 import Foundation
 
-print(F.x(1).f({ $0 + 1}).f({ $0 + 2 }).y())
+let res = F
+    .x(1)
+    .f({ $0 + 1})
+    .f({ $0 + 2 })
+    .f({ F.x($0) })
+    .y()
 
 RunLoop.main.run()
