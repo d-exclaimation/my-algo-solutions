@@ -139,6 +139,7 @@ defmodule Numeric do
   end
 
   @doc """
+  Maximum number if given an integer with only 6s and 9s digits
   """
   @spec max_six_nine(non_neg_integer()) :: non_neg_integer()
   def max_six_nine(num) do
