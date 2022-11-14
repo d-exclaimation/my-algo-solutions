@@ -7,11 +7,6 @@
 
 import Foundation
 
-let res = F
-    .x(1)
-    .f({ $0 + 1})
-    .f({ $0 + 2 })
-    .f({ F.x($0) })
-    .y()
+let res = [1, 1, 2, 3]
 
-RunLoop.main.run()
+print(valueSort(res))
