@@ -7,6 +7,7 @@
 //
 use::std::collections::HashMap;
 
+#[allow(dead_code)]
 pub fn max_unique(arr: Vec<i32>) -> i32 {
     let mut mapper = HashMap::new();
     for i in 0..arr.len() {
