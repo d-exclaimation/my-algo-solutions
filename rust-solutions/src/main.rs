@@ -5,8 +5,49 @@
 //  Created by d-exclaimation on 9:41 PM.
 //  Copyright © 2021 d-exclaimation. All rights reserved.
 //
-mod flight;
+mod divide_seq_k;
+use std::collections::HashSet;
+use std::hash::Hash;
+
+pub trait Identifiable<T: Eq + Hash> {
+    fn id(&self) -> T;
+
+    fn is_equal(&self, other: &Self) -> bool {
+        self.id() == other.id()
+    }
+}
+
+pub struct User {
+    pub id: String,
+    pub name: Option<String>,
+    pub email: String,
+}
+
+impl User {
+    pub fn display_name(&self) -> String {
+        match &self.name {
+            Some(name) => name.clone(),
+            None => self.email.clone(),
+        }
+    }
+}
+
+impl Identifiable<String> for User {
+    fn id(&self) -> String {
+        self.email.clone()
+    }
+}
+
+pub fn unique<T: Eq + Hash, K: Identifiable<T>>(vec: Vec<K>) -> Vec<K> {
+    let mut repo = HashSet::new();
+    vec.into_iter()
+        .filter(|item| repo.insert(item.id()))
+        .collect()
+}
 
 fn main() {
-    println!("{}", flight::destination(vec![('a', 'b'), ('c', 'd'), ('b', 'c')]));
+    println!(
+        "{}",
+        divide_seq_k::divide_seq_k(vec![1, 2, 3, 3, 4, 4, 5, 6], 4)
+    );
 }
