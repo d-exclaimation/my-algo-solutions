@@ -7,6 +7,7 @@
 //
 mod divide_seq_k;
 mod form_words;
+mod unique_occurence;
 use std::collections::HashSet;
 use std::hash::Hash;
 
@@ -65,4 +66,11 @@ fn main() {
             &vec!['a', 'b', 'c']
         )
     );
+
+    println!(
+        "{}",
+        unique_occurence::has_unique_occurence(vec![1, 2, 2, 1, 1, 3])
+    );
+
+    println!("{}", unique_occurence::has_unique_occurence(vec![1, 2]));
 }
