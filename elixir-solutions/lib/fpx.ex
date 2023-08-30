@@ -35,8 +35,8 @@ defmodule FPX do
   """
   @spec main() :: :ok
   def main() do
-    [2, 9, 3, 5, 7, 4, 4]
-    |> Array.largest_right()
+    [65, 32, 32]
+    |> Stats.max_orders(64)
     |> IO.inspect()
 
     :ok

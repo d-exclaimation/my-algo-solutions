@@ -107,4 +107,23 @@ defmodule Stats do
     num = obs - exp
     [num * num / exp | do_chi_square(rest, remain)]
   end
+
+  @doc """
+  Get the max orders can be fit in a budget
+  """
+  @spec max_orders([number()], number()) :: number()
+  def max_orders(prices, budget) when is_list(prices) do
+    {count, _} =
+      prices
+      |> Enum.sort()
+      |> Enum.reduce_while({0, 0}, fn price, {count, total} ->
+        if total + price <= budget do
+          {:cont, {count + 1, total + price}}
+        else
+          {:halt, {count, total}}
+        end
+      end)
+
+    count
+  end
 end
